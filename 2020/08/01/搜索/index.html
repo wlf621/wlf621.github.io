@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>搜索 | WLF</title>
+
+
+
+    <link rel="icon" href="/wlf621/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/wlf621/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/wlf621/js/script.js"></script>
+    
+    <script src="/wlf621/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/wlf621/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/wlf621/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">搜索</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 1, 2020&nbsp;&nbsp;16:22:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Sticks"><a href="#Sticks" class="headerlink" title="Sticks"></a>Sticks</h2><p>N个棍子，长度为len[n]，棍子可以拼接成更长的棍子，要求所有的棍子都使用，且拼成的长度相等为m，求最短长度m;例子：<br>输入: 5,2,1,5,2,1,5,2,1<br>输出：6</p>
+<details><summary>查看代码</summary><pre><code>
+class solution {
+/*
+* cur : 当前从第cur根棍子开始尝试组合
+* nums : 当前还有nums根新棍子未组合完成
+* curLen ：当前组合的棍子长度
+* len ： 要组合的新棍子长度
+*/
+private:
+    const int INF = 1 << 30;
+    const int N = 70;
+    vector<int> stick;
+    int visit[70];
+    int n;
+    int ans;
+public:
+    bool dfs(int cur, int nums, int curLen, int len)
+    {
+        if (nums == 0)
+            return true;
+        int same = -1;
+        for (int i = cur; i < n; i++)
+        {
+            if (visit[i] || stick[i] == same)//剪枝2：当前长度的棍子不合适，直接跳过
+                continue;
+            visit[i] = 1;
+            if (curLen + stick[i] < len)
+            {
+                if (dfs(cur + 1, nums, curLen + stick[i], len))
+                    return true;
+                else same = stick[i];
+            }
+            else if (curLen + stick[i] == len)
+            {
+                if (dfs(0, nums - 1, 0, len))
+                    return true;
+            }
+            visit[i] = 0;
+            if (curLen == 0)break;//剪枝3：cur作为组合的第一个棍子，与其他所有棍子不合适，跳过以cur开始的组合
+        }
+        return false;
+    }
+    int findMinLen() {
+        cin >> n;
+        int sum = 0, ans = 0;
+        stick.clear();
+        for (int i = 0; i < n; i++)
+        {
+            int len;
+            cin >> len;
+            sum += len;
+            stick.push_back(len);
+        }
+
+<pre><code>    ans = INF;
+    sort(stick.begin(), stick.end(), [](int a, int b) {return a &gt; b; });
+    for (int i = stick[0]; i &lt;= sum; i++)
+    {
+        if (sum % i != 0)//剪枝1：最后的长度一定会被棍子总和整除
+            continue;
+        memset(visit, 0, sizeof(visit));
+        if (dfs(0, sum / i, 0, i))
+        {
+            ans = i;
+            break;
+        }
+    }
+    return ans;
+}</code></pre><p>};<br></p></int></code></pre></details><p></p>
+<h2 id="矩阵的路径"><a href="#矩阵的路径" class="headerlink" title="矩阵的路径"></a>矩阵的路径</h2><p>判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一格开始，每一步可以在矩阵中向左、右、上、下移动一格。如果一条路径经过了矩阵的某一格，那么该路径不能再次进入该格子</p>
+<blockquote>
+<p>dfs深搜遍历所有路径，注意标志矩阵的设置</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+private:
+    int n,m,M,dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+    bool  **visited;
+public:
+    bool helper(const vector<vector<char>>& board,const string &word,const int &index,const int &i,const int &j){
+       if (index == M)return true;
+        for (int k = 0; k < 4; k++) {
+            int _i = i + dir[k][0], _j = j + dir[k][1];
+            if (_i >= 0 && _i < n && _j >= 0 && _j < m && !visited[_i][_j] && board[_i][_j] == word[index]) {
+                visited[_i][_j] = true;//进递归，置为true
+                if(helper(board, word, index+1, _i, _j))return true;
+                visited[_i][_j] = false;//出递归，置为false
+            }
+        }
+        return false;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        M = word.size();
+        if (M == 0)return true;
+        n = board.size();
+        if (n == 0)return false;
+        m = board[0].size();
+        visited = new bool*[n];
+        for (int i = 0; i < n; i++) {
+            visited[i] = new bool[m];
+            memset(visited[i], false, sizeof(bool) * m);
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (word[0] == board[i][j]) {
+                    visited[i][j] = true;
+                    if (helper(board, word, 1, i, j))return true;
+                    visited[i][j] = false;
+                }
+            }
+        }
+        return false;
+    }
+};
+</vector<char></vector<char></code></pre></details>
+
+<h2 id="机器人路径"><a href="#机器人路径" class="headerlink" title="机器人路径"></a>机器人路径</h2><p>地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），也不能进入行坐标和列坐标的数位之和大于k的格子。例如，当k为18时，机器人能够进入方格 [35, 37] ，因为3+5+3+7=18。但它不能进入方格 [35, 38]，因为3+5+3+8=19。请问该机器人能够到达多少个格子？</p>
+<blockquote>
+<p> dfs深搜遍历所有可以走的路径，每个节点只走一次，标志矩阵置为true后不置为false</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+private:
+    int rows,cols,threshold,dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+    bool visit[100][100];
+public:
+
+<pre><code>int getSum(int rows,int cols){
+    int sum=0;
+    while(rows!=0){
+        sum+=(rows%10);
+        rows/=10;
+    }
+    while(cols!=0){
+        sum+=(cols%10);
+        cols/=10;
+    }
+    return sum;
+}
+
+void moving(int i,int j,int &amp;num){
+    if (visit[i][j] == false) {
+        num++;
+        visit[i][j] = true;//只置为true，不置回false
+    }
+    for (int k = 0; k &lt; 4; k++) {
+        int _i = i + dir[k][0], _j = j + dir[k][1];
+        if (_i &gt;= 0 &amp;&amp; _i &lt; rows &amp;&amp; _j &gt;= 0 &amp;&amp; _j &lt; cols &amp;&amp; !visit[_i][_j] &amp;&amp; getSum(_i, _j) &lt;= threshold)
+        moving(_i, _j, num);
+    }
+}
+
+int movingCount(int m, int n, int k) {
+    int num=0;
+    rows=m;
+    cols=n;
+    threshold=k;
+    memset(visit,0,100*100*sizeof(bool));
+    if(getSum(0,0)&lt;=k)moving(0,0,num);
+    return num;
+}</code></pre><p>};<br></p></code></pre></details><p></p>
+<h2 id="复原IP地址"><a href="#复原IP地址" class="headerlink" title="复原IP地址"></a>复原IP地址</h2><blockquote>
+<p>给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。有效的 IP 地址正好由四个整数（每个整数位于 0 到 255 之间组成），整数之间用 ‘.’ 分隔。<br>遍历搜索’.’所有可能的位置，并利用helper判断是否合法</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    bool helper(string s) {
+        if (s.length() == 0)return false;
+        if (s.length() == 1)return true;
+        if (s.length() > 3)return false;
+        if (s[0] == '0')return false;
+        if(atoi(s.c_str())>255||atoi(s.c_str())<0)return false; return true; } vector<string> restoreIpAddresses(string s) {
+        vector<string> ans;
+        int n = s.size();
+        string p1, p2, p3, p4;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                        p1 = s.substr(0, i + 1).c_str();
+                        p2 = i + 1 < n ? s.substr(i + 1, j + 1) : "";
+                        p3 = i + j + 2 < n ? s.substr(i + j + 2, k + 1) : "";
+                        p4 = i + j + k + 3 < n ? s.substr(i + j + k + 3) : "";
+                        if (helper(p1)&& helper(p2)&& helper(p3)&& helper(p4)) {
+                            ans.push_back(p1+"."+ p2 + "." + p3 + "." + p4);
+                        }
+                }
+            }
+
+<pre><code>    }
+    return ans;
+}</code></pre><p>};<br></p></string></0)return></code></pre></details><p></p>
+<h2 id="找出满足最大值减去最小值小于等于num的子数组数量"><a href="#找出满足最大值减去最小值小于等于num的子数组数量" class="headerlink" title="找出满足最大值减去最小值小于等于num的子数组数量"></a>找出满足最大值减去最小值小于等于num的子数组数量</h2><p>max(arr[i…j]) - min(arr[i…j]) &lt;= num<br>max(arr[i…j])表示子数组arr[i…j]中的最大值，min[arr[i…j])表示子数组arr[i…j]中的最小值</p>
+<details><summary>查看代码</summary><pre><code>
+#include<iostream>
+#include<vector>
+#include<deque>
+using namespace std;
+int main()
+{
+    long long n; long long num;
+    cin >> n >> num;
+    vector<long long> datas(n, 0);
+    for (int i = 0; i < n; i++)
+    {
+        long long x;
+        cin >> x;
+        datas[i] = x;
+    }
+    //以上用于输入
+    deque<int> dq1;//最大值队列
+    deque<int> dq2;//最小值队列
+    int res = 0;
+    int j = 0;
+    int i = 0;
+    for (; i < datas.size(); i++)
+    { //以i为起始位置的子数组
+        for (; j < datas.size(); j++)
+        {
+            while (!dq1.empty() && datas[j] >= datas[dq1.back()])
+                dq1.pop_back();
+            dq1.push_back(j);
+            while (!dq2.empty() && datas[j] <= datas[dq2.back()]) dq2.pop_back(); dq2.push_back(j); 如果最大值减去最小值大于num就break，此时最大值 减去最小值大于num一定是由于j的插入 if (datas[dq1.front()] - datas[dq2.front()]> num)
+                break;
+        }
+        if (dq1.front() == i)//如果队头是i位置的元素，i加一后就过期删掉
+            dq1.pop_front();
+        if (dq2.front() == i)
+            dq2.pop_front();
+        res += j - i;//以i为开头的小于num的子数组长度j-i
+    }
+    cout << res << endl;
+}
+</=></int></int></long></deque></vector></iostream></code></pre></details>
+
+<h2 id="数字序列中某一位的数字"><a href="#数字序列中某一位的数字" class="headerlink" title="数字序列中某一位的数字"></a>数字序列中某一位的数字</h2><p>数字以0123456789101112131415…的格式序列化到一个字符序列中。在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。</p>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int findNthDigit(int n) {
+        int digit = 1;
+        long start = 1;
+        long count = 9;
+        while (n > count) { 
+            n -= count;
+            digit += 1;
+            start *= 10;
+            count = digit * start * 9;
+        }
+        long num = start + (n - 1) / digit; 
+        return to_string(num)[(n - 1) % digit] - '0'; 
+    }
+};
+</code></pre></details>
+
+<h2 id="顺时针遍历"><a href="#顺时针遍历" class="headerlink" title="顺时针遍历"></a>顺时针遍历</h2><p>从1开始顺时针报数，若所报数字各位是7，十位是奇数则将下标[i,j]加入数组；</p>
+<details><summary>查看代码</summary><pre><code>
+#include<iostream>
+#include<vector>
+
+<p>using namespace std;</p>
+<p>int main() {<br>    int n, m, k = 0;<br>    vector&lt;pair&lt;int,int&gt;&gt; ans;<br>    if (n &lt; 10 || n&gt;1000 || m &lt; 10 || m&gt;1000) {<br>        cout &lt;&lt; “[]” &lt;&lt; endl;<br>        return 0;<br>    }<br>    cin &gt;&gt; n &gt;&gt; m;<br>    int row = 0, col = 0, xl = 0, xr = m - 1, yu = 0, yd = n - 1, dir = 0;<br>    while (k &lt; n * m) {<br>        if (dir == 0) {<br>            for (col = xl; col &lt;= xr; col++) {<br>                k++;<br>                if ((k % 10 == 7) &amp;&amp; (((k % 100) / 10) % 2 == 1))<br>                    ans.push_back(make_pair(row, col));<br>            }<br>            yu++;<br>            dir = 1;<br>            col–;<br>        }<br>        else if (dir == 1) {<br>            for (row = yu; row &lt;= yd; row++) {<br>                k++;<br>                if ((k % 10 == 7) &amp;&amp; (((k % 100) / 10) % 2 == 1))<br>                    ans.push_back(make_pair(row, col));<br>            }<br>            xr–;<br>            dir = 2;<br>            row–;<br>        }<br>        else if (dir == 2) {<br>            for (col = xr; col &gt;= xl; col–) {<br>                k++;<br>                if ((k % 10 == 7 )&amp;&amp; (((k % 100) / 10) % 2 == 1))<br>                    ans.push_back(make_pair(row, col));<br>            }<br>            yd–;<br>            dir = 3;<br>            col++;<br>        }<br>        else {<br>            for (row = yd; row &gt;= yu; row–) {<br>                k++;<br>                if ((k % 10 == 7) &amp;&amp; (((k % 100) / 10) % 2 == 1))<br>                    ans.push_back(make_pair(row, col));<br>            }<br>            xl++;<br>            dir = 0;<br>            row++;<br>        }<br>    }<br>    for (int i = 0; i &lt; ans.size() - 1; i++) {<br>        cout &lt;&lt; “[“ &lt;&lt; ans[i].first &lt;&lt; “,” &lt;&lt; ans[i].second &lt;&lt; “],”;<br>    }<br>    cout&lt;&lt; “[“ &lt;&lt; ans[ans.size() - 1].first &lt;&lt; “,” &lt;&lt; ans[ans.size() - 1].second &lt;&lt; “]”;<br>    return 0;<br>}<br></p></vector></iostream></code></pre></details><p></p>
+<h2 id="构建乘积数组"><a href="#构建乘积数组" class="headerlink" title="构建乘积数组"></a><a href="https://leetcode-cn.com/problems/gou-jian-cheng-ji-shu-zu-lcof/" target="_blank" rel="noopener">构建乘积数组</a></h2><p>给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中 B 中的元素 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。</p>
+<blockquote>
+<p>输入: [1,2,3,4,5]<br>输出: [120,60,40,30,24]</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    vector<int> constructArr(vector<int>& a) {
+        vector<int> ans(a.size(), 1), dp(a.size(), 1);
+        for (int i = 1; i < a.size(); i++) {
+            ans[i] = ans[i - 1] * a[i - 1];
+
+<pre><code>    }
+    for (int i = a.size() - 2; i &gt;= 0; i--) {
+        dp[i] = dp[i + 1] * a[i + 1];
+        ans[i] = ans[i] * dp[i];
+    }
+    return ans;
+}</code></pre><p>};<br></p></int></int></int></code></pre></details><p></p>
+<h2 id="不用加减乘除做加法"><a href="#不用加减乘除做加法" class="headerlink" title="不用加减乘除做加法"></a><a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/" target="_blank" rel="noopener">不用加减乘除做加法</a></h2><p>写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。</p>
+<blockquote>
+<p>输入: a = 1, b = 1<br>输出: 2</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int add(int a, int b) {
+        int t;
+        while(b!=0){//无进位终止
+            t = (unsigned int) (a & b)<<1; 进位：按位与后左移1位 a="a" ^ b; 当前不考虑进位，若有进位则在下一循环相加 b="t;" } return a; }; < code></1;></code></pre></details>
+
+<h2 id="重复的子字符串"><a href="#重复的子字符串" class="headerlink" title="重复的子字符串"></a><a href="https://leetcode-cn.com/problems/repeated-substring-pattern/" target="_blank" rel="noopener">重复的子字符串</a></h2><p>给定一个非空的字符串，判断它是否可以由它的一个子串重复多次构成。给定的字符串只含有小写英文字母，并且长度不超过10000。</p>
+<blockquote>
+<p>输入: “abab”<br>输出: True<br>解释: 可由子字符串 “ab” 重复两次构成。</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {//暴力搜索，优化见leetcode
+public:
+    bool repeatedSubstringPattern(string s) {
+        bool match;
+        for (int i = 1; i*2 <= s.size(); i++) { if (s.size() % i !="0)continue;" match="true;" for (int j="i;" < j++) (s[j] - i]) break; } (match)return true; return false; }; code></=></code></pre></details>
+
+<h2 id="柱状图中最大的矩形"><a href="#柱状图中最大的矩形" class="headerlink" title="柱状图中最大的矩形"></a><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener">柱状图中最大的矩形</a></h2><p>给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。<br>求在该柱状图中，能够勾勒出来的矩形的最大面积。</p>
+<blockquote>
+<p>输入: [2,1,5,6,2,3]<br>输出: 10</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//按高度进行穷搜
+class Solution {
+private:
+    long long Max = INT_MIN;
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        if(heights.empty())return 0;
+        for (int i = 0; i < heights.size(); i++) {
+            long long l = i, r = i + 1;
+            while (l - 1 >= 0 && heights[l - 1] >= heights[i]) l--;
+            while (r < heights.size() && heights[r] >= heights[i]) r++;
+            Max = max(Max, (r - l) * heights[i]);
+        }
+        return Max;
+    }
+};
+//辅助数据结构栈、数组存储有效数据，空间换时间
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size(), Max = 0;
+        vector<int> left(n), right(n, n);
+        stack<int> s;
+        for (int i = 0; i < heights.size(); i++) {
+            while (!s.empty() && heights[s.top()] > heights[i]) {
+                right[s.top()] = i;
+                s.pop();
+            }
+            left[i] = !s.empty() ? s.top() : -1;
+            s.push(i);
+        }
+        for (int i = 0; i < heights.size(); i++) {
+            Max = max((right[i] - left[i] -  1) * heights[i], Max);
+        }
+        return Max;
+    }
+};
+</int></int></int></int></code></pre></details>
+
+<h2 id="钥匙和房间"><a href="#钥匙和房间" class="headerlink" title="钥匙和房间"></a><a href="https://leetcode-cn.com/problems/keys-and-rooms/" target="_blank" rel="noopener">钥匙和房间</a></h2><p>有 N 个房间，开始时你位于 0 号房间。每个房间有不同的号码：0，1，2，…，N-1，并且房间里可能有一些钥匙能使你进入下一个房间。在形式上，对于每个房间 i 都有一个钥匙列表 rooms[i]，每个钥匙 rooms[i][j] 由 [0,1，…，N-1] 中的一个整数表示，其中 N = rooms.length。 钥匙 rooms[i][j] = v 可以打开编号为 v 的房间。最初，除 0 号房间外的其余所有房间都被锁住。你可以自由地在房间之间来回走动。如果能进入每个房间返回 true，否则返回 false。</p>
+<blockquote>
+<p>输入: [[1],[2],[3],[]]<br>输出: true<br>输入：[[1,3],[3,0,1],[2],[0]]<br>输出：false</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//DFS深搜（或BFS）
+//c++
+class Solution {
+private:
+    int* keys;
+public:
+    void helper(const vector<vector<int>>& rooms,int index) {
+        for (int i = 0; i < rooms[index].size(); i++)
+        {
+            if (!keys[rooms[index][i]]) {
+                keys[rooms[index][i]] = 1;
+                helper(rooms, rooms[index][i]);
+            }     
+        }
+    }
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        keys = new int[rooms.size()];
+        memset(keys, 0, sizeof(int) * rooms.size());
+        keys[0] = 1;
+        helper(rooms, 0);
+        for (int i = 0; i < rooms.size(); i++) {
+            if (!keys[i])return false;
+        }
+        return true;
+    }
+};
+
+<p>//python3<br>class Solution:<br>    def canVisitAllRooms(self, rooms: List[List[int]]) -&gt; bool:<br>        keys = []<br>        def dfs(index:int):<br>            for i in rooms[index]:<br>                if i not in keys:<br>                    keys.append(i)<br>                    dfs(i)<br>        keys.append(0)<br>        dfs(0)<br>        return len(keys) == len(rooms)<br></p></vector<int></vector<int></code></pre></details><p></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/08/01/%E6%90%9C%E7%B4%A2/">https://wlf621.github.io/2020/08/01/%E6%90%9C%E7%B4%A2/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/wlf621/tags/%E6%90%9C%E7%B4%A2/"># 搜索</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/wlf621/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/wlf621/2020/08/01/%E7%BB%8F%E5%85%B8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">经典动态规划</a>
+            
+            
+            <a class="next" rel="next" href="/wlf621/2020/08/01/%E9%80%92%E5%BD%92/">递归</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

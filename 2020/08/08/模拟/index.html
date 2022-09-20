@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>模拟 | WLF</title>
+
+
+
+    <link rel="icon" href="/wlf621/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/wlf621/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/wlf621/js/script.js"></script>
+    
+    <script src="/wlf621/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/wlf621/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/wlf621/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">模拟</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 8, 2020&nbsp;&nbsp;16:22:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="验证给定的字符串是否可以解释为十进制数字"><a href="#验证给定的字符串是否可以解释为十进制数字" class="headerlink" title="验证给定的字符串是否可以解释为十进制数字"></a><a href="https://leetcode-cn.com/problems/valid-number/" target="_blank" rel="noopener">验证给定的字符串是否可以解释为十进制数字</a></h2><blockquote>
+<p>“0” =&gt; true<br>“ 0.1 “ =&gt; true<br>“abc” =&gt; false<br>“1 a” =&gt; false<br>“2e10” =&gt; true<br>“ -90e3   “ =&gt; true<br>“ 1e” =&gt; false<br>“e3” =&gt; false<br>“ 6e-1” =&gt; true<br>“ 99e2.5 “ =&gt; false<br>“53.5e93” =&gt; true<br>“ –6 “ =&gt; false<br>“-+3” =&gt; false<br>“95a54e53” =&gt; false</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    bool isNumber(string s) {//模拟： '.', 'e'只能出现一次，'+','-'只能出现在数字前面或'e'后面且最多出现两次，'e'后面要出现数字不能出现'.'；其他情况不是数字
+        //去掉首尾空格
+        s.erase(0, s.find_first_not_of(" "));
+        s.erase(s.find_last_not_of(" ") + 1);
+
+<pre><code>    bool isNumber = false, dotFlag = false, plusFlag = false, eFlag = false, minusFlag = false;
+    for (int i = 0; i &lt; s.size(); i++) {
+        if (&apos;0&apos; &lt;= s[i] &amp;&amp; s[i] &lt;= &apos;9&apos;) {
+            isNumber = true;
+        }
+        else if ((s[i] == &apos;+&apos; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &apos;+&apos; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) {/*&apos;+&apos;只能出现在数字前面或
+            &apos;e&apos;后面且最多出现两次， !dotFlag防止&quot;.+&quot;这种情况*/
+            plusFlag = true;
+            isNumber = false;
+        }
+        else if ((s[i] == &apos;-&apos; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &apos;-&apos; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) {/*&apos;-&apos;只能出现在数字前面或
+            &apos;e&apos;后面且最多出现两次， !dotFlag防止&quot;.-&quot;这种情况*/
+            minusFlag = true;
+            isNumber = false;
+        }
+        else if (s[i] == &apos;e&apos; &amp;&amp; !eFlag &amp;&amp; isNumber) {/* &apos;e&apos;只能出现一次且前后必须出现数字，出现&apos;e&apos;和可以再次出现&apos;+&apos;,&apos;-&apos;*/
+            eFlag = true;
+            isNumber = false;
+            minusFlag = false;
+            plusFlag = false;
+        }
+        else if (s[i] == &apos;.&apos; &amp;&amp; !dotFlag &amp;&amp; !eFlag) {/* &apos;.&apos;只能出现一次且不能出现再&apos;e&apos;后面*/
+            dotFlag = true;
+        }
+        else return false;
+    }
+    return isNumber;
+}</code></pre><p>};<br></p></code></pre></details><p></p>
+<h2 id="LRU缓存机制"><a href="#LRU缓存机制" class="headerlink" title="LRU缓存机制"></a>LRU缓存机制</h2><blockquote>
+<p>要求get(key),put(key)是O(1)时间复杂度<br>Hash表加双向链表，头表示最近使用的，尾表示最近未使用的；</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+struct DLinkedNode{
+    int key, val;
+    DLinkedNode* prev;
+    DLinkedNode* next;
+    DLinkedNode(int k = 0, int v = 0) :key(k), val(v), prev(nullptr), next(nullptr) {}
+};
+
+<p>class LRUCache {<br>private:<br>    unordered_map&lt;int, DLinkedNode<em>&gt; Cache;<br>    DLinkedNode</em> head;<br>    DLinkedNode* tail;<br>    int size;<br>    int capacity;<br>public:<br>    LRUCache(int _capacity = 0);<br>    int get(int key);<br>    void put(int key, int value);<br>    void moveTohead(DLinkedNode* node);<br>    void addTohead(DLinkedNode* node);<br>    void removeNode(DLinkedNode* node);<br>    DLinkedNode* removeTail();<br>};</p>
+<p>int main() {<br>    //int a;<br>    //cin &gt;&gt; a;<br>    LRUCache cache(2);<br>    cache.put(1, 1);<br>    cache.put(2, 2);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    cout &lt;&lt; cache.get(2) &lt;&lt; endl;<br>    cache.put(3, 3);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    return 0;<br>}</p>
+<p>LRUCache::LRUCache(int _capacity) : capacity(_capacity), size(0) {<br>    // 使用伪头部和伪尾部节点<br>    head = new DLinkedNode();<br>    tail = new DLinkedNode();<br>    head-&gt;next = tail;<br>    tail-&gt;prev = head;<br>}<br>int LRUCache::get(int key)<br>{<br>    if (!Cache.count(key)) {<br>        return -1;<br>    }<br>    // 如果 key 存在，先通过哈希表定位，再移到头部<br>    DLinkedNode* node = Cache[key];<br>    this-&gt;moveTohead(node);<br>    return node-&gt;val;<br>}</p>
+<p>void LRUCache::put(int key, int value)<br>{<br>    if (!Cache.count(key)) {<br>        // 如果 key 不存在，创建一个新的节点<br>        DLinkedNode* node = new DLinkedNode(key, value);<br>        // 添加进哈希表<br>        Cache[key] = node;<br>        // 添加至双向链表的头部<br>        this-&gt;addTohead(node);<br>        ++size;<br>        if (size &gt; capacity) {<br>            // 如果超出容量，删除双向链表的尾部节点<br>            DLinkedNode* removed = removeTail();<br>            // 删除哈希表中对应的项<br>            Cache.erase(removed-&gt;key);<br>            // 防止内存泄漏<br>            delete removed;<br>            –size;<br>        }<br>    }<br>    else {<br>        // 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部<br>        DLinkedNode* node = Cache[key];<br>        node-&gt;val = value;<br>        this-&gt;moveTohead(node);<br>    }<br>}</p>
+<p>void LRUCache::moveTohead(DLinkedNode* node)<br>{<br>    addTohead(node);<br>    removeNode(node);<br>}</p>
+<p>void LRUCache::addTohead(DLinkedNode* node)<br>{<br>    head-&gt;next-&gt;prev = node;<br>    node-&gt;next = head-&gt;next;<br>    head-&gt;next = node;<br>    node-&gt;prev = head;<br>}</p>
+<p>void LRUCache::removeNode(DLinkedNode* node)<br>{<br>    node-&gt;prev-&gt;next = node-&gt;next;<br>    node-&gt;next-&gt;prev = node-&gt;prev;<br>}</p>
+<p>DLinkedNode* LRUCache::removeTail()<br>{<br>    DLinkedNode* node = tail-&gt;prev;<br>    removeNode(node);<br>    return node;<br>}<br></p></code></pre></details><p></p>
+<h2 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a><a href="https://leetcode-cn.com/problems/minesweeper/" target="_blank" rel="noopener">扫雷游戏</a></h2><p>如果一个地雷（’M’）被挖出，游戏就结束了- 把它改为 ‘X’。<br>如果一个没有相邻地雷的空方块（’E’）被挖出，修改它为（’B’），并且所有和其相邻的未挖出方块都应该被递归地揭露。<br>如果一个至少与一个地雷相邻的空方块（’E’）被挖出，修改它为数字（’1’到’8’），表示相邻地雷的数量。<br>如果在此次点击中，若无更多方块可被揭露，则返回面板。</p>
+<blockquote>
+<p>输入:<br>[[‘E’, ‘E’, ‘E’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘M’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘E’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘E’, ‘E’, ‘E’]]<br>Click : [3,0]<br>输出:<br>[[‘B’, ‘1’, ‘E’, ‘1’, ‘B’],<br> [‘B’, ‘1’, ‘M’, ‘1’, ‘B’],<br> [‘B’, ‘1’, ‘1’, ‘1’, ‘B’],<br> [‘B’, ‘B’, ‘B’, ‘B’, ‘B’]]</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+private:
+    int dir[8][2] = { { -1,0 }, {-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1} };
+
+<p>public:<br>    int getNum(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) {<br>        int ans = 0, _i, _j;<br>        for (int i = 0; i &lt; 8; i++) {<br>            _i = click[0] + dir[i][0]; _j = click[1] + dir[i][1];<br>            if (_i &gt;= 0 &amp;&amp; _i &lt; board.size() &amp;&amp; _j &gt;= 0 &amp;&amp; _j &lt; board[0].size() &amp;&amp; board[_i][_j] == ‘M’)ans++;<br>        }<br>        return ans;<br>    }<br>    void helper(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click, vector&lt;vector<int>&gt; &amp;visited) {<br>        if (board[click[0]][click[1]] == ‘M’&amp;&amp;!visited[click[0]][click[1]]) {<br>            visited[click[0]][click[1]] = 1;<br>            board[click[0]][click[1]] = ‘X’;<br>            return;<br>        }<br>        else if (board[click[0]][click[1]] == ‘E’&amp;&amp;!visited[click[0]][click[1]]) {<br>            int temp = getNum(board, click);<br>            if (temp != 0) {<br>                visited[click[0]][click[1]] = 1;<br>                board[click[0]][click[1]] = temp + ‘0’;<br>                return;<br>            }<br>            else {<br>                visited[click[0]][click[1]] = 1;<br>                board[click[0]][click[1]] =  ‘B’;<br>                for (int i = 0; i &lt; 8; i++) {<br>                    int _i = click[0], _j = click[1];<br>                    click[0] = click[0] + dir[i][0], click[1] = click[1] + dir[i][1];<br>                    if (click[0] &gt;= 0 &amp;&amp; click[0] &lt; board.size() &amp;&amp; click[1] &gt;= 0 &amp;&amp; click[1] &lt; board[0].size())<br>                        helper(board, click, visited);<br>                    click[1]=_j;<br>                    click[0]=_i;<br>                }<br>                return;<br>            }<br>        }<br>        return;<br>    }<br>    vector&lt;vector<char>&gt; updateBoard(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) {<br>        if (board.size() == 0 || board[0].size() == 0)return board;<br>        vector&lt;vector<int>&gt; visited(board.size(), vector<int>(board[0].size(), 0));<br>        helper(board, click, visited);<br>        return board;<br>    }<br>};<br></int></int></int></char></char></int></int></char></int></char></p></code></pre></details><p></p>
+<h2 id="把字符串转换成整数"><a href="#把字符串转换成整数" class="headerlink" title="把字符串转换成整数"></a><a href="https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/" target="_blank" rel="noopener">把字符串转换成整数</a></h2><p>写一个函数 StrToInt，实现把字符串转换成整数这个功能。不能使用 atoi 或者其他类似的库函数。</p>
+<blockquote>
+<p>输入: “   -42”<br>输出: -42<br>解释: 第一个非空白字符为 ‘-‘, 它是一个负号。我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int strToInt(string str) {
+        if (str.size() == 0)return 0;
+        long long ans = 0, flag = 1;
+        str.erase(0,str.find_first_not_of(' '));
+        if(str.find_first_of(' ') != string::npos) str.erase(str.find_first_of(' '));
+        int i = 0;
+        if (str[0] == '-') {
+            flag = -1;
+            i++;
+        }
+        for (; i < str.size(); i++) {
+            if(str[i]=='+'&&i==0)continue;//'+'在第一位跳过
+            if (str[i] <= '9' && str[i]>= '0')
+                ans = ans * 10 + str[i] - '0';
+            else break;//遇到非数字则跳出
+            if(ans>INT_MAX)return flag==1?INT_MAX: INT_MIN;//超过int的范围
+        }
+        return flag*ans;
+    }
+};
+</=></code></pre></details>
+
+<h2 id="约瑟夫环"><a href="#约瑟夫环" class="headerlink" title="约瑟夫环"></a>约瑟夫环</h2><details><summary>查看代码</summary><pre><code>
+class Node {
+public:
+    int val;
+    Node* next;
+
+<pre><code>Node(int _val) {
+    val = _val;
+    next = NULL;
+}</code></pre><p>};</p>
+<p>class Solution {<br>public:<br>    int lastRemaining(int n, int m) {<br>        int ans;<br>        Node* l = new Node(0), * p, * pre;<br>        p = l;<br>        for (int i = 0; i &lt; n; i++) {<br>            Node* t = new Node(i);<br>            p-&gt;next = t;<br>            p = p-&gt;next;<br>        }<br>        l = l-&gt;next;<br>        p-&gt;next = l;<br>        pre = p;<br>        p = l;<br>        while (n &gt; 1) {<br>            for (int i = 1; i &lt; m; i++) {<br>                pre = p;<br>                p = p-&gt;next;<br>            }<br>            pre-&gt;next = p-&gt;next;<br>            delete p;<br>            p = pre-&gt;next;<br>            n–;<br>        }<br>        return p-&gt;val;<br>    }<br>};<br></p></code></pre></details><p></p>
+<h2 id="n个骰子的点数"><a href="#n个骰子的点数" class="headerlink" title="n个骰子的点数"></a><a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/" target="_blank" rel="noopener">n个骰子的点数</a></h2><p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。</p>
+<blockquote>
+<p>输入: 2<br>输出: [0.02778,0.05556,0.08333,0.11111,0.13889,0.16667,0.13889,0.11111,0.08333,0.05556,0.02778]</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//掷掷骰子的出现点数的概率
+class Solution {
+private:
+    map<int, double> t;
+    map<int, double> s;
+    vector<double> ans;
+public:
+    vector<double> twoSum(int n) {
+        for (int i = 1; i < 7; i++) s[i] = 1.0 / 6;
+        n--;
+        while (n--) {
+            t.clear();
+            for (int i = 1; i < 7; i++) {
+                for (auto it = s.begin(); it != s.end(); it++) {
+                    if (t.count(it->first + i) == 0) {
+                        t[it->first + i] = it->second * 1.0 / 6;
+                    }else{
+                        t[it->first + i] = it->second * 1.0 / 6 + t[it->first + i];
+                    }
+                }
+            }
+            s.clear();
+            for (auto it = t.begin(); it != t.end(); it++)s[it->first] = it->second;
+        }
+        for (auto it = s.begin(); it != s.end(); it++)ans.push_back(it->second);
+        return ans;
+    }
+};
+</double></double></int,></int,></code></pre></details>
+
+<h2 id="队列的最大值"><a href="#队列的最大值" class="headerlink" title="队列的最大值"></a><a href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/" target="_blank" rel="noopener">队列的最大值</a></h2><p>请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。</p>
+<blockquote>
+<p>输入:<br>[“MaxQueue”,”push_back”,”push_back”,”max_value”,”pop_front”,”max_value”]<br>[[],[1],[2],[],[],[]]<br>输出: [null,null,null,2,1,2]</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//利用双端队列保存最大值
+class MaxQueue {
+private:
+    queue<int> s;
+    deque<int> t;
+public:
+    MaxQueue() {
+
+<pre><code>}
+
+int max_value() {
+    if (!t.empty())return t.back();
+    else return -1;
+}
+
+void push_back(int value) {
+    while (!t.empty() &amp;&amp; value &gt; t.front())t.pop_front();
+    s.push(value);
+    t.push_front(value);
+}
+int pop_front() {
+    if (!s.empty()) {
+        if (s.front() == t.back())t.pop_back();
+        int t = s.front();
+        s.pop();
+        return t;
+    }
+    else return -1;
+}</code></pre><p>};<br></p></int></int></code></pre></details><p></p>
+<h2 id="大数乘法"><a href="#大数乘法" class="headerlink" title="大数乘法"></a>大数乘法</h2><details><summary>查看代码</summary><pre><code>
+vector<int> bigNumberMultiply2(vector<int> num1, vector<int> num2) {
+    // 分配一个空间，用来存储运算的结果，num1长的数 * num2长的数，结果不会超过num1+num2长
+    vector<int> result(num1.size() + num2.size());
+
+<pre><code>// 先不考虑进位问题，根据竖式的乘法运算，num1的第i位与num2的第j位相乘，结果应该存放在结果的第i+j位上
+for (int i = 0; i &lt; num1.size(); i++) {
+    for (int j = 0; j &lt; num2.size(); j++) {
+        result[i + j +1] += num1[i] * num2[j];     // (因为进位的问题，最终放置到第i+j+1位)
+    }
+}
+
+//单独处理进位
+for (int k = result.size() - 1; k &gt; 0; k--) {
+    if (result[k] &gt;= 10) {
+        result[k - 1] += result[k] / 10;
+        result[k] %= 10;
+    }
+}
+return result;</code></pre><p>}<br></p></int></int></int></int></code></pre></details><p></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/08/08/%E6%A8%A1%E6%8B%9F/">https://wlf621.github.io/2020/08/08/%E6%A8%A1%E6%8B%9F/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/wlf621/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/wlf621/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/wlf621/2020/08/08/%E6%A0%91%E7%AE%97%E6%B3%95/">树算法</a>
+            
+            
+            <a class="next" rel="next" href="/wlf621/2020/08/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

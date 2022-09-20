@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>递归 | WLF</title>
+
+
+
+    <link rel="icon" href="/wlf621/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/wlf621/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/wlf621/js/script.js"></script>
+    
+    <script src="/wlf621/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/wlf621/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/wlf621/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">递归</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 1, 2020&nbsp;&nbsp;16:22:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="数值的整数次方"><a href="#数值的整数次方" class="headerlink" title="数值的整数次方"></a>数值的整数次方</h2><blockquote>
+<p>实现函数double Power(double base, int exponent)，求base的exponent次方。不得使用库函数，同时不需要考虑大数问题，n可以是负数。</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if(n==0)return 1;
+        if(n==1)return x;
+        if(n==-1)return 1/x;
+        double t = myPow(x,n/2);//二分调用myPow(x,n/2)并记录以减少重复计算
+        return t*t*myPow(x,n%2);
+    }
+};
+</code></pre></details>
+
+<h2 id="如何查找两个有序数组的中位数"><a href="#如何查找两个有序数组的中位数" class="headerlink" title="如何查找两个有序数组的中位数"></a>如何查找两个有序数组的中位数</h2><h2 id="字符串的排列"><a href="#字符串的排列" class="headerlink" title="字符串的排列"></a>字符串的排列</h2><p>不能有重复元素</p>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+private:
+    int len;
+    vector<string> ans;
+public:
+    void helper(string s,int left){
+        if(left==len-1)ans.push_back(s);
+        vector<char> tmp;
+        for(int i=left;i<len;i++){ if(find(tmp.begin(),tmp.end(),s[i])="=tmp.end()){//若存在则说明已交换过相同字符" tmp.push_back(s[i]); 加入临时数组，说明已与该符号交换 swap(s[left],s[i]); helper(s,left+1);0 } vector<string> permutation(string s) {
+        int i=0,j;
+        len=s.length();
+        j=len-1;
+        helper(s,0);
+        return ans;
+    }
+};
+</len;i++){></char></string></code></pre></details>
+
+<h2 id="数组小和"><a href="#数组小和" class="headerlink" title="数组小和"></a>数组小和</h2><p>归并</p>
+<details><summary>查看代码</summary><pre><code>
+#include<iostream>
+#include<vector>
+#include<deque>
+using namespace std;
+
+<p>int ans = 0;<br>vector<int> nums;</int></p>
+<p>void merge(int l, int r,int mid) {<br>    if (l &gt; r)return;<br>    int len = r - l + 1, * temp = new int[len];<br>    int i = l, j = mid + 1, k = 0;<br>    while (i &lt;= mid &amp;&amp; j &lt;= r) {<br>        if (nums[i] &lt;= nums[j]) {<br>            ans += nums[i] * (r - j + 1);<br>            temp[k++] = nums[i++];<br>        }<br>        else {<br>            temp[k++] = nums[j++];<br>        }<br>    }<br>    while (i &lt;= mid) {<br>        temp[k++] = nums[i++];<br>    }<br>    while (j &lt;= r) {<br>        temp[k++] = nums[j++];<br>    }<br>    for (int k = 0; k &lt; len; k++) {<br>        nums[l++] = temp[k];<br>    }<br>}</p>
+<p>void sort(int l,int r) {<br>    if (l &gt;= r)return;<br>    sort(l, (l + r) &gt;&gt; 1);<br>    sort(((l + r) &gt;&gt; 1) + 1, r);<br>    merge(l, r, (l + r) &gt;&gt; 1);<br>}</p>
+<p>int main()<br>{<br>    long long n;<br>    cin &gt;&gt; n;<br>    for (int i = 0; i &lt; n; i++)<br>    {<br>        int t;<br>        cin &gt;&gt; t;<br>        nums.push_back(t);<br>    }<br>    sort(0, nums.size() - 1);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    return 0;<br>}<br></p></deque></vector></iostream></code></pre></details><p></p>
+<h2 id="24-点游戏"><a href="#24-点游戏" class="headerlink" title="24 点游戏"></a><a href="https://leetcode-cn.com/problems/24-game/" target="_blank" rel="noopener">24 点游戏</a></h2><p>你有 4 张写有 1 到 9 数字的牌。你需要判断是否能通过 *，/，+，-，(，) 的运算得到 24。</p>
+<blockquote>
+<p>输入: [4, 1, 8, 7]<br>输出: True<br>解释: (8-4) * (7-1) = 24</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//递归遍历所有可能
+class Solution {
+    static constexpr int TARGET = 24;
+    static constexpr double EPSILON = 1e-6;
+    static constexpr int ADD = 0, MULTIPLY = 1, SUBTRACT = 2, DIVIDE = 3;
+
+<p>public:<br>    bool helper(vector<double> &amp;l) {<br>        if (l.size() == 0)return false;<br>        if (l.size() == 1)return fabs(l[0] - TARGET) &lt; EPSILON;<br>        int size = l.size();<br>        for (size_t i = 0; i &lt; size; i++)<br>        {<br>            for (size_t j = 0 ; j &lt; size; j++)<br>            {<br>                if (i != j) {<br>                    vector<double> l2;<br>                    for (int k = 0; k &lt; size; k++) {<br>                        if (k != i &amp;&amp; k != j) {<br>                            l2.push_back(l[k]);<br>                        }<br>                    }<br>                    for (int k = 0; k &lt; 4; k++) {<br>                        if (k == ADD) {<br>                            l2.push_back(l[i] + l[j]);<br>                        }<br>                        else if (k == MULTIPLY) {<br>                            l2.push_back(l[i] * l[j]);<br>                        }<br>                        else if (k == SUBTRACT) {<br>                            l2.push_back(l[i] - l[j]);<br>                        }<br>                        else if (k == DIVIDE) {<br>                            if (l[j] &lt; EPSILON)continue;<br>                            else l2.push_back(l[i] / l[j]);<br>                        }<br>                        if (helper(l2))return true;<br>                        l2.pop_back();<br>                    }<br>                }<br>            }<br>        }<br>        return false;<br>    }<br>    bool judgePoint24(vector<int>&amp; nums) {<br>        vector<double> l;<br>        for (int num : nums)<br>        {<br>            l.push_back(static_cast<double>(num));<br>        }<br>        return helper(l);<br>    }<br>};<br></double></double></int></double></double></p></code></pre></details><p></p>
+<h2 id="求1-2-…-n"><a href="#求1-2-…-n" class="headerlink" title="求1+2+…+n"></a><a href="https://leetcode-cn.com/problems/qiu-12n-lcof/" target="_blank" rel="noopener">求1+2+…+n</a></h2><p>求 1+2+…+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。</p>
+<blockquote>
+<p>输入: n = 3<br>输出: 6</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int res=0;
+    int sumNums(int n) {
+       bool t = (n==1||sumNums(n-1));//利用逻辑运算的短路原则终止递归
+       res+=n;//递归实现1+2+...+n
+       return res;
+    }
+};
+</code></pre></details>
+
+<h2 id="圆圈中最后剩下的数字"><a href="#圆圈中最后剩下的数字" class="headerlink" title="圆圈中最后剩下的数字"></a><a href="https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/" target="_blank" rel="noopener">圆圈中最后剩下的数字</a></h2><p>0,1,,n-1这n个数字排成一个圆圈，从数字0开始，每次从这个圆圈里删除第m个数字。求出这个圆圈里剩下的最后一个数字。<br>例如，0、1、2、3、4这5个数字组成一个圆圈，从数字0开始每次删除第3个数字，则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3。</p>
+<blockquote>
+<p>输入: n = 5, m = 3<br>输出: 3</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int lastRemaining(int n, int m) {
+        if (n == 1)return 0;
+        return (lastRemaining(n - 1, m) + m) % n;
+    }
+};
+</code></pre></details>
+
+<h2 id="递增子序列"><a href="#递增子序列" class="headerlink" title="递增子序列"></a>递增子序列</h2><p>给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。</p>
+<blockquote>
+<p>输入: [4, 6, 7, 7]<br>输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+private:
+    int len;
+    vector<vector<int>> ans;
+    vector<int> temp;
+public:
+    bool cmp(const vector<int>& nums, int last, int cur) {//关键去重
+        for (int i = last + 1; i < cur; i++) {
+            if (nums[i] == nums[cur]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    void helper(const vector<int>& nums,const int &l,const int &r,const int &_len,const int &pre) {
+        if (_len > 1)ans.push_back(temp);
+        if (l == r) {
+            return ;
+        }
+        for (int i = l; i < r; i++) {
+            if ((temp.size()==0|| nums[i] >= nums[pre])&&cmp(nums, pre, i)) {
+                temp.push_back(nums[i]);
+                helper(nums, i + 1, r, _len + 1, i);
+                temp.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        helper(nums, 0, nums.size(), 0, -1);
+        return ans;
+    }
+};
+</int></vector<int></int></int></int></vector<int></code></pre></details>
+
+<h2 id="电话号码的字母组合"><a href="#电话号码的字母组合" class="headerlink" title="电话号码的字母组合"></a><a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">电话号码的字母组合</a></h2><p>给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。<br>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
+<blockquote>
+<p>输入：”23”<br>输出：[“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//dfs深搜回溯所有组合
+class Solution {
+private:
+    vector<string> str = { "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };
+    vector<string> ans;
+    string s;
+    int n;
+public:
+    void helper(const string& digits, const int& index) {
+        if (index == n) {
+            ans.push_back(s);
+            return;
+        }
+        for (int i = 0; i < str[digits[index] - '2'].size(); i++) {
+            s.push_back(str[digits[index] - '2'][i]);
+            helper(digits,index + 1);
+            s.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        n = digits.size();
+        if (n == 0)return ans;
+        helper(digits, 0);
+        return ans;
+    }
+};
+</string></string></string></code></pre></details>
+
+<h2 id="括号生成"><a href="#括号生成" class="headerlink" title="括号生成"></a><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">括号生成</a></h2><p>数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。</p>
+<details><summary>查看代码</summary><pre><code>
+//深搜递归，递归"("判断是否还有"(",递归")"判断是否有")"可用以及是否还有"("可以匹配
+class Solution {
+private:
+    vector<string> ans;
+    string t;
+    int numOfl, numOfr, nowOfl;
+public:
+    void helper(const int &l,const int &len) {
+        if (l == len) {
+            ans.push_back(t);
+            return;
+        }
+        if (numOfl > 0) {
+            numOfl--;
+            nowOfl++;
+            t = t + "(";
+            helper(l+1,len);
+            t.pop_back();
+            nowOfl--;
+            numOfl++;
+        }
+        if (numOfr > 0 && nowOfl > 0) {
+            numOfr--;
+            nowOfl--;
+            t = t + ")";
+            helper(l + 1, len);
+            t.pop_back();
+            numOfr++;
+            nowOfl++;
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        t = "";
+        numOfl = n;
+        numOfr = n;
+        nowOfl = 0;
+        helper(0, 2 * n);
+        return ans;
+    }
+};
+</string></string></code></pre></details>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/08/01/%E9%80%92%E5%BD%92/">https://wlf621.github.io/2020/08/01/%E9%80%92%E5%BD%92/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/wlf621/tags/%E9%80%92%E5%BD%92/"># 递归</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/wlf621/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/wlf621/2020/08/01/%E6%90%9C%E7%B4%A2/">搜索</a>
+            
+            
+            <a class="next" rel="next" href="/wlf621/2020/07/27/%E4%BD%8D%E8%BF%90%E7%AE%97/">位运算</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

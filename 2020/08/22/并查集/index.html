@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>并查集 | WLF</title>
+
+
+
+    <link rel="icon" href="/wlf621/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/wlf621/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/wlf621/js/script.js"></script>
+    
+    <script src="/wlf621/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/wlf621/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/wlf621/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">并查集</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 22, 2020&nbsp;&nbsp;16:22:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> pre[N],rank[N]; <span class="comment">//pre[]为前驱,rank[]为当前元素所在集合的大小</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;N; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        pre[i] = i;</span><br><span class="line">        rank[i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//带路径压缩的非递归找根节点</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r = x;</span><br><span class="line">    <span class="keyword">while</span>(r != pre[r])</span><br><span class="line">        r = pre[r];</span><br><span class="line">    <span class="keyword">int</span> i = x, j;</span><br><span class="line">    <span class="keyword">while</span>(i != r)</span><br><span class="line">    &#123;</span><br><span class="line">        j = pre[i];</span><br><span class="line">        pre[i] = r;</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//带路径压缩的递归找根节点</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(pre[x] != x)</span><br><span class="line">        pre[x] = Find(pre[x]);</span><br><span class="line">    <span class="keyword">return</span> pre[x];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//按秩合并，元素少的集合的根节点指向元素多的集合的根节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    x = Find(x);</span><br><span class="line">    y = Find(y);</span><br><span class="line">    <span class="keyword">if</span>(x == y) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(rank[x] &gt;= rank[y])</span><br><span class="line">    &#123;</span><br><span class="line">        pre[y] = x;</span><br><span class="line">        rank[x] += rank[y];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        pre[x] = y;</span><br><span class="line">        rank[y] += rank[x];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="冗余连接"><a href="#冗余连接" class="headerlink" title="冗余连接"></a><a href="https://leetcode-cn.com/problems/redundant-connection/submissions/" target="_blank" rel="noopener">冗余连接</a></h2><p>输入一个图，该图由一个有着N个节点 (节点值不重复1, 2, …, N) 的树及一条附加的边构成。附加的边的两个顶点包含在1到N中间，这条附加的边不属于树中已存在的边。<br>结果图是一个以边组成的二维数组。每一个边的元素是一对[u, v] ，满足 u &lt; v，表示连接顶点u 和v的无向图的边。<br>返回一条可以删去的边，使得结果图是一个有着N个节点的树。如果有多个答案，则返回二维数组中最后出现的边。答案边 [u, v] 应满足相同的格式 u &lt; v。</p>
+<blockquote>
+<p>输入: [[1,2], [1,3], [2,3]]<br>输出: [2,3]<br>解释: 给定的无向图为:<br>  1<br> / <br>2 - 3</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int maxn, cnt;
+    int* pre;
+    void new_set()
+    {
+        for (int i = 1; i <= maxn; i++) { pre[i]="i;" } int find(int x) r="x;" while (r !="pre[r])" i="x," j; (i j="pre[i];" return r; bool union_set(int x, y) x="Find(x);" y="Find(y);" if (x="=" true; else pre[x]="y;" false; vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        maxn = edges.size();
+        pre = new int[maxn + 1];
+        new_set();
+        for (int i = 0; i < maxn + 1; i++) {
+            if (union_set(edges[i][0], edges[i][1]))return edges[i];
+        }
+        return vector<int>{};
+    }
+};
+</int></vector<int></=></code></pre></details>
+
+<h2 id="顺丰笔试：学术交流"><a href="#顺丰笔试：学术交流" class="headerlink" title="[顺丰笔试：学术交流]"></a>[顺丰笔试：学术交流]</h2><details><summary>查看代码</summary><pre><code>
+#include "stdafx.h"
+
+<p>int* pre;</p>
+<p>int Find(int x)<br>{<br>    int r = x;<br>    while (r != pre[r])<br>        r = pre[r];<br>    int i = x, j;<br>    while (i != r)<br>    {<br>        j = pre[i];<br>        pre[i] = r;<br>        i = j;<br>    }<br>    return r;<br>}</p>
+<p>int main() {<br>    int n, m, k, t1, t2, ans = 0;<br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;<br>    unordered_set<int> s;<br>    vector&lt;vector<int>&gt; persons(n + 1);<br>    int *visited = new int[m + 1];<br>    memset(visited, 0, sizeof(int) * (m + 1));<br>    pre = new int[m + 1];<br>    memset(pre, 0, sizeof(int) * (m + 1));<br>    for (int i = 0; i &lt; k; i++) {<br>        cin &gt;&gt; t1 &gt;&gt; t2;<br>        pre[t2] = t2;<br>        persons[t1].push_back(t2);<br>    }</int></int></p>
+<pre><code>for (int i = 1; i &lt;= n; i++) {
+    for (size_t j = 1; j &lt; persons[i].size(); j++)
+    {
+        if (visited[persons[i][j]] == 0 &amp;&amp; Find(persons[i][0]) != Find(persons[i][j])) {
+            pre[persons[i][j]] = pre[persons[i][0]];
+            visited[persons[i][j]] == 1;
+        }
+    }
+    if (persons[i].size() == 0)ans++;
+}
+
+for (int i = 1; i &lt;= m; i++) {
+    if (pre[i] == 0);
+    else {
+        if (s.find(Find(i)) != s.end());
+        else {
+            s.insert(Find(i));
+            ans++;
+        }
+    }
+}
+cout &lt;&lt; ans - 1 &lt;&lt; endl;
+return 0;</code></pre><p>}<br></p></code></pre></details><p></p>
+<h2 id="等式方程的可满足性"><a href="#等式方程的可满足性" class="headerlink" title="等式方程的可满足性"></a><a href="https://leetcode-cn.com/problems/satisfiability-of-equality-equations/" target="_blank" rel="noopener">等式方程的可满足性</a></h2><details><summary>查看代码</summary><pre><code>
+class Solution {
+    int* m1;
+public:
+    int find(int* m, int num) {
+        int r = num;
+        while (r != m[r])r = m[r];
+        int i = num, j;
+        while (i != r) {
+            j = m[i];
+            m[i] = r;
+            i = j;
+        }
+        return r;
+    }
+    void Union(int* m, int a, int b) {
+        int x = find(m, a);
+        int y = find(m, b);
+        if (x != y) {
+            m[x] = y;
+        }
+    }
+    bool equationsPossible(vector<string>& equations) {
+        m1 = new int[26];
+        for (int i = 0; i < 26; i++) {
+            m1[i] = i;
+        }
+        for (int i = 0; i < equations.size(); i++) if (equations[i][1] == '=')Union(m1, equations[i][0] - 'a', equations[i][3] - 'a');
+        for (int i = 0; i < equations.size(); i++) {
+            if (equations[i][1] == '!') {
+                if (find(m1, equations[i][0] - 'a') == find(m1, equations[i][3] - 'a'))return false;
+            }
+        }
+        return true;
+    }
+};
+</string></code></pre></details>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/08/22/%E5%B9%B6%E6%9F%A5%E9%9B%86/">https://wlf621.github.io/2020/08/22/%E5%B9%B6%E6%9F%A5%E9%9B%86/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/wlf621/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"># 并查集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/wlf621/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/wlf621/2021/03/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">计算机体系结构</a>
+            
+            
+            <a class="next" rel="next" href="/wlf621/2020/08/19/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>树算法 | WLF</title>
+
+
+
+    <link rel="icon" href="/wlf621/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/wlf621/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/wlf621/js/script.js"></script>
+    
+    <script src="/wlf621/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/wlf621/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/wlf621/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/wlf621/archives">Posts</a>
+                
+                    <a class="menu-item" href="/wlf621/category">Categories</a>
+                
+                    <a class="menu-item" href="/wlf621/tag">Tags</a>
+                
+                    <a class="menu-item" href="/wlf621/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">树算法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 8, 2020&nbsp;&nbsp;16:22:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>/**</p>
+<ul>
+<li>Definition for a binary tree node.</li>
+<li>struct TreeNode {</li>
+<li>int val;</li>
+<li>TreeNode *left;</li>
+<li>TreeNode *right;</li>
+<li>TreeNode(int x) : val(x), left(NULL), right(NULL) {}</li>
+<li>};</li>
+<li>/</li>
+</ul>
+<h2 id="利用先序和中序重建二叉树"><a href="#利用先序和中序重建二叉树" class="headerlink" title="利用先序和中序重建二叉树"></a><a href="https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/" target="_blank" rel="noopener">利用先序和中序重建二叉树</a></h2><blockquote>
+<p>先用线序判断根节点，然后根据根节点和中序划分左右子树，根据左右子树节点数量找到子树对应根节点，继续递归操作</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    TreeNode* helper(vector<int>::iterator root, vector<int>::iterator inBegin, vector<int>::iterator inEnd) {
+    if (inBegin >= inEnd)return nullptr;
+    TreeNode* t = new TreeNode(*root);
+    vector<int>::iterator tmp = find(inBegin,inEnd,*root);//根据根节点和中序划分左右子树
+    t->left = helper(root+1,inBegin,tmp);//左子树根节点为root+1
+    t->right = helper(root + (tmp - inBegin + 1), tmp==inEnd?tmp:tmp+1, inEnd);//右子树根节点为root+（左子树节点数量）
+    return t;
+    }
+
+<pre><code>TreeNode* buildTree(vector&lt;int&gt;&amp; preorder, vector&lt;int&gt;&amp; inorder) {
+    return helper(preorder.begin(),inorder.begin(),inorder.end());
+}</code></pre><p>};<br></p></int></int></int></int></code></pre></details><p></p>
+<h2 id="组成二叉树的数量"><a href="#组成二叉树的数量" class="headerlink" title="组成二叉树的数量"></a>组成二叉树的数量</h2><p>给出每个深度的节点数量，求可能的二叉树的数量</p>
+<details><summary>查看代码</summary><pre><code>
+#include<iostream>
+#include<algorithm>
+#include<map>
+
+<p>#define ROW 10001<br>#define COL 1005</p>
+<p>int dp[ROW][COL];<br>using namespace std;</p>
+<p>int main() {</p>
+<pre><code>for (int i = 0; i &lt; ROW; i++) {
+
+    dp[i][0] = 1;
+}
+for (int i = 0; i &lt; COL; i++)dp[0][i] = 0;
+for (int i = 1; i &lt; COL; i++) {
+    for (int j = 1; j &lt; 10001; j++) {
+        dp[i][j] = (dp[i - 1][j] + dp[i - 1][j - 1]) % 1000000007;
+    }
+}
+int n, temp, m;
+long long res = 1;
+cin &gt;&gt; n;
+map&lt;int, int&gt; r;
+m = n;
+while (m--) {
+    cin &gt;&gt; temp;
+    if (r.count(temp))r[temp]++;
+    else r[temp] = 1;
+}
+if (r[0] == 0) {
+    cout &lt;&lt; 0 &lt;&lt; endl;
+    return 0;
+}
+for (int i = 1; i &lt; r.size(); i++)
+    if (r[i] &gt; 2 * r[i - 1])
+    {
+        return 0;//下一层节点过多直接return
+    }
+for (int i = 1; i &lt; r.size(); i++) {
+    res *= dp[2*r[i - 1]][r[i]];//坑位2*r[i-1]要放r[i]个，C 2*r[i-1],r[i]；
+}
+cout &lt;&lt; res % 1000000007 &lt;&lt; endl;
+return 0;</code></pre><p>}<br></p></map></algorithm></iostream></code></pre></details><p></p>
+<h2 id="二叉树的最小深度"><a href="#二叉树的最小深度" class="headerlink" title="二叉树的最小深度"></a><a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最小深度</a></h2><p>给定一个二叉树，找出其最小深度。最小深度是从根节点到最近叶子节点的最短路径上的节点数量。</p>
+<details><summary>查看代码</summary><pre><code>
+//利用队列BFS，遇到叶子节点终止遍历
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if (!root)return 0;
+        queue<TreeNode *> que;
+        que.push(root);
+        int ans = 0;
+        while (!que.empty()) {
+            int n = que.size();
+            TreeNode* tmp;
+            ans++;
+            bool flag = false;
+            for (size_t i = 0; i < n; i++)
+            {
+               tmp = que.front();
+               que.pop();
+               if (!tmp->left && !tmp->right) {
+                   flag = true;
+                   break;
+               }
+               else
+               {
+                   if (tmp->left)que.push(tmp->left);
+                   if (tmp->right)que.push(tmp->right);
+               }
+            }
+            if (flag)break;
+        }
+        return ans;
+    }
+};
+
+<p>//递归方法<br>class Solution {<br>public:<br>    int minDepth(TreeNode* root) {<br>        if(!root) return 0;<br>        if(!root-&gt;left&amp;&amp;!root-&gt;right)return 1;<br>        if(!root-&gt;left)return minDepth(root-&gt;right)+1;<br>        if(!root-&gt;right)return minDepth(root-&gt;left)+1;<br>        int l=minDepth(root-&gt;left);<br>        int r=minDepth(root-&gt;right);<br>        return min(l,r)+1;<br>    }<br>};<br></p></TreeNode></code></pre></details><p></p>
+<h2 id="二叉搜索树的最近公共祖先"><a href="#二叉搜索树的最近公共祖先" class="headerlink" title="二叉搜索树的最近公共祖先"></a><a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/" target="_blank" rel="noopener">二叉搜索树的最近公共祖先</a></h2><p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先（一个节点也可以是它自己的祖先）。</p>
+<details><summary>查看代码</summary><pre><code>
+//递归：若两个指定节点的值都大于根，则在右子树；若两个指定节点的值都小于根，则在左子树；其余说明分别在左右子树（或当前节点是某个指定节点）则返回root。
+
+<p>class Solution {<br>public:<br>    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {<br>        if (root-&gt;val &lt; p-&gt;val &amp;&amp; root-&gt;val &lt; q-&gt;val)return lowestCommonAncestor(root-&gt;right, p, q);<br>        else if (root-&gt;val &gt; p-&gt;val&amp;&amp; root-&gt;val &gt; q-&gt;val)return lowestCommonAncestor(root-&gt;left, p, q);<br>        else return root;<br>    }<br>};</p>
+<p>//遍历，思路相同。<br>class Solution {<br>public:<br>    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {<br>        TreeNode* cur = root;<br>        while (cur) {<br>            if (cur-&gt;val &lt; p-&gt;val &amp;&amp; cur-&gt;val &lt; q-&gt;val)cur = cur-&gt;right;<br>            else if (cur-&gt;val &gt; p-&gt;val&amp;&amp; cur-&gt;val &gt; q-&gt;val)cur = cur-&gt;left;<br>            else break;<br>        }<br>        return cur;<br>    }<br>};</p>
+<p></p></code></pre></details><p></p>
+<h2 id="二叉树的最近公共祖先"><a href="#二叉树的最近公共祖先" class="headerlink" title="二叉树的最近公共祖先"></a><a href="https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/" target="_blank" rel="noopener">二叉树的最近公共祖先</a></h2><p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。</p>
+<details><summary>查看代码</summary><pre><code>
+//较于二叉搜索树无法通过比较判断节点在哪个子树，可通过递归返回的方式确定所在子树；若某次递归等于指定节点则返回此节点否则返回nullptr，若子树返回的不是nullptr则说明指定节点存在次子树中（或子树存在最近祖先节点），若左右子树都包含指定节点则当前节点是最近祖先节点然后返回，若仅一棵子树返回非空（指定节点或最近祖先节点）则返回子树结果。
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (!root || root == p || root == q)return root;
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        if (!left && !right)return root;
+        else return !left ? right : left;
+    }
+};
+</code></pre></details>
+
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a><a href="https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof/" target="_blank" rel="noopener">平衡二叉树</a></h2><p>输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。</p>
+<blockquote>
+<p>给定二叉树 [3,9,20,null,null,15,7]<br>    3<br>   / <br>  9  20<br>    /  <br>   15   7</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    int helper(TreeNode* cur) {
+        if (cur == nullptr)return 0;
+        int left = helper(cur->left);
+        int right = helper(cur->right);
+        if (left == -1 || right == -1)return -1;
+        return abs(left - right) <= 1 ? max(left, right) + : -1; 若是平衡树则返回树高度，否则返回-1 } bool isbalanced(treenode* root) { return helper(root)>= 0;
+    }
+};
+</=></code></pre></details>
+
+<h2 id="二叉搜索树的第k大节点"><a href="#二叉搜索树的第k大节点" class="headerlink" title="二叉搜索树的第k大节点"></a><a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/" target="_blank" rel="noopener">二叉搜索树的第k大节点</a></h2><p>给定一棵二叉搜索树，请找出其中第k大的节点。</p>
+<blockquote>
+<p>输入: root = [3,1,4,null,2], k = 1<br>   3<br>  / <br> 1   4<br>  <br>   2<br>输出: 4</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+//递归遍历：right->root->left即为非递增序列，保存第K个即可
+class Solution {
+private:
+    int count = 0, ans, K;
+public:
+    void helper(TreeNode* cur) {
+        if (cur == nullptr)return ;
+        helper(cur->right);
+        count++;
+        if (count == K)ans = cur->val;
+        helper(cur->left);
+    }
+    int kthLargest(TreeNode* root, int k) {
+        K = k;
+        helper(root);
+        return ans;
+    }
+};
+</code></pre></details>
+
+<h2 id="二叉树序列化和反序列化"><a href="#二叉树序列化和反序列化" class="headerlink" title="二叉树序列化和反序列化"></a><a href="https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/" target="_blank" rel="noopener">二叉树序列化和反序列化</a></h2><details><summary>查看代码</summary><pre><code>
+#include <iostream>
+#include <vector>
+
+<p>using namespace std;</p>
+<p>class TreeNode {<br>public:<br>    int val;<br>    TreeNode* left;<br>    TreeNode* right;<br>    TreeNode(int value) {<br>        val = value;<br>        left = nullptr;<br>        right = nullptr;<br>    }<br>};</p>
+<p>vector<int> xuliehua(TreeNode* root) {<br>    vector&lt;TreeNode<em>&gt; s;<br>    vector&lt;TreeNode</em>&gt; s1;<br>    s.push_back(root);<br>    vector<int> ans;<br>    while (!s.empty()) {<br>        for (auto it = s.begin(); it != s.end(); it++) {<br>            if ((<em>it) != nullptr) {<br>                ans.push_back((<em>it)-&gt;val);<br>                s1.push_back((</em>it)-&gt;left);<br>                s1.push_back((*it)-&gt;right);<br>            }<br>            else ans.push_back(INT32_MAX);<br>        }<br>        s.clear();<br>        for (auto _it = s1.begin(); _it != s1.end(); _it++) {<br>            s.push_back(</em>_it);<br>        }<br>        s1.clear();<br>    }<br>    while (*(ans.end()-1)== INT32_MAX)<br>    {<br>        ans.pop_back();<br>    }<br>    return ans;<br>}</int></int></p>
+<p>TreeNode* rexuliehua(const vector<int>&amp; t) {<br>    TreeNode* root;<br>    if (t[0] != INT32_MAX)root = new TreeNode(t[0]);<br>    vector&lt;TreeNode<em>&gt; s;<br>    vector&lt;TreeNode</em>&gt; s1;<br>    s.push_back(root);<br>    int i = 1;<br>    while (!s.empty() &amp;&amp; i &lt; t.size()) {<br>        for (auto it = s.begin(); it != s.end(); it++) {<br>            if (i &gt;= t.size())break;<br>            if (t[i] != INT32_MAX) {<br>                (<em>it)-&gt;left = new TreeNode(t[i]);<br>                s1.push_back((<em>it)-&gt;left);<br>            }<br>            i++;<br>            if (i &lt; t.size()) {<br>                if (t[i] != INT32_MAX) {<br>                    (</em>it)-&gt;right = new TreeNode(t[i]);<br>                    s1.push_back((*it)-&gt;right);<br>                }<br>                i++;<br>            }<br>        }<br>        s.clear();<br>        for (auto _it = s1.begin(); _it != s1.end(); _it++) {<br>            s.push_back(</em>_it);<br>        }<br>        s1.clear();<br>    }<br>    return root;<br>}</int></p>
+<p>int main() {<br>    //int a;<br>    //cin &gt;&gt; a;<br>    vector<int> a{ 1,2,3,INT32_MAX,4,5};<br>    TreeNode* root = rexuliehua(a);<br>    vector<int> ans;<br>    ans = xuliehua(root);</int></int></p>
+<pre><code>cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; endl;</code></pre><p>}<br></p></vector></iostream></code></pre></details><p></p>
+<h2 id="翻转二叉树"><a href="#翻转二叉树" class="headerlink" title="翻转二叉树"></a><a href="https://leetcode-cn.com/problems/invert-binary-tree/" target="_blank" rel="noopener">翻转二叉树</a></h2><details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (!root)return root;
+        TreeNode* temp = root->left;
+        root->left = invertTree(root->right);
+        root->right = invertTree(temp);
+        return root;
+    }
+};
+</code></pre></details>
+
+<h2 id="前缀树"><a href="#前缀树" class="headerlink" title="前缀树"></a><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">前缀树</a></h2><details><summary>查看代码</summary><pre><code>
+class Trie {
+    bool isEnd;
+    Trie* next[26];
+public:
+    /** Initialize your data structure here. */
+    Trie() {
+        isEnd = false;
+        memset(next, 0, sizeof(next));
+    }
+
+<pre><code>/** Inserts a word into the trie. */
+void insert(string word) {
+    Trie* node = this;
+    for (char c : word) {
+        if (node-&gt;next[c - &apos;a&apos;] == NULL) {
+            node-&gt;next[c - &apos;a&apos;] = new Trie();
+        }
+        node = node-&gt;next[c - &apos;a&apos;];   
+    }
+    node-&gt;isEnd = true;
+}
+
+/** Returns if the word is in the trie. */
+bool search(string word) {
+    Trie* node = this;
+    for (char c : word) {
+        if (node-&gt;next[c - &apos;a&apos;] == NULL) {
+            return false;
+        }else node = node-&gt;next[c - &apos;a&apos;];
+    }
+    return node-&gt;isEnd;
+}
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+bool startsWith(string prefix) {
+    Trie* node = this;
+    for (char c : prefix) {
+        if (node-&gt;next[c - &apos;a&apos;] == NULL) {
+            return false;
+        }
+        else node = node-&gt;next[c - &apos;a&apos;];
+    }
+    return true;
+}</code></pre><p>};<br></p></code></pre></details><p></p>
+<h2 id="把二叉搜索树转换为累加树"><a href="#把二叉搜索树转换为累加树" class="headerlink" title="把二叉搜索树转换为累加树"></a><a href="https://leetcode-cn.com/problems/convert-bst-to-greater-tree/" target="_blank" rel="noopener">把二叉搜索树转换为累加树</a></h2><p>给定一个二叉搜索树（Binary Search Tree），把它转换成为累加树（Greater Tree)，使得每个节点的值是原来的节点值加上所有大于它的节点值之和。<br>输入: 原始二叉搜索树:<br>              5<br>            /   <br>           2     13</p>
+<p>输出: 转换为累加树:<br>             18<br>            /   <br>          20     13</p>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+    int sum=0;
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(root!=nullptr){
+            convertBST(root->right);
+            sum+=root->val;
+            root->val=sum;
+            convertBST(root->left);
+        }
+        return root;
+    }
+};
+</code></pre></details>
+
+<h2 id="填充每个节点的下一个右侧节点指针"><a href="#填充每个节点的下一个右侧节点指针" class="headerlink" title="填充每个节点的下一个右侧节点指针"></a><a href="https://leetcode-cn.com/problems/populating-next-right-pointers-in-each-node/" target="_blank" rel="noopener">填充每个节点的下一个右侧节点指针</a></h2><p>给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：<br>struct Node {<br>  int val;<br>  Node *left;<br>  Node *right;<br>  Node *next;<br>}<br>填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。初始状态下，所有 next 指针都被设置为 NULL。</p>
+<details><summary>查看代码</summary><pre><code>
+class Solution {
+public:
+    Node* connect(Node* root) {
+        queue<Node*> q;
+        if (root == nullptr)return root;
+        q.push(root);
+        while (!q.empty()) {
+            int Size = q.size();
+            for (int i = 0; i < Size; i++) {
+                Node* temp = q.front();
+                q.pop();
+                if (i + 1 == Size)temp->next = nullptr;
+                else temp->next = q.front();
+                if (temp->left != nullptr)q.push(temp->left);
+                if (temp->right != nullptr)q.push(temp->right);
+            }
+        }
+        return root;
+    }
+};
+</Node*></code></pre></details>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/08/08/%E6%A0%91%E7%AE%97%E6%B3%95/">https://wlf621.github.io/2020/08/08/%E6%A0%91%E7%AE%97%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/wlf621/tags/%E6%A0%91%E7%AE%97%E6%B3%95/"># 树算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/wlf621/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/wlf621/2020/08/19/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+            
+            
+            <a class="next" rel="next" href="/wlf621/2020/08/08/%E6%A8%A1%E6%8B%9F/">模拟</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
