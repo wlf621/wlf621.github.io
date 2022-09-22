@@ -12,7 +12,7 @@
 
 
 
-<title>698 | WLF</title>
+<title>1640 | WLF</title>
 
 
 
@@ -213,7 +213,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">698</h1>
+            <h1 class="post-title">1640</h1>
             
                 <div class="post-meta">
                     
@@ -222,7 +222,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 20, 2022&nbsp;&nbsp;22:30:22</a>
+                        Date: <a href="#">九月 22, 2022&nbsp;&nbsp;22:30:22</a>
                         </span>
                     
                     
@@ -238,83 +238,35 @@
         </header>
 
         <div class="post-content">
-            <p>给定一个整数数组 <code>nums</code> 和一个正整数 <code>k</code>，找出是否有可能把这个数组分成 <code>k</code> 个非空子集，其总和都相等。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入： nums &#x3D; [4, 3, 2, 3, 5, 2, 1], k &#x3D; 4</span><br><span class="line">输出： True</span><br><span class="line">说明： 有可能将其分成 4 个子集（5），（1,4），（2,3），（2,3）等于总和。</span><br></pre></td></tr></table></figure>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums &#x3D; [1,2,3,4], k &#x3D; 3</span><br><span class="line">输出：False</span><br></pre></td></tr></table></figure>
+            <p>给你一个整数数组 arr ，数组中的每个整数 互不相同 。另有一个由整数数组构成的数组 pieces，其中的整数也 互不相同 。请你以 任意顺序 连接 pieces 中的数组以形成 arr 。但是，不允许 对每个数组 pieces[i] 中的整数重新排序。</p>
+<p>如果可以连接 pieces 中的数组形成 arr ，返回 true ；否则，返回 false 。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：arr &#x3D; [15,88], pieces &#x3D; [[88],[15]]</span><br><span class="line">输出：true</span><br><span class="line">解释：依次连接 [15] 和 [88]</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：arr &#x3D; [49,18,16], pieces &#x3D; [[16,18,49]]</span><br><span class="line">输出：false</span><br><span class="line">解释：即便数字相符，也不能重新排列 pieces[0]</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：arr &#x3D; [91,4,64,78], pieces &#x3D; [[78],[4,64],[91]]</span><br><span class="line">输出：true</span><br><span class="line">解释：依次连接 [91]、[4,64] 和 [78]</span><br></pre></td></tr></table></figure>
 
 <details><summary>查看代码</summary><pre><code>
 class Solution {
-    int gk;
-    int avg;
-    int n;
-    bool dfs(int idx, int cur, int cnt, vector<bool> &visited, vector<int>& nums) {
-        if (cur == avg) {
-            return dfs(0, 0, cnt + 1, visited, nums);
-        }
-        // 因为各分组的和与原数组相等，到这所有元素必然已使用
-        if (cnt == gk) {
-            return true;
-        }
-        // 从大到小搜索
-        for (int i = idx; i < n; i++) {
-            if (cur + nums[i] > avg) continue;
-            if (visited[i] == true) continue;
-            visited[i] = true;
-            if (dfs(i + 1, cur + nums[i], cnt, visited, nums)) {
-                return true;
-            }
-            visited[i] = false;
-            if (cur == 0) return false; // 当前最大单个元素无法加入任何子集，此种方案false
-        }
-        return false;
-    }
 public:
-    bool canPartitionKSubsets(vector<int>& nums, int k) {
-        n = nums.size();
-        gk = k;
-        int sum = accumulate(nums.begin(), nums.end(), 0);
-        if (sum % k != 0) return false;
-        avg = sum / k;
-        sort(nums.begin(), nums.end(), greater<int>());
-        vector<bool> visited(n, false);
-        return dfs(0, 0, 0, visited, nums);
-    }
-};
-</bool></int></int></int></bool></code></pre></details>
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
+        vector<int> nums(101, -1);
+        for (int i = 0; i < arr.size(); i++) {
+            nums[arr[i]] = i;
+        }
+        for (int i = 0; i < pieces.size(); i++) {
+            int pre = pieces[i][0];
+            for (int j = 1; j < pieces[i].size(); j++) {
+                if (nums[pieces[i][j]] != nums[pre] + 1) {
+                    return false;
+                }
+                pre = pieces[i][j];
+            }
+        }
 
-<p>待补充官方题解，利用bitmap记录当前元素是否已访问，则可以用一个整数S表示当前已经加入子集的元素（当前状态），继而可以使用vis[S]标记当前状态是否已计算，避免重复计算</p>
-<details><summary>查看代码</summary><pre><code>
-class Solution {
-
-<p>  int gk;</p>
-<p>  int avg;</p>
-<p>  int n;</p>
-<p>  bool dfs(int s, int cur, vector<bool> &amp;visited, const vector<int>&amp; nums) {</int></bool></p>
-<p>​    if (cur == avg) cur = 0;</p>
-<p>​    if (s == 0) return true;</p>
-<p>​    if (!visited[s]) return false;</p>
-<p>​    </p>
-<p>​    visited[s] = false;</p>
-<p>​    for (int i = 0; i &lt; n; i++) {</p>
-<p>​      if (cur + nums[i] &gt; avg) break;</p>
-<p>​      if (s &gt;&gt; i&amp; 1)</p>
-<p>​        if (dfs(s ^ (1 &lt;&lt; i), cur + nums[i], visited, nums)) return true;</p>
-<p>​    }</p>
-<p>​    return false;</p>
-<p>  }</p>
-<p>public:</p>
-<p>  bool canPartitionKSubsets(vector<int>&amp; nums, int k) {</int></p>
-<p>​    n = nums.size();</p>
-<p>​    gk = k;</p>
-<p>​    int sum = accumulate(nums.begin(), nums.end(), 0);</p>
-<p>​    if (sum % k != 0) return false;</p>
-<p>​    avg = sum / k;</p>
-<p>​    sort(nums.begin(), nums.end());</p>
-<p>​    vector<bool> visited(1 &lt;&lt; n, true);</bool></p>
-<p>​    return dfs((1 &lt;&lt; n) - 1, 0, visited, nums);</p>
-<p>  }</p>
-<p>};<br></p></code></pre></details><p></p>
-<p><a href="https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/" target="_blank" rel="noopener">698. 划分为k个相等的子集 - 力扣（LeetCode）</a></p>
+<pre><code>    return true;
+}</code></pre><p>};<br></p></int></vector<int></int></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode.cn/problems/check-array-formation-through-concatenation" target="_blank" rel="noopener">https://leetcode.cn/problems/check-array-formation-through-concatenation</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -329,7 +281,7 @@ class Solution {
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/20/698/">https://wlf621.github.io/2022/09/20/698/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/22/1640/">https://wlf621.github.io/2022/09/22/1640/</a></span>
                     </p>
                 
                 
@@ -353,11 +305,7 @@ class Solution {
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%8E%92%E5%BA%8F/"># 排序</a>
-                    
-                        <a href="/tags/DFS/"># DFS</a>
-                    
-                        <a href="/tags/BITMAP/"># BITMAP</a>
+                        <a href="/tags/%E5%93%88%E5%B8%8C/"># 哈希</a>
                     
                         
                 </span>
@@ -370,10 +318,8 @@ class Solution {
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/20/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">Git基础操作</a>
             
-            
-            <a class="next" rel="next" href="/2022/09/19/1636/">1636</a>
+            <a class="next" rel="next" href="/2022/09/21/LearnSprider/">LearnSpider</a>
             
         </section>
 
