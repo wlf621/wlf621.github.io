@@ -12,10 +12,10 @@ nav:
 favicon: /favicon.ico
 
 # Profile
-nickname: Nick Wang
+nickname: Wang
 
 ### this variable is MarkDown form.
-description: Lorem ipsum dolor sit amet, **consectetur adipiscing elit.** <br>Fusce eget urna vitae velit *eleifend interdum at ac* nisi.
+description: 分享生活，分享技术
 avatar: /image/avatar.jpeg
 
 # main menu navigation
@@ -33,7 +33,7 @@ links:
 #  Gallary:
 #  RSS:
 #  AliPay:
-  ZhiHu: https://www.zhihu.com
+#  ZhiHu: https://www.zhihu.com
 #  LinkedIn:
 #  FaceBook:
 #  Twitter:
@@ -43,8 +43,8 @@ links:
 #  Sketch:
 #  Gitlab:
 #  Dribble:
-  Instagram:
-  Reddit:
+#  Instagram:
+#  Reddit:
 #  YouTube:
 #  QQ:
 #  Weibo:
