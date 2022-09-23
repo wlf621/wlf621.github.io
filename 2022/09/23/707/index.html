@@ -12,7 +12,7 @@
 
 
 
-<title>双指针 | WLF</title>
+<title>707 | WLF</title>
 
 
 
@@ -213,7 +213,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">双指针</h1>
+            <h1 class="post-title">707</h1>
             
                 <div class="post-meta">
                     
@@ -222,95 +222,118 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">八月 19, 2020&nbsp;&nbsp;16:22:10</a>
+                        Date: <a href="#">九月 23, 2022&nbsp;&nbsp;22:30:22</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h2 id="和为s的两个数字"><a href="#和为s的两个数字" class="headerlink" title="和为s的两个数字"></a><a href="https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/" target="_blank" rel="noopener">和为s的两个数字</a></h2><p>输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。</p>
+            <p>设计链表的实现。您可以选择使用单链表或双链表。单链表中的节点应该具有两个属性：val 和 next。val 是当前节点的值，next 是指向下一个节点的指针/引用。如果要使用双向链表，则还需要一个属性 prev 以指示链表中的上一个节点。假设链表中的所有节点都是 0-index 的。</p>
+<p>在链表类中实现这些功能：</p>
+<ul>
+<li>get(index)：获取链表中第 index 个节点的值。如果索引无效，则返回-1。</li>
+<li>addAtHead(val)：在链表的第一个元素之前添加一个值为 val 的节点。插入后，新节点将成为链表的第一个节点。</li>
+<li>addAtTail(val)：将值为 val 的节点追加到链表的最后一个元素。</li>
+<li>addAtIndex(index,val)：在链表中的第 index 个节点之前添加值为 val  的节点。如果 index 等于链表的长度，则该节点将附加到链表的末尾。如果 index 大于链表长度，则不会插入节点。如果index小于0，则在头部插入节点。</li>
+<li>deleteAtIndex(index)：如果索引 index 有效，则删除链表中的第 index 个节点。</li>
+</ul>
+<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyLinkedList linkedList = <span class="keyword">new</span> MyLinkedList();</span><br><span class="line">linkedList.addAtHead(<span class="number">1</span>);</span><br><span class="line">linkedList.addAtTail(<span class="number">3</span>);</span><br><span class="line">linkedList.addAtIndex(<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//链表变为1-&gt; 2-&gt; 3</span></span><br><span class="line">linkedList.<span class="built_in">get</span>(<span class="number">1</span>);            <span class="comment">//返回2</span></span><br><span class="line">linkedList.deleteAtIndex(<span class="number">1</span>);  <span class="comment">//现在链表是1-&gt; 3</span></span><br><span class="line">linkedList.<span class="built_in">get</span>(<span class="number">1</span>);            <span class="comment">//返回3</span></span><br></pre></td></tr></table></figure>
+
 <details><summary>查看代码</summary><pre><code>
-//双指针分别指向两端
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        int p1 = 0, p2 = nums.size() - 1;
-        while (p1 <= p2) { if (nums[p1] + nums[p2] < target) 小于则p1+1 p1++; }else> target) {//大于则p2-1
-                p2--;
-            }
-            else {//相等则返回结果
-                return vector<int>{nums[p1], nums[p2]};
-            }
-        }
-        return vector<int>{};
-    }
+// 注意边界情况，链表空等
+struct DLinkListNode {
+    int val;
+    DLinkListNode* prev, * next;
+    DLinkListNode(int _val) : val(_val), prev(nullptr), next(nullptr) {}
+    DLinkListNode() : val(0), prev(nullptr), next(nullptr) {}
 };
-</int></int></=></int></int></code></pre></details>
 
-<h2 id="三数之和"><a href="#三数之和" class="headerlink" title="三数之和"></a><a href="https://leetcode-cn.com/problems/3sum/" target="_blank" rel="noopener">三数之和</a></h2><details><summary>查看代码</summary><pre><code>
-class Solution {
-public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> ans;
-        sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size(); i++) {
-            if (i-1>=0&&nums[i] == nums[i - 1])continue;
-            if (nums[i] <= 0) { int l="i" + 1, r="nums.size()-1;" while (l < r) if (nums[l] nums[i] nums[r]="=" ans.push_back(vector<int>{nums[l], nums[i], nums[r]});
-                        while (l + 1 < r && nums[l + 1] == nums[l]) {
-                            l++;
-                        }
-                        while (r - 1 > l&& nums[r - 1] == nums[r]) {
-                            r--;
-                        }
-                        l++;
-                        r--;
-                    }
-                    else if (nums[l] + nums[i] + nums[r] > 0) {
-                        r--;
-                    }
-                    else l++;
-                }
-            }
+<p>class MyLinkedList {<br>    DLinkListNode *head;<br>    int len = 0;<br>public:<br>    MyLinkedList() {<br>        head = new DLinkListNode();<br>    }</p>
+<pre><code>DLinkListNode* getNodeByIndex(int index) {
+    int num = 0;
+    DLinkListNode* pWork = this-&gt;head-&gt;next;
+    while (pWork != nullptr) {
+        if (num == index) {
+            return pWork;
         }
-        return ans;
+        num++;
+        pWork = pWork-&gt;next;
     }
-};
-</=></vector<int></int></vector<int></code></pre></details>
+    return pWork;
+}
 
-<h2 id="滑动窗口的最大值"><a href="#滑动窗口的最大值" class="headerlink" title="滑动窗口的最大值"></a><a href="https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/" target="_blank" rel="noopener">滑动窗口的最大值</a></h2><p>给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。</p>
-<blockquote>
-<p>输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3<br>输出: [3,3,5,5,6,7]<br>解释:<br>  滑动窗口的位置                最大值</p>
-</blockquote>
-<hr>
-<p>[1  3  -1] -3  5  3  6  7       3<br> 1 [3  -1  -3] 5  3  6  7       3<br> 1  3 [-1  -3  5] 3  6  7       5<br> 1  3  -1 [-3  5  3] 6  7       5<br> 1  3  -1  -3 [5  3  6] 7       6<br> 1  3  -1  -3  5 [3  6  7]      7</p>
- <details><summary>查看代码</summary><pre><code>
- //双端队列维护最大值
- class Solution {
-private:
-    deque<int> max;
-    vector<int> ans;
-public:
-    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        if(nums.size()==0)return ans;
-        for (int i = 0; i < k; i++) {
-            while (!max.empty() && nums[i] > max.front())max.pop_front();
-            max.push_front(nums[i]);
-        }
-        for (int i = 0; i < nums.size() - k + 1; i++) {
-            ans.push_back(max.back());
-            if (nums[i] == max.back())max.pop_back();
-            if (i + k < nums.size()) {
-                while (!max.empty() && nums[i + k] > max.front())max.pop_front();
-                max.push_front(nums[i + k]);
-            }
-        }
-        return ans;
+int get(int index) {
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index);
+    return tmp == nullptr ? -1 : tmp-&gt;val;
+}
+
+void addAtHead(int val) {
+    DLinkListNode *tmp = new DLinkListNode(val);
+    tmp-&gt;next = this-&gt;head-&gt;next;
+    tmp-&gt;prev = this-&gt;head;
+    if (this-&gt;head-&gt;next != nullptr) {
+        this-&gt;head-&gt;next-&gt;prev = tmp;
     }
-};
- </int></int></int></int></code></pre></details>
+    this-&gt;head-&gt;next = tmp;
+    len++;
+}
+
+void addAtTail(int val) {
+    if (len == 0) {
+        this-&gt;addAtHead(val);
+        return;
+    }
+    DLinkListNode* tmp = new DLinkListNode(val);
+    DLinkListNode* tail = this-&gt;getNodeByIndex(len - 1);
+    tmp-&gt;prev = tail;
+    if (tail != nullptr)
+        tail-&gt;next = tmp;
+    tail = tmp;
+    len++;
+}
+
+void addAtIndex(int index, int val) {
+    if (index &gt; len) return;
+    if (index &lt;= 0) {
+        this-&gt;addAtHead(val);
+        return;
+    }
+    if (index == len) {
+        this-&gt;addAtTail(val);
+        return;
+    }
+
+    DLinkListNode* tmpNode = new DLinkListNode(val);
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index - 1);
+    tmpNode-&gt;prev = tmp;
+    tmpNode-&gt;next = tmp-&gt;next;
+    if (tmp-&gt;next != nullptr)
+        tmp-&gt;next-&gt;prev = tmpNode;
+    tmp-&gt;next = tmpNode;
+    len++;
+}
+
+void deleteAtIndex(int index) {
+    if (index &lt; 0 || index &gt;= len) return;
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index);
+    tmp-&gt;prev-&gt;next = tmp-&gt;next;
+    if (tmp-&gt;next != nullptr)
+        tmp-&gt;next-&gt;prev = tmp-&gt;prev;
+    delete tmp;
+    len--;
+}</code></pre><p>};<br></p></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode.cn/problems/design-linked-list" target="_blank" rel="noopener">https://leetcode.cn/problems/design-linked-list</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+
         </div>
 
         
@@ -324,7 +347,7 @@ public:
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2020/08/19/%E5%8F%8C%E6%8C%87%E9%92%88/">https://wlf621.github.io/2020/08/19/%E5%8F%8C%E6%8C%87%E9%92%88/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/23/707/">https://wlf621.github.io/2022/09/23/707/</a></span>
                     </p>
                 
                 
@@ -348,7 +371,7 @@ public:
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"># 双指针</a>
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/"># 链表</a>
                     
                         
                 </span>
@@ -361,10 +384,8 @@ public:
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/22/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集</a>
             
-            
-            <a class="next" rel="next" href="/2020/08/08/%E6%A8%A1%E6%8B%9F/">模拟</a>
+            <a class="next" rel="next" href="/2022/09/22/1640/">1640</a>
             
         </section>
 
