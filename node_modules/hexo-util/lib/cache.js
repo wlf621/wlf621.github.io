@@ -2,23 +2,23 @@
 
 module.exports = class Cache {
   constructor() {
-    this.cache = {};
+    this.cache = new Map();
   }
 
   set(id, value) {
-    this.cache[id] = value;
+    this.cache.set(id, value);
   }
 
   has(id) {
-    return typeof this.cache[id] !== 'undefined';
+    return this.cache.has(id);
   }
 
   get(id) {
-    return this.cache[id];
+    return this.cache.get(id);
   }
 
   del(id) {
-    delete this.cache[id];
+    this.cache.delete(id);
   }
 
   apply(id, value) {
@@ -31,6 +31,14 @@ module.exports = class Cache {
   }
 
   flush() {
-    this.cache = {};
+    this.cache.clear();
+  }
+
+  size() {
+    return this.cache.size;
+  }
+
+  dump() {
+    return Object.fromEntries(this.cache);
   }
 };
