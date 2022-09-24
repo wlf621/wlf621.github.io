@@ -82,7 +82,7 @@
     
 
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <div class="wrapper">
         <header>
@@ -98,6 +98,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/html">不要点</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -124,6 +126,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/html">不要点</a>
                 
             </div>
         </div>
@@ -231,203 +235,211 @@
         </header>
 
         <div class="post-content">
-            <h2 id="验证给定的字符串是否可以解释为十进制数字"><a href="#验证给定的字符串是否可以解释为十进制数字" class="headerlink" title="验证给定的字符串是否可以解释为十进制数字"></a><a href="https://leetcode-cn.com/problems/valid-number/" target="_blank" rel="noopener">验证给定的字符串是否可以解释为十进制数字</a></h2><blockquote>
-<p>“0” =&gt; true<br>“ 0.1 “ =&gt; true<br>“abc” =&gt; false<br>“1 a” =&gt; false<br>“2e10” =&gt; true<br>“ -90e3   “ =&gt; true<br>“ 1e” =&gt; false<br>“e3” =&gt; false<br>“ 6e-1” =&gt; true<br>“ 99e2.5 “ =&gt; false<br>“53.5e93” =&gt; true<br>“ –6 “ =&gt; false<br>“-+3” =&gt; false<br>“95a54e53” =&gt; false</p>
+            <h2 id="验证给定的字符串是否可以解释为十进制数字"><a href="#验证给定的字符串是否可以解释为十进制数字" class="headerlink" title="验证给定的字符串是否可以解释为十进制数字"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-number/">验证给定的字符串是否可以解释为十进制数字</a></h2><blockquote>
+<p>“0” &#x3D;&gt; true<br>“ 0.1 “ &#x3D;&gt; true<br>“abc” &#x3D;&gt; false<br>“1 a” &#x3D;&gt; false<br>“2e10” &#x3D;&gt; true<br>“ -90e3   “ &#x3D;&gt; true<br>“ 1e” &#x3D;&gt; false<br>“e3” &#x3D;&gt; false<br>“ 6e-1” &#x3D;&gt; true<br>“ 99e2.5 “ &#x3D;&gt; false<br>“53.5e93” &#x3D;&gt; true<br>“ –6 “ &#x3D;&gt; false<br>“-+3” &#x3D;&gt; false<br>“95a54e53” &#x3D;&gt; false</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
-class Solution {
+class Solution &#123;
 public:
-    bool isNumber(string s) {//模拟： '.', 'e'只能出现一次，'+','-'只能出现在数字前面或'e'后面且最多出现两次，'e'后面要出现数字不能出现'.'；其他情况不是数字
+    bool isNumber(string s) &#123;//模拟： '.', 'e'只能出现一次，'+','-'只能出现在数字前面或'e'后面且最多出现两次，'e'后面要出现数字不能出现'.'；其他情况不是数字
         //去掉首尾空格
         s.erase(0, s.find_first_not_of(" "));
         s.erase(s.find_last_not_of(" ") + 1);
 
 <pre><code>    bool isNumber = false, dotFlag = false, plusFlag = false, eFlag = false, minusFlag = false;
-    for (int i = 0; i &lt; s.size(); i++) {
-        if (&apos;0&apos; &lt;= s[i] &amp;&amp; s[i] &lt;= &apos;9&apos;) {
+    for (int i = 0; i &lt; s.size(); i++) &#123;
+        if (&#39;0&#39; &lt;= s[i] &amp;&amp; s[i] &lt;= &#39;9&#39;) &#123;
             isNumber = true;
-        }
-        else if ((s[i] == &apos;+&apos; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &apos;+&apos; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) {/*&apos;+&apos;只能出现在数字前面或
-            &apos;e&apos;后面且最多出现两次， !dotFlag防止&quot;.+&quot;这种情况*/
+        &#125;
+        else if ((s[i] == &#39;+&#39; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &#39;+&#39; &amp;&amp; !plusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) &#123;/*&#39;+&#39;只能出现在数字前面或
+            &#39;e&#39;后面且最多出现两次， !dotFlag防止&quot;.+&quot;这种情况*/
             plusFlag = true;
             isNumber = false;
-        }
-        else if ((s[i] == &apos;-&apos; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &apos;-&apos; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) {/*&apos;-&apos;只能出现在数字前面或
-            &apos;e&apos;后面且最多出现两次， !dotFlag防止&quot;.-&quot;这种情况*/
+        &#125;
+        else if ((s[i] == &#39;-&#39; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; !dotFlag) || (s[i] == &#39;-&#39; &amp;&amp; !minusFlag &amp;&amp; !isNumber &amp;&amp; eFlag)) &#123;/*&#39;-&#39;只能出现在数字前面或
+            &#39;e&#39;后面且最多出现两次， !dotFlag防止&quot;.-&quot;这种情况*/
             minusFlag = true;
             isNumber = false;
-        }
-        else if (s[i] == &apos;e&apos; &amp;&amp; !eFlag &amp;&amp; isNumber) {/* &apos;e&apos;只能出现一次且前后必须出现数字，出现&apos;e&apos;和可以再次出现&apos;+&apos;,&apos;-&apos;*/
+        &#125;
+        else if (s[i] == &#39;e&#39; &amp;&amp; !eFlag &amp;&amp; isNumber) &#123;/* &#39;e&#39;只能出现一次且前后必须出现数字，出现&#39;e&#39;和可以再次出现&#39;+&#39;,&#39;-&#39;*/
             eFlag = true;
             isNumber = false;
             minusFlag = false;
             plusFlag = false;
-        }
-        else if (s[i] == &apos;.&apos; &amp;&amp; !dotFlag &amp;&amp; !eFlag) {/* &apos;.&apos;只能出现一次且不能出现再&apos;e&apos;后面*/
+        &#125;
+        else if (s[i] == &#39;.&#39; &amp;&amp; !dotFlag &amp;&amp; !eFlag) &#123;/* &#39;.&#39;只能出现一次且不能出现再&#39;e&#39;后面*/
             dotFlag = true;
-        }
+        &#125;
         else return false;
-    }
+    &#125;
     return isNumber;
-}</code></pre><p>};<br></p></code></pre></details><p></p>
+&#125;
+</code></pre>
+<p>};<br></p></code></pre></details><p></p>
 <h2 id="LRU缓存机制"><a href="#LRU缓存机制" class="headerlink" title="LRU缓存机制"></a>LRU缓存机制</h2><blockquote>
 <p>要求get(key),put(key)是O(1)时间复杂度<br>Hash表加双向链表，头表示最近使用的，尾表示最近未使用的；</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
-struct DLinkedNode{
+struct DLinkedNode&#123;
     int key, val;
     DLinkedNode* prev;
     DLinkedNode* next;
-    DLinkedNode(int k = 0, int v = 0) :key(k), val(v), prev(nullptr), next(nullptr) {}
-};
+    DLinkedNode(int k = 0, int v = 0) :key(k), val(v), prev(nullptr), next(nullptr) &#123;&#125;
+&#125;;
 
-<p>class LRUCache {<br>private:<br>    unordered_map&lt;int, DLinkedNode<em>&gt; Cache;<br>    DLinkedNode</em> head;<br>    DLinkedNode* tail;<br>    int size;<br>    int capacity;<br>public:<br>    LRUCache(int _capacity = 0);<br>    int get(int key);<br>    void put(int key, int value);<br>    void moveTohead(DLinkedNode* node);<br>    void addTohead(DLinkedNode* node);<br>    void removeNode(DLinkedNode* node);<br>    DLinkedNode* removeTail();<br>};</p>
-<p>int main() {<br>    //int a;<br>    //cin &gt;&gt; a;<br>    LRUCache cache(2);<br>    cache.put(1, 1);<br>    cache.put(2, 2);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    cout &lt;&lt; cache.get(2) &lt;&lt; endl;<br>    cache.put(3, 3);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    return 0;<br>}</p>
-<p>LRUCache::LRUCache(int _capacity) : capacity(_capacity), size(0) {<br>    // 使用伪头部和伪尾部节点<br>    head = new DLinkedNode();<br>    tail = new DLinkedNode();<br>    head-&gt;next = tail;<br>    tail-&gt;prev = head;<br>}<br>int LRUCache::get(int key)<br>{<br>    if (!Cache.count(key)) {<br>        return -1;<br>    }<br>    // 如果 key 存在，先通过哈希表定位，再移到头部<br>    DLinkedNode* node = Cache[key];<br>    this-&gt;moveTohead(node);<br>    return node-&gt;val;<br>}</p>
-<p>void LRUCache::put(int key, int value)<br>{<br>    if (!Cache.count(key)) {<br>        // 如果 key 不存在，创建一个新的节点<br>        DLinkedNode* node = new DLinkedNode(key, value);<br>        // 添加进哈希表<br>        Cache[key] = node;<br>        // 添加至双向链表的头部<br>        this-&gt;addTohead(node);<br>        ++size;<br>        if (size &gt; capacity) {<br>            // 如果超出容量，删除双向链表的尾部节点<br>            DLinkedNode* removed = removeTail();<br>            // 删除哈希表中对应的项<br>            Cache.erase(removed-&gt;key);<br>            // 防止内存泄漏<br>            delete removed;<br>            –size;<br>        }<br>    }<br>    else {<br>        // 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部<br>        DLinkedNode* node = Cache[key];<br>        node-&gt;val = value;<br>        this-&gt;moveTohead(node);<br>    }<br>}</p>
-<p>void LRUCache::moveTohead(DLinkedNode* node)<br>{<br>    addTohead(node);<br>    removeNode(node);<br>}</p>
-<p>void LRUCache::addTohead(DLinkedNode* node)<br>{<br>    head-&gt;next-&gt;prev = node;<br>    node-&gt;next = head-&gt;next;<br>    head-&gt;next = node;<br>    node-&gt;prev = head;<br>}</p>
-<p>void LRUCache::removeNode(DLinkedNode* node)<br>{<br>    node-&gt;prev-&gt;next = node-&gt;next;<br>    node-&gt;next-&gt;prev = node-&gt;prev;<br>}</p>
-<p>DLinkedNode* LRUCache::removeTail()<br>{<br>    DLinkedNode* node = tail-&gt;prev;<br>    removeNode(node);<br>    return node;<br>}<br></p></code></pre></details><p></p>
-<h2 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a><a href="https://leetcode-cn.com/problems/minesweeper/" target="_blank" rel="noopener">扫雷游戏</a></h2><p>如果一个地雷（’M’）被挖出，游戏就结束了- 把它改为 ‘X’。<br>如果一个没有相邻地雷的空方块（’E’）被挖出，修改它为（’B’），并且所有和其相邻的未挖出方块都应该被递归地揭露。<br>如果一个至少与一个地雷相邻的空方块（’E’）被挖出，修改它为数字（’1’到’8’），表示相邻地雷的数量。<br>如果在此次点击中，若无更多方块可被揭露，则返回面板。</p>
+<p>class LRUCache &#123;<br>private:<br>    unordered_map&lt;int, DLinkedNode*&gt; Cache;<br>    DLinkedNode* head;<br>    DLinkedNode* tail;<br>    int size;<br>    int capacity;<br>public:<br>    LRUCache(int _capacity &#x3D; 0);<br>    int get(int key);<br>    void put(int key, int value);<br>    void moveTohead(DLinkedNode* node);<br>    void addTohead(DLinkedNode* node);<br>    void removeNode(DLinkedNode* node);<br>    DLinkedNode* removeTail();<br>&#125;;</p>
+<p>int main() &#123;<br>    &#x2F;&#x2F;int a;<br>    &#x2F;&#x2F;cin &gt;&gt; a;<br>    LRUCache cache(2);<br>    cache.put(1, 1);<br>    cache.put(2, 2);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    cout &lt;&lt; cache.get(2) &lt;&lt; endl;<br>    cache.put(3, 3);<br>    cout &lt;&lt; cache.get(1) &lt;&lt; endl;<br>    return 0;<br>&#125;</p>
+<p>LRUCache::LRUCache(int _capacity) : capacity(_capacity), size(0) &#123;<br>    &#x2F;&#x2F; 使用伪头部和伪尾部节点<br>    head &#x3D; new DLinkedNode();<br>    tail &#x3D; new DLinkedNode();<br>    head-&gt;next &#x3D; tail;<br>    tail-&gt;prev &#x3D; head;<br>&#125;<br>int LRUCache::get(int key)<br>&#123;<br>    if (!Cache.count(key)) &#123;<br>        return -1;<br>    &#125;<br>    &#x2F;&#x2F; 如果 key 存在，先通过哈希表定位，再移到头部<br>    DLinkedNode* node &#x3D; Cache[key];<br>    this-&gt;moveTohead(node);<br>    return node-&gt;val;<br>&#125;</p>
+<p>void LRUCache::put(int key, int value)<br>&#123;<br>    if (!Cache.count(key)) &#123;<br>        &#x2F;&#x2F; 如果 key 不存在，创建一个新的节点<br>        DLinkedNode* node &#x3D; new DLinkedNode(key, value);<br>        &#x2F;&#x2F; 添加进哈希表<br>        Cache[key] &#x3D; node;<br>        &#x2F;&#x2F; 添加至双向链表的头部<br>        this-&gt;addTohead(node);<br>        ++size;<br>        if (size &gt; capacity) &#123;<br>            &#x2F;&#x2F; 如果超出容量，删除双向链表的尾部节点<br>            DLinkedNode* removed &#x3D; removeTail();<br>            &#x2F;&#x2F; 删除哈希表中对应的项<br>            Cache.erase(removed-&gt;key);<br>            &#x2F;&#x2F; 防止内存泄漏<br>            delete removed;<br>            –size;<br>        &#125;<br>    &#125;<br>    else &#123;<br>        &#x2F;&#x2F; 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部<br>        DLinkedNode* node &#x3D; Cache[key];<br>        node-&gt;val &#x3D; value;<br>        this-&gt;moveTohead(node);<br>    &#125;<br>&#125;</p>
+<p>void LRUCache::moveTohead(DLinkedNode* node)<br>&#123;<br>    addTohead(node);<br>    removeNode(node);<br>&#125;</p>
+<p>void LRUCache::addTohead(DLinkedNode* node)<br>&#123;<br>    head-&gt;next-&gt;prev &#x3D; node;<br>    node-&gt;next &#x3D; head-&gt;next;<br>    head-&gt;next &#x3D; node;<br>    node-&gt;prev &#x3D; head;<br>&#125;</p>
+<p>void LRUCache::removeNode(DLinkedNode* node)<br>&#123;<br>    node-&gt;prev-&gt;next &#x3D; node-&gt;next;<br>    node-&gt;next-&gt;prev &#x3D; node-&gt;prev;<br>&#125;</p>
+<p>DLinkedNode* LRUCache::removeTail()<br>&#123;<br>    DLinkedNode* node &#x3D; tail-&gt;prev;<br>    removeNode(node);<br>    return node;<br>&#125;<br></p></code></pre></details><p></p>
+<h2 id="扫雷游戏"><a href="#扫雷游戏" class="headerlink" title="扫雷游戏"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minesweeper/">扫雷游戏</a></h2><p>如果一个地雷（’M’）被挖出，游戏就结束了- 把它改为 ‘X’。<br>如果一个没有相邻地雷的空方块（’E’）被挖出，修改它为（’B’），并且所有和其相邻的未挖出方块都应该被递归地揭露。<br>如果一个至少与一个地雷相邻的空方块（’E’）被挖出，修改它为数字（’1’到’8’），表示相邻地雷的数量。<br>如果在此次点击中，若无更多方块可被揭露，则返回面板。</p>
 <blockquote>
 <p>输入:<br>[[‘E’, ‘E’, ‘E’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘M’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘E’, ‘E’, ‘E’],<br> [‘E’, ‘E’, ‘E’, ‘E’, ‘E’]]<br>Click : [3,0]<br>输出:<br>[[‘B’, ‘1’, ‘E’, ‘1’, ‘B’],<br> [‘B’, ‘1’, ‘M’, ‘1’, ‘B’],<br> [‘B’, ‘1’, ‘1’, ‘1’, ‘B’],<br> [‘B’, ‘B’, ‘B’, ‘B’, ‘B’]]</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
-class Solution {
+class Solution &#123;
 private:
-    int dir[8][2] = { { -1,0 }, {-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1} };
+    int dir[8][2] = &#123; &#123; -1,0 &#125;, &#123;-1,1&#125;,&#123;0,1&#125;,&#123;1,1&#125;,&#123;1,0&#125;,&#123;1,-1&#125;,&#123;0,-1&#125;,&#123;-1,-1&#125; &#125;;
 
-<p>public:<br>    int getNum(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) {<br>        int ans = 0, _i, _j;<br>        for (int i = 0; i &lt; 8; i++) {<br>            _i = click[0] + dir[i][0]; _j = click[1] + dir[i][1];<br>            if (_i &gt;= 0 &amp;&amp; _i &lt; board.size() &amp;&amp; _j &gt;= 0 &amp;&amp; _j &lt; board[0].size() &amp;&amp; board[_i][_j] == ‘M’)ans++;<br>        }<br>        return ans;<br>    }<br>    void helper(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click, vector&lt;vector<int>&gt; &amp;visited) {<br>        if (board[click[0]][click[1]] == ‘M’&amp;&amp;!visited[click[0]][click[1]]) {<br>            visited[click[0]][click[1]] = 1;<br>            board[click[0]][click[1]] = ‘X’;<br>            return;<br>        }<br>        else if (board[click[0]][click[1]] == ‘E’&amp;&amp;!visited[click[0]][click[1]]) {<br>            int temp = getNum(board, click);<br>            if (temp != 0) {<br>                visited[click[0]][click[1]] = 1;<br>                board[click[0]][click[1]] = temp + ‘0’;<br>                return;<br>            }<br>            else {<br>                visited[click[0]][click[1]] = 1;<br>                board[click[0]][click[1]] =  ‘B’;<br>                for (int i = 0; i &lt; 8; i++) {<br>                    int _i = click[0], _j = click[1];<br>                    click[0] = click[0] + dir[i][0], click[1] = click[1] + dir[i][1];<br>                    if (click[0] &gt;= 0 &amp;&amp; click[0] &lt; board.size() &amp;&amp; click[1] &gt;= 0 &amp;&amp; click[1] &lt; board[0].size())<br>                        helper(board, click, visited);<br>                    click[1]=_j;<br>                    click[0]=_i;<br>                }<br>                return;<br>            }<br>        }<br>        return;<br>    }<br>    vector&lt;vector<char>&gt; updateBoard(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) {<br>        if (board.size() == 0 || board[0].size() == 0)return board;<br>        vector&lt;vector<int>&gt; visited(board.size(), vector<int>(board[0].size(), 0));<br>        helper(board, click, visited);<br>        return board;<br>    }<br>};<br></int></int></int></char></char></int></int></char></int></char></p></code></pre></details><p></p>
-<h2 id="把字符串转换成整数"><a href="#把字符串转换成整数" class="headerlink" title="把字符串转换成整数"></a><a href="https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/" target="_blank" rel="noopener">把字符串转换成整数</a></h2><p>写一个函数 StrToInt，实现把字符串转换成整数这个功能。不能使用 atoi 或者其他类似的库函数。</p>
+<p>public:<br>    int getNum(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) &#123;<br>        int ans &#x3D; 0, _i, _j;<br>        for (int i &#x3D; 0; i &lt; 8; i++) &#123;<br>            _i &#x3D; click[0] + dir[i][0]; _j &#x3D; click[1] + dir[i][1];<br>            if (_i &gt;&#x3D; 0 &amp;&amp; _i &lt; board.size() &amp;&amp; _j &gt;&#x3D; 0 &amp;&amp; _j &lt; board[0].size() &amp;&amp; board[_i][_j] &#x3D;&#x3D; ‘M’)ans++;<br>        &#125;<br>        return ans;<br>    &#125;<br>    void helper(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click, vector&lt;vector<int>&gt; &amp;visited) &#123;<br>        if (board[click[0]][click[1]] &#x3D;&#x3D; ‘M’&amp;&amp;!visited[click[0]][click[1]]) &#123;<br>            visited[click[0]][click[1]] &#x3D; 1;<br>            board[click[0]][click[1]] &#x3D; ‘X’;<br>            return;<br>        &#125;<br>        else if (board[click[0]][click[1]] &#x3D;&#x3D; ‘E’&amp;&amp;!visited[click[0]][click[1]]) &#123;<br>            int temp &#x3D; getNum(board, click);<br>            if (temp !&#x3D; 0) &#123;<br>                visited[click[0]][click[1]] &#x3D; 1;<br>                board[click[0]][click[1]] &#x3D; temp + ‘0’;<br>                return;<br>            &#125;<br>            else &#123;<br>                visited[click[0]][click[1]] &#x3D; 1;<br>                board[click[0]][click[1]] &#x3D;  ‘B’;<br>                for (int i &#x3D; 0; i &lt; 8; i++) &#123;<br>                    int _i &#x3D; click[0], _j &#x3D; click[1];<br>                    click[0] &#x3D; click[0] + dir[i][0], click[1] &#x3D; click[1] + dir[i][1];<br>                    if (click[0] &gt;&#x3D; 0 &amp;&amp; click[0] &lt; board.size() &amp;&amp; click[1] &gt;&#x3D; 0 &amp;&amp; click[1] &lt; board[0].size())<br>                        helper(board, click, visited);<br>                    click[1]&#x3D;_j;<br>                    click[0]&#x3D;_i;<br>                &#125;<br>                return;<br>            &#125;<br>        &#125;<br>        return;<br>    &#125;<br>    vector&lt;vector<char>&gt; updateBoard(vector&lt;vector<char>&gt;&amp; board, vector<int>&amp; click) &#123;<br>        if (board.size() &#x3D;&#x3D; 0 || board[0].size() &#x3D;&#x3D; 0)return board;<br>        vector&lt;vector<int>&gt; visited(board.size(), vector<int>(board[0].size(), 0));<br>        helper(board, click, visited);<br>        return board;<br>    &#125;<br>&#125;;<br></int></int></int></char></char></int></int></char></int></char></p></code></pre></details><p></p>
+<h2 id="把字符串转换成整数"><a href="#把字符串转换成整数" class="headerlink" title="把字符串转换成整数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/">把字符串转换成整数</a></h2><p>写一个函数 StrToInt，实现把字符串转换成整数这个功能。不能使用 atoi 或者其他类似的库函数。</p>
 <blockquote>
 <p>输入: “   -42”<br>输出: -42<br>解释: 第一个非空白字符为 ‘-‘, 它是一个负号。我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
-class Solution {
+class Solution &#123;
 public:
-    int strToInt(string str) {
+    int strToInt(string str) &#123;
         if (str.size() == 0)return 0;
         long long ans = 0, flag = 1;
         str.erase(0,str.find_first_not_of(' '));
         if(str.find_first_of(' ') != string::npos) str.erase(str.find_first_of(' '));
         int i = 0;
-        if (str[0] == '-') {
+        if (str[0] == '-') &#123;
             flag = -1;
             i++;
-        }
-        for (; i < str.size(); i++) {
+        &#125;
+        for (; i < str.size(); i++) &#123;
             if(str[i]=='+'&&i==0)continue;//'+'在第一位跳过
             if (str[i] <= '9' && str[i]>= '0')
                 ans = ans * 10 + str[i] - '0';
             else break;//遇到非数字则跳出
             if(ans>INT_MAX)return flag==1?INT_MAX: INT_MIN;//超过int的范围
-        }
+        &#125;
         return flag*ans;
-    }
-};
+    &#125;
+&#125;;
 </=></code></pre></details>
 
 <h2 id="约瑟夫环"><a href="#约瑟夫环" class="headerlink" title="约瑟夫环"></a>约瑟夫环</h2><details><summary>查看代码</summary><pre><code>
-class Node {
+class Node &#123;
 public:
     int val;
     Node* next;
 
-<pre><code>Node(int _val) {
+<pre><code>Node(int _val) &#123;
     val = _val;
     next = NULL;
-}</code></pre><p>};</p>
-<p>class Solution {<br>public:<br>    int lastRemaining(int n, int m) {<br>        int ans;<br>        Node* l = new Node(0), * p, * pre;<br>        p = l;<br>        for (int i = 0; i &lt; n; i++) {<br>            Node* t = new Node(i);<br>            p-&gt;next = t;<br>            p = p-&gt;next;<br>        }<br>        l = l-&gt;next;<br>        p-&gt;next = l;<br>        pre = p;<br>        p = l;<br>        while (n &gt; 1) {<br>            for (int i = 1; i &lt; m; i++) {<br>                pre = p;<br>                p = p-&gt;next;<br>            }<br>            pre-&gt;next = p-&gt;next;<br>            delete p;<br>            p = pre-&gt;next;<br>            n–;<br>        }<br>        return p-&gt;val;<br>    }<br>};<br></p></code></pre></details><p></p>
-<h2 id="n个骰子的点数"><a href="#n个骰子的点数" class="headerlink" title="n个骰子的点数"></a><a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/" target="_blank" rel="noopener">n个骰子的点数</a></h2><p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。</p>
+&#125;
+</code></pre>
+<p>};</p>
+<p>class Solution {<br>public:<br>    int lastRemaining(int n, int m) {<br>        int ans;<br>        Node* l &#x3D; new Node(0), * p, * pre;<br>        p &#x3D; l;<br>        for (int i &#x3D; 0; i &lt; n; i++) {<br>            Node* t &#x3D; new Node(i);<br>            p-&gt;next &#x3D; t;<br>            p &#x3D; p-&gt;next;<br>        }<br>        l &#x3D; l-&gt;next;<br>        p-&gt;next &#x3D; l;<br>        pre &#x3D; p;<br>        p &#x3D; l;<br>        while (n &gt; 1) {<br>            for (int i &#x3D; 1; i &lt; m; i++) {<br>                pre &#x3D; p;<br>                p &#x3D; p-&gt;next;<br>            }<br>            pre-&gt;next &#x3D; p-&gt;next;<br>            delete p;<br>            p &#x3D; pre-&gt;next;<br>            n–;<br>        }<br>        return p-&gt;val;<br>    }<br>};<br></p></code></pre></details><p></p>
+<h2 id="n个骰子的点数"><a href="#n个骰子的点数" class="headerlink" title="n个骰子的点数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/">n个骰子的点数</a></h2><p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。</p>
 <blockquote>
 <p>输入: 2<br>输出: [0.02778,0.05556,0.08333,0.11111,0.13889,0.16667,0.13889,0.11111,0.08333,0.05556,0.02778]</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
 //掷掷骰子的出现点数的概率
-class Solution {
+class Solution &#123;
 private:
     map<int, double> t;
     map<int, double> s;
     vector<double> ans;
 public:
-    vector<double> twoSum(int n) {
+    vector<double> twoSum(int n) &#123;
         for (int i = 1; i < 7; i++) s[i] = 1.0 / 6;
         n--;
-        while (n--) {
+        while (n--) &#123;
             t.clear();
-            for (int i = 1; i < 7; i++) {
-                for (auto it = s.begin(); it != s.end(); it++) {
-                    if (t.count(it->first + i) == 0) {
+            for (int i = 1; i < 7; i++) &#123;
+                for (auto it = s.begin(); it != s.end(); it++) &#123;
+                    if (t.count(it->first + i) == 0) &#123;
                         t[it->first + i] = it->second * 1.0 / 6;
-                    }else{
+                    &#125;else&#123;
                         t[it->first + i] = it->second * 1.0 / 6 + t[it->first + i];
-                    }
-                }
-            }
+                    &#125;
+                &#125;
+            &#125;
             s.clear();
             for (auto it = t.begin(); it != t.end(); it++)s[it->first] = it->second;
-        }
+        &#125;
         for (auto it = s.begin(); it != s.end(); it++)ans.push_back(it->second);
         return ans;
-    }
-};
+    &#125;
+&#125;;
 </double></double></int,></int,></code></pre></details>
 
-<h2 id="队列的最大值"><a href="#队列的最大值" class="headerlink" title="队列的最大值"></a><a href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/" target="_blank" rel="noopener">队列的最大值</a></h2><p>请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。</p>
+<h2 id="队列的最大值"><a href="#队列的最大值" class="headerlink" title="队列的最大值"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/">队列的最大值</a></h2><p>请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的均摊时间复杂度都是O(1)。</p>
 <blockquote>
 <p>输入:<br>[“MaxQueue”,”push_back”,”push_back”,”max_value”,”pop_front”,”max_value”]<br>[[],[1],[2],[],[],[]]<br>输出: [null,null,null,2,1,2]</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
 //利用双端队列保存最大值
-class MaxQueue {
+class MaxQueue &#123;
 private:
     queue<int> s;
     deque<int> t;
 public:
-    MaxQueue() {
+    MaxQueue() &#123;
 
-<pre><code>}
+<pre><code>&#125;
 
-int max_value() {
+int max_value() &#123;
     if (!t.empty())return t.back();
     else return -1;
-}
+&#125;
 
-void push_back(int value) {
+void push_back(int value) &#123;
     while (!t.empty() &amp;&amp; value &gt; t.front())t.pop_front();
     s.push(value);
     t.push_front(value);
-}
-int pop_front() {
-    if (!s.empty()) {
+&#125;
+int pop_front() &#123;
+    if (!s.empty()) &#123;
         if (s.front() == t.back())t.pop_back();
         int t = s.front();
         s.pop();
         return t;
-    }
+    &#125;
     else return -1;
-}</code></pre><p>};<br></p></int></int></code></pre></details><p></p>
+&#125;
+</code></pre>
+<p>};<br></p></int></int></code></pre></details><p></p>
 <h2 id="大数乘法"><a href="#大数乘法" class="headerlink" title="大数乘法"></a>大数乘法</h2><details><summary>查看代码</summary><pre><code>
-vector<int> bigNumberMultiply2(vector<int> num1, vector<int> num2) {
+vector<int> bigNumberMultiply2(vector<int> num1, vector<int> num2) &#123;
     // 分配一个空间，用来存储运算的结果，num1长的数 * num2长的数，结果不会超过num1+num2长
     vector<int> result(num1.size() + num2.size());
 
 <pre><code>// 先不考虑进位问题，根据竖式的乘法运算，num1的第i位与num2的第j位相乘，结果应该存放在结果的第i+j位上
-for (int i = 0; i &lt; num1.size(); i++) {
-    for (int j = 0; j &lt; num2.size(); j++) {
-        result[i + j +1] += num1[i] * num2[j];     // (因为进位的问题，最终放置到第i+j+1位)
-    }
-}
+for (int i = 0; i &lt; num1.size(); i++) &#123;
+    for (int j = 0; j &lt; num2.size(); j++) &#123;
+        result[i + j +1] += num1[i] * num2[j];	 // (因为进位的问题，最终放置到第i+j+1位)
+    &#125;
+&#125;
 
 //单独处理进位
-for (int k = result.size() - 1; k &gt; 0; k--) {
-    if (result[k] &gt;= 10) {
+for (int k = result.size() - 1; k &gt; 0; k--) &#123;
+    if (result[k] &gt;= 10) &#123;
         result[k - 1] += result[k] / 10;
         result[k] %= 10;
-    }
-}
-return result;</code></pre><p>}<br></p></int></int></int></int></code></pre></details><p></p>
+    &#125;
+&#125;
+return result;
+</code></pre>
+<p>}<br></p></int></int></int></int></code></pre></details><p></p>
 
         </div>
 
@@ -448,7 +460,7 @@ return result;</code></pre><p>}<br></p></int></int></int></int></code></pre></de
                 
                     <p class="copyright-item">
                         <span>License:</span>
-                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
                     </p>
                 
                 

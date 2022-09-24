@@ -82,7 +82,7 @@
     
 
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <div class="wrapper">
         <header>
@@ -98,6 +98,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/html">不要点</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -124,6 +126,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/html">不要点</a>
                 
             </div>
         </div>
@@ -241,138 +245,138 @@
             <p>给你一个大小为 n x n 二进制矩阵 grid 。最多 只能将一格 0 变成 1 。</p>
 <p>返回执行此操作后，grid 中最大的岛屿面积是多少？</p>
 <p>岛屿 由一组上、下、左、右四个方向相连的 1 形成。</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><p>输入: grid = [[1, 0], [0, 1]]<br>输出: 3<br>解释: 将一格0变成1，最终连通两个小岛得到面积为 3 的岛屿。<br>示例 2:</p>
-<p>输入: grid = [[1, 1], [1, 0]]<br>输出: 4<br>解释: 将一格0变成1，岛屿的面积扩大为 4。<br>示例 3:</p>
-<p>输入: grid = [[1, 1], [1, 1]]<br>输出: 4<br>解释: 没有0可以让我们变成1，面积依然为 4。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><p>输入: grid &#x3D; [[1, 0], [0, 1]]<br>输出: 3<br>解释: 将一格0变成1，最终连通两个小岛得到面积为 3 的岛屿。<br>示例 2:</p>
+<p>输入: grid &#x3D; [[1, 1], [1, 0]]<br>输出: 4<br>解释: 将一格0变成1，岛屿的面积扩大为 4。<br>示例 3:</p>
+<p>输入: grid &#x3D; [[1, 1], [1, 1]]<br>输出: 4<br>解释: 没有0可以让我们变成1，面积依然为 4。</p>
 <details><summary>查看代码</summary><pre><code>
 // dfs
-class Solution {
+class Solution &#123;
     static int dir[][2];
-    bool invaild(int n, int x, int y) {
+    bool invaild(int n, int x, int y) &#123;
         return x < 0 || x >= n || y < 0 || y >= n;
-    }
-    int dfs(vector<vector<int>>& grid, int x, int y, vector<vector<int>>& tag, int t) {
+    &#125;
+    int dfs(vector<vector<int>>& grid, int x, int y, vector<vector<int>>& tag, int t) &#123;
         int area = 1;
         tag[x][y] = t;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) &#123;
             int next_x = x + dir[i][0];
             int next_y = y + dir[i][1];
             if (invaild(grid.size(), next_x, next_y) || grid[next_x][next_y] == 0 ||
-                tag[next_x][next_y] != 0) {
+                tag[next_x][next_y] != 0) &#123;
                 continue;
-            }
+            &#125;
             area += dfs(grid, next_x, next_y, tag, t);
-        }
+        &#125;
         return area;
-    }
+    &#125;
 public:
-    int largestIsland(vector<vector<int>>& grid) {
+    int largestIsland(vector<vector<int>>& grid) &#123;
         int ans = 0;
         int n = grid.size();
         vector<vector<int>> tag(n, vector<int>(n, 0));
         vector<int> area(n * n + 1, 0);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1 && tag[i][j] == 0) {
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                if (grid[i][j] == 1 && tag[i][j] == 0) &#123;
                     int t = i * n + j + 1;
                     area[t] = dfs(grid, i, j, tag, t);
                     ans = max(ans, area[t]);
-                }
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+                &#125;
+            &#125;
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
                 unordered_set<int> hashSet;
                 if (grid[i][j] == 1) continue;
                 int sum = 1;
-                for (int k = 0; k < 4; k++) {
+                for (int k = 0; k < 4; k++) &#123;
                     int next_x = i + dir[k][0];
                     int next_y = j + dir[k][1];
-                    if (!invaild(grid.size(), next_x, next_y) && tag[next_x][next_y] != 0 && hashSet.count(tag[next_x][next_y]) == 0) {
+                    if (!invaild(grid.size(), next_x, next_y) && tag[next_x][next_y] != 0 && hashSet.count(tag[next_x][next_y]) == 0) &#123;
                         sum += area[tag[next_x][next_y]];
                         hashSet.insert(tag[next_x][next_y]);
-                    }
-                }
+                    &#125;
+                &#125;
                 ans = max(ans, sum);
-            }
-        }
+            &#125;
+        &#125;
         return ans;
-    }
-};
-int Solution::dir[][2] = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+    &#125;
+&#125;;
+int Solution::dir[][2] = &#123; &#123;1, 0&#125;, &#123;0, 1&#125;, &#123;-1, 0&#125;, &#123;0, -1&#125; &#125;;
 // 并查集解法
-class Solution {
+class Solution &#123;
     static int dir[][2];
     vector<int> area;
     vector<int> parents;
-    bool invaild(int n, int x, int y) {
+    bool invaild(int n, int x, int y) &#123;
         return x < 0 || x >= n || y < 0 || y >= n;
-    }
-    int find(int x) {
+    &#125;
+    int find(int x) &#123;
         if (parents[x] != x) parents[x] = find(parents[x]);
         return parents[x];
-    }
-    void unionSet(int x, int y) {
+    &#125;
+    void unionSet(int x, int y) &#123;
         int px = find(x), py = find(y);
-        if (px == py) {
+        if (px == py) &#123;
             return;
-        }
-        if (area[px] < area[py]) {
+        &#125;
+        if (area[px] < area[py]) &#123;
             unionSet(y, x);
-        }
-        else {
+        &#125;
+        else &#123;
             parents[px] = parents[py];
             area[py] += area[px];
-        }
-    }
+        &#125;
+    &#125;
 public:
-    int largestIsland(vector<vector<int>>& grid) {
+    int largestIsland(vector<vector<int>>& grid) &#123;
         int ans = 0;
         int n = grid.size();
         area.resize(n * n + 1);
         parents.resize(n * n + 1);
-        for (int i = 0; i < n * n + 1; i++) {
+        for (int i = 0; i < n * n + 1; i++) &#123;
             parents[i] = i;
             area[i] = 1;
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
                 if (grid[i][j] == 0) continue;
-                for (int k = 0; k < 4; k++) {
+                for (int k = 0; k < 4; k++) &#123;
                     int next_x = i + dir[k][0], next_y = j + dir[k][1];
-                    if (!invaild(grid.size(), next_x, next_y) && grid[next_x][next_y] == 1) {
+                    if (!invaild(grid.size(), next_x, next_y) && grid[next_x][next_y] == 1) &#123;
                         unionSet(i * n + j + 1, next_x * n + next_y + 1);
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                if (grid[i][j] == 1) &#123;
                     ans = max(ans, area[find(i * n + j + 1)]);
                     continue;
-                }
+                &#125;
                 int sum = 1;
                 unordered_set<int> hashSet;
-                for (int k = 0; k < 4; k++) {
+                for (int k = 0; k < 4; k++) &#123;
                     int next_x = i + dir[k][0];
                     int next_y = j + dir[k][1];
                     int t = next_x * n + next_y + 1;
-                    if (!invaild(grid.size(), next_x, next_y) && hashSet.count(find(t)) == 0 && grid[next_x][next_y] != 0) {
+                    if (!invaild(grid.size(), next_x, next_y) && hashSet.count(find(t)) == 0 && grid[next_x][next_y] != 0) &#123;
                         sum += area[find(t)];
                         hashSet.insert(find(t));
-                    }
-                }
+                    &#125;
+                &#125;
                 ans = max(ans, sum);
-            }
-        }
+            &#125;
+        &#125;
         return ans;
-    }
-};
-int Solution::dir[][2] = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+    &#125;
+&#125;;
+int Solution::dir[][2] = &#123; &#123;1, 0&#125;, &#123;0, 1&#125;, &#123;-1, 0&#125;, &#123;0, -1&#125; &#125;;
 </int></vector<int></int></int></int></int></int></vector<int></vector<int></vector<int></vector<int></code></pre></details>
 
-<p>REF:<a href="https://leetcode.cn/problems/making-a-large-island" target="_blank" rel="noopener">力扣（LeetCode）</a></p>
+<p>REF:<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/making-a-large-island">力扣（LeetCode）</a></p>
 
         </div>
 
@@ -393,7 +397,7 @@ int Solution::dir[][2] = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
                 
                     <p class="copyright-item">
                         <span>License:</span>
-                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
                     </p>
                 
                 

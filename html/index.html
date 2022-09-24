@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+<label>请输入密码</label><br>
+<input id="password"><br>
+<button onclick="myFunction()">验证</button>
+
+<script>
+function myFunction() {
+    if(document.getElementById("password").value=="zcy1208")
+    {
+		alert("验证通过");
+		window.location.href="pictures.html";
+    } 
+    else
+    {
+      alert("密码错误");
+    }
+   }
+</script>
+
+</body>
+</html>
