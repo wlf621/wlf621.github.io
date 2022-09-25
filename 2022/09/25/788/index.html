@@ -12,7 +12,7 @@
 
 
 
-<title>1001 A+B Format | WLF</title>
+<title>1652 | WLF</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">1001 A+B Format</h1>
+            <h1 class="post-title">1652</h1>
             
                 <div class="post-meta">
                     
@@ -226,14 +226,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">一月 7, 2020&nbsp;&nbsp;20:18:02</a>
+                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;12:30:22</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/PAT/">PAT</a>
+                                <a href="/categories/leetcode/">leetcode</a>
                             
                         </span>
                     
@@ -242,17 +242,39 @@
         </header>
 
         <div class="post-content">
-            <p>Calculate a+b and output the sum in standard format – that is, the digits must be separated into groups of three by commas (unless there are less than four digits).</p>
-<blockquote>
-<p>Input Specification:<br>Each input file contains one test case. Each case contains a pair of integers a and b where $−10^6 ≤ a$, $b ≤ 10^{​6}$. The numbers are separatedby a space.</p>
-</blockquote>
-<blockquote>
-<p>Output Specification:<br>For each test case, you should output the sum of a and b in one line. The sum must be written in the standard format.</p>
-</blockquote>
-<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1000000 9</span><br></pre></td></tr></table></figure>
+            <p>我们称一个数 X 为好数, 如果它的每位数字逐个地被旋转 180 度后，我们仍可以得到一个有效的，且和 X 不同的数。要求每位数字都要被旋转。</p>
+<p>如果一个数的每位数字被旋转以后仍然还是一个数字， 则这个数是有效的。0, 1, 和 8 被旋转后仍然是它们自己；2 和 5 可以互相旋转成对方（在这种情况下，它们以不同的方向旋转，换句话说，2 和 5 互为镜像）；6 和 9 同理，除了这些以外其他的数字旋转以后都不再是有效的数字。</p>
+<p>现在我们有一个正整数 N, 计算从 1 到 N 中有多少个数 X 是好数？</p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: 10</span><br><span class="line">输出: 4</span><br><span class="line">解释: </span><br><span class="line">在[1, 10]中有四个好数： 2, 5, 6, 9。</span><br><span class="line">注意 1 和 10 不是好数, 因为他们在旋转之后不变。</span><br></pre></td></tr></table></figure>
 
-<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-999,991</span><br></pre></td></tr></table></figure>
-<h3 id="AC-Code"><a href="#AC-Code" class="headerlink" title="AC Code"></a>AC Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> x, y;</span><br><span class="line">	<span class="keyword">while</span> (cin &gt;&gt; x &gt;&gt; y) &#123;</span><br><span class="line">		<span class="type">int</span> a = x + y;</span><br><span class="line">		<span class="type">bool</span> flag;</span><br><span class="line">		<span class="keyword">if</span> (a &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			a = -a;</span><br><span class="line">			flag = <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a == <span class="number">0</span>) &#123;</span><br><span class="line">			cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			flag = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="type">int</span> b, i = <span class="number">0</span>,j=<span class="number">1</span>;</span><br><span class="line">		<span class="type">char</span> c[<span class="number">100</span>];</span><br><span class="line">		b = a % <span class="number">10</span>;</span><br><span class="line">		<span class="keyword">while</span> (a != <span class="number">0</span>) &#123;</span><br><span class="line">			c[i++] = b+<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">			a = a / <span class="number">10</span>;</span><br><span class="line">			b = a % <span class="number">10</span>;</span><br><span class="line">			<span class="keyword">if</span> (j % <span class="number">3</span> == <span class="number">0</span>) &#123;</span><br><span class="line">				c[i++] = <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">				j = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> j++;</span><br><span class="line">		&#125;</span><br><span class="line">		i = i - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (flag == <span class="literal">false</span>) &#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;-&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (c[i] == <span class="string">&#x27;,&#x27;</span>)i--;</span><br><span class="line">		<span class="keyword">for</span> (; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">			cout &lt;&lt; c[i];</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; c[i] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示：N 的取值范围是 [1, 10000]。</p>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+    bool isGoodNum(int num) &#123;
+        bool flag2 = false;
+        bool flag3 = false;
+        while (num != 0) &#123;
+            int tmp = num % 10;
+            if (tmp == 3 || tmp == 4 || tmp == 7) flag3 = true;
+            else if (tmp == 2 || tmp == 5 || tmp == 6 || tmp == 9) flag2 = true;
+            num = num / 10;
+        &#125;
+
+<pre><code>    if (flag3 == true) &#123;
+        return false;
+    &#125;
+    return flag2;
+&#125;
+</code></pre>
+<p>public:<br>    int rotatedDigits(int n) {<br>        int num &#x3D; 0;<br>        for (int i &#x3D; 1; i &lt;&#x3D; n; i++) {<br>            if (isGoodNum(i)) {<br>                num++;<br>            }<br>        }</p>
+<pre><code>    return num;
+&#125;
+</code></pre>
+<p>};<br></p></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotated-digits">https://leetcode.cn/problems/rotated-digits</a></p>
+
         </div>
 
         
@@ -266,7 +288,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2020/01/07/1001-A-B-Format/">https://wlf621.github.io/2020/01/07/1001-A-B-Format/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/25/788/">https://wlf621.github.io/2022/09/25/788/</a></span>
                     </p>
                 
                 
@@ -290,7 +312,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%A4%A7%E6%95%B0%E8%BF%90%E7%AE%97/"># 大数运算</a>
+                        <a href="/tags/%E6%9E%9A%E4%B8%BE/"># 枚举</a>
                     
                         
                 </span>
@@ -303,10 +325,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/01/08/1002-A-B-for-Polynomials/">1002 A+B for Polynomials</a>
             
-            
-            <a class="next" rel="next" href="/2020/01/07/%E7%BC%96%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">编程Checklist</a>
+            <a class="next" rel="next" href="/2022/09/24/selenium/">selenium</a>
             
         </section>
 
