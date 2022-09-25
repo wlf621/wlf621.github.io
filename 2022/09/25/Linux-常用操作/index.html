@@ -12,7 +12,7 @@
 
 
 
-<title>788 | WLF</title>
+<title>Linux 常用操作 | WLF</title>
 
 
 
@@ -39,45 +39,6 @@
 
     
     
-        
-            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-
         
     
 
@@ -217,7 +178,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">788</h1>
+            <h1 class="post-title">Linux 常用操作</h1>
             
                 <div class="post-meta">
                     
@@ -226,54 +187,57 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;12:30:22</a>
+                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;21:31:39</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/leetcode/">leetcode</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <p>我们称一个数 X 为好数, 如果它的每位数字逐个地被旋转 180 度后，我们仍可以得到一个有效的，且和 X 不同的数。要求每位数字都要被旋转。</p>
-<p>如果一个数的每位数字被旋转以后仍然还是一个数字， 则这个数是有效的。0, 1, 和 8 被旋转后仍然是它们自己；2 和 5 可以互相旋转成对方（在这种情况下，它们以不同的方向旋转，换句话说，2 和 5 互为镜像）；6 和 9 同理，除了这些以外其他的数字旋转以后都不再是有效的数字。</p>
-<p>现在我们有一个正整数 N, 计算从 1 到 N 中有多少个数 X 是好数？</p>
-<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: 10</span><br><span class="line">输出: 4</span><br><span class="line">解释: </span><br><span class="line">在[1, 10]中有四个好数： 2, 5, 6, 9。</span><br><span class="line">注意 1 和 10 不是好数, 因为他们在旋转之后不变。</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>提示：N 的取值范围是 [1, 10000]。</p>
+            <h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
+<p>Linux uname（英文全拼：unix name）命令用于显示系统信息。</p>
 </blockquote>
-<details><summary>查看代码</summary><pre><code>
-class Solution &#123;
-    bool isGoodNum(int num) &#123;
-        bool flag2 = false;
-        bool flag3 = false;
-        while (num != 0) &#123;
-            int tmp = num % 10;
-            if (tmp == 3 || tmp == 4 || tmp == 7) flag3 = true;
-            else if (tmp == 2 || tmp == 5 || tmp == 6 || tmp == 9) flag2 = true;
-            num = num / 10;
-        &#125;
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
 
-<pre><code>    if (flag3 == true) &#123;
-        return false;
-    &#125;
-    return flag2;
-&#125;
-</code></pre>
-<p>public:<br>    int rotatedDigits(int n) {<br>        int num &#x3D; 0;<br>        for (int i &#x3D; 1; i &lt;&#x3D; n; i++) {<br>            if (isGoodNum(i)) {<br>                num++;<br>            }<br>        }</p>
-<pre><code>    return num;
-&#125;
-</code></pre>
-<p>};<br></p></code></pre></details><p></p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotated-digits">https://leetcode.cn/problems/rotated-digits</a></p>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li>-a或–all 　显示全部的信息。</li>
+<li>-m或–machine 　显示电脑类型。</li>
+<li>-n或–nodename 　显示在网络上的主机名称。</li>
+<li>-r或–release 　显示操作系统的发行编号。</li>
+<li>-s或–sysname 　显示操作系统名称。</li>
+<li>-v 　显示操作系统的版本。</li>
+<li>–help 　显示帮助。</li>
+<li>–version 　显示版本信息。</li>
+</ul>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><blockquote>
+<p>管理服务(unit)<br>systemctl 提供了一组子命令来管理单个的 unit</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl [command] [unit]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>查看版本号<br>systemctl –-version</li>
+<li>command 主要有：<ul>
+<li>start：立刻启动后面接的 unit。</li>
+<li>stop：立刻关闭后面接的 unit。</li>
+<li>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</li>
+<li>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</li>
+<li>enable：设置下次开机时，后面接的 unit 会被启动。</li>
+<li>disable：设置下次开机时，后面接的 unit 不会被启动。</li>
+<li>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</li>
+<li>is-active：目前有没有正在运行中。</li>
+<li>is-enabled：开机时有没有默认要启用这个 unit。</li>
+<li>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</li>
+<li>show：列出 unit 的配置。</li>
+<li>mask：注销 unit，注销后你就无法启动这个 unit 了。</li>
+<li>unmask：取消对 unit 的注销。</li>
+</ul>
+</li>
+</ul>
 
         </div>
 
@@ -288,7 +252,7 @@ class Solution &#123;
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/25/788/">https://wlf621.github.io/2022/09/25/788/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</a></span>
                     </p>
                 
                 
@@ -312,7 +276,7 @@ class Solution &#123;
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%9E%9A%E4%B8%BE/"># 枚举</a>
+                        <a href="/tags/Linux/"># Linux</a>
                     
                         
                 </span>
@@ -325,10 +289,8 @@ class Solution &#123;
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">Linux 常用操作</a>
             
-            
-            <a class="next" rel="next" href="/2022/09/24/selenium/">selenium</a>
+            <a class="next" rel="next" href="/2022/09/25/788/">788</a>
             
         </section>
 
