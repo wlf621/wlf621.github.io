@@ -12,7 +12,7 @@
 
 
 
-<title>17.19 | WLF</title>
+<title>01.02 | WLF</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">17.19</h1>
+            <h1 class="post-title">01.02</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 26, 2022&nbsp;&nbsp;22:30:22</a>
+                        Date: <a href="#">九月 27, 2022&nbsp;&nbsp;23:30:22</a>
                         </span>
                     
                     
@@ -242,42 +242,42 @@
         </header>
 
         <div class="post-content">
-            <p>给定一个数组，包含从 1 到 N 所有的整数，但其中缺了两个数字。你能在 O(N) 时间内只用 O(1) 的空间找到它们吗？</p>
-<p>以任意顺序返回这两个数字均可。</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">1</span>]</span><br><span class="line">输出: [<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">输出: [<span class="number">1</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+            <p>给定两个字符串 s1 和 s2，请编写一个程序，确定其中一个字符串的字符重新排列后，能否变成另一个字符串。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s1 = &quot;abc&quot;, s2 = &quot;bca&quot;</span><br><span class="line">输出: true </span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s1 = &quot;abc&quot;, s2 = &quot;bad&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>提示：nums.length &lt;&#x3D; 30000</p>
+<p>说明：</p>
+<p>0 &lt;&#x3D; len(s1) &lt;&#x3D; 100</p>
+<p>0 &lt;&#x3D; len(s2) &lt;&#x3D; 100</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
 class Solution &#123;
 public:
-    vector<int> missingTwo(vector<int>& nums) &#123;
-        // nums 加上 1 - nums.size() + 2 全部异或，x为num1与num2的异或值
-        int x = 0;
-        for (int i = 0; i < nums.size(); i++) &#123;
-            x ^= nums[i];
+    bool CheckPermutation(string s1, string s2) &#123;
+        unordered_map<char, int> cMap;
+        for (auto var : s1) &#123;
+            cMap[var]++;
         &#125;
-        for (int i = 1; i <= nums.size() + 2; i++) &#123; x ^="i;" &#125; & -x; 异或值第l位为1，说明num1与num2的第l位不同（0与1） int l="1;" while (!(x l)) << 1; <pre><code>    // 按照x比特位是否为1分为两类，出现过两次相同为一类，num1与num2分别在两类，全部异或求出num1、num2
-    int num1 = 0, num2 = 0;
-    for (int i = 0; i &lt; nums.size(); i++) &#123;
-        if (nums[i] &amp; l)
-            num1 ^= nums[i];
-        else
-            num2 ^= nums[i];
+        for (auto val : s2) &#123;
+            if (cMap.count(val) == 0) &#123;
+                return false;
+            &#125;
+            if (cMap[val] == 0) &#123;
+                return false;
+            &#125;
+            cMap[val]--;
+        &#125;
+        for (auto val : cMap) &#123;
+            if (val.second != 0) &#123;
+                return false;
+            &#125;
+        &#125;
+        return true;
     &#125;
-    for (int i = 1; i &lt;= nums.size() + 2; i++) &#123;
-        if (i &amp; l)
-            num1 ^= i;
-        else
-            num2 ^= i;
-    &#125;
+&#125;;
+</char,></code></pre></details>
 
-    return &#123; num1, num2 &#125;;
-&#125;
-</code></=></int></int></code></pre>
-<p>};<br></p></details><p></p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/missing-two-lcci">https://leetcode.cn/problems/missing-two-lcci</a></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/check-permutation-lcci">https://leetcode.cn/problems/check-permutation-lcci</a></p>
 
         </div>
 
@@ -292,7 +292,7 @@ public:
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/26/17.19/">https://wlf621.github.io/2022/09/26/17.19/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/27/01.02/">https://wlf621.github.io/2022/09/27/01.02/</a></span>
                     </p>
                 
                 
@@ -316,7 +316,7 @@ public:
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"># 位运算</a>
+                        <a href="/tags/%E5%93%88%E5%B8%8C/"># 哈希</a>
                     
                         
                 </span>
@@ -329,10 +329,8 @@ public:
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/27/01.02/">01.02</a>
             
-            
-            <a class="next" rel="next" href="/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">Linux 常用操作</a>
+            <a class="next" rel="next" href="/2022/09/26/17.19/">17.19</a>
             
         </section>
 
