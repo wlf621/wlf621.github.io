@@ -12,7 +12,7 @@
 
 
 
-<title>Linux 常用操作 | WLF</title>
+<title>17.19 | WLF</title>
 
 
 
@@ -39,6 +39,45 @@
 
     
     
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
         
     
 
@@ -178,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Linux 常用操作</h1>
+            <h1 class="post-title">17.19</h1>
             
                 <div class="post-meta">
                     
@@ -187,57 +226,58 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;21:31:39</a>
+                        Date: <a href="#">九月 26, 2022&nbsp;&nbsp;22:30:22</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
-<p>Linux uname（英文全拼：unix name）命令用于显示系统信息。</p>
+            <p>给定一个数组，包含从 1 到 N 所有的整数，但其中缺了两个数字。你能在 O(N) 时间内只用 O(1) 的空间找到它们吗？</p>
+<p>以任意顺序返回这两个数字均可。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">1</span>]</span><br><span class="line">输出: [<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">输出: [<span class="number">1</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示：nums.length &lt;&#x3D; 30000</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
+<details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+public:
+    vector<int> missingTwo(vector<int>& nums) &#123;
+        // nums 加上 1 - nums.size() + 2 全部异或，x为num1与num2的异或值
+        int x = 0;
+        for (int i = 0; i < nums.size(); i++) &#123;
+            x ^= nums[i];
+        &#125;
+        for (int i = 1; i <= nums.size() + 2; i++) &#123; x ^="i;" &#125; & -x; 异或值第l位为1，说明num1与num2的第l位不同（0与1） int l="1;" while (!(x l)) << 1; <pre><code>    // 按照x比特位是否为1分为两类，出现过两次相同为一类，num1与num2分别在两类，全部异或求出num1、num2
+    int num1 = 0, num2 = 0;
+    for (int i = 0; i &lt; nums.size(); i++) &#123;
+        if (nums[i] &amp; l)
+            num1 ^= nums[i];
+        else
+            num2 ^= nums[i];
+    &#125;
+    for (int i = 1; i &lt;= nums.size() + 2; i++) &#123;
+        if (i &amp; l)
+            num1 ^= i;
+        else
+            num2 ^= i;
+    &#125;
 
-<p><strong>参数说明</strong>：</p>
-<ul>
-<li>-a或–all 　显示全部的信息。</li>
-<li>-m或–machine 　显示电脑类型。</li>
-<li>-n或–nodename 　显示在网络上的主机名称。</li>
-<li>-r或–release 　显示操作系统的发行编号。</li>
-<li>-s或–sysname 　显示操作系统名称。</li>
-<li>-v 　显示操作系统的版本。</li>
-<li>–help 　显示帮助。</li>
-<li>–version 　显示版本信息。</li>
-</ul>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><blockquote>
-<p>管理服务(unit)<br>systemctl 提供了一组子命令来管理单个的 unit</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl [command] [unit]</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>查看版本号<br>systemctl –-version</li>
-<li>command 主要有：<ul>
-<li>start：立刻启动后面接的 unit。</li>
-<li>stop：立刻关闭后面接的 unit。</li>
-<li>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</li>
-<li>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</li>
-<li>enable：设置下次开机时，后面接的 unit 会被启动。</li>
-<li>disable：设置下次开机时，后面接的 unit 不会被启动。</li>
-<li>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</li>
-<li>is-active：目前有没有正在运行中。</li>
-<li>is-enabled：开机时有没有默认要启用这个 unit。</li>
-<li>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</li>
-<li>show：列出 unit 的配置。</li>
-<li>mask：注销 unit，注销后你就无法启动这个 unit 了。</li>
-<li>unmask：取消对 unit 的注销。</li>
-</ul>
-</li>
-</ul>
+    return &#123; num1, num2 &#125;;
+&#125;
+</code></=></int></int></code></pre>
+<p>};<br></p></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/missing-two-lcci">https://leetcode.cn/problems/missing-two-lcci</a></p>
 
         </div>
 
@@ -252,7 +292,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/09/26/17.09/">https://wlf621.github.io/2022/09/26/17.09/</a></span>
                     </p>
                 
                 
@@ -276,7 +316,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Linux/"># Linux</a>
+                        <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"># 位运算</a>
                     
                         
                 </span>
@@ -289,10 +329,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/26/17.09/">17.19</a>
+                <a class="prev" rel="prev" href="/2022/09/27/01.02/">01.02</a>
             
             
-            <a class="next" rel="next" href="/2022/09/25/788/">788</a>
+            <a class="next" rel="next" href="/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">Linux 常用操作</a>
             
         </section>
 
