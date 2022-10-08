@@ -12,7 +12,7 @@
 
 
 
-<title>698 | WLF</title>
+<title>1652 | WLF</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">698</h1>
+            <h1 class="post-title">1652</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 20, 2022&nbsp;&nbsp;22:30:22</a>
+                        Date: <a href="#">十月 8, 2022&nbsp;&nbsp;20:30:22</a>
                         </span>
                     
                     
@@ -242,83 +242,51 @@
         </header>
 
         <div class="post-content">
-            <p>给定一个整数数组 <code>nums</code> 和一个正整数 <code>k</code>，找出是否有可能把这个数组分成 <code>k</code> 个非空子集，其总和都相等。</p>
-<h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入： nums = [4, 3, 2, 3, 5, 2, 1], k = 4</span><br><span class="line">输出： True</span><br><span class="line">说明： 有可能将其分成 4 个子集（5），（1,4），（2,3），（2,3）等于总和。</span><br></pre></td></tr></table></figure>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,2,3,4], k = 3</span><br><span class="line">输出：False</span><br></pre></td></tr></table></figure>
+            <p>给定两个大小相等的数组 nums1 和 nums2，nums1 相对于 nums2 的优势可以用满足 nums1[i] &gt; nums2[i] 的索引 i 的数目来描述。</p>
+<p>返回 nums1 的任意排列，使其相对于 nums2 的优势最大化。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [2,7,11,15], nums2 = [1,10,4,11]</span><br><span class="line">输出：[2,11,7,15]</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [12,24,8,32], nums2 = [13,25,32,11]</span><br><span class="line">输出：[24,32,8,12]</span><br></pre></td></tr></table></figure>
 
 <details><summary>查看代码</summary><pre><code>
-class Solution &#123;
-    int gk;
-    int avg;
-    int n;
-    bool dfs(int idx, int cur, int cnt, vector<bool> &visited, vector<int>& nums) &#123;
-        if (cur == avg) &#123;
-            return dfs(0, 0, cnt + 1, visited, nums);
-        &#125;
-        // 因为各分组的和与原数组相等，到这所有元素必然已使用
-        if (cnt == gk) &#123;
-            return true;
-        &#125;
-        // 从大到小搜索
-        for (int i = idx; i < n; i++) &#123;
-            if (cur + nums[i] > avg) continue;
-            if (visited[i] == true) continue;
-            visited[i] = true;
-            if (dfs(i + 1, cur + nums[i], cnt, visited, nums)) &#123;
-                return true;
-            &#125;
-            visited[i] = false;
-            if (cur == 0) return false; // 当前最大单个元素无法加入任何子集，此种方案false
-        &#125;
-        return false;
-    &#125;
-public:
-    bool canPartitionKSubsets(vector<int>& nums, int k) &#123;
-        n = nums.size();
-        gk = k;
-        int sum = accumulate(nums.begin(), nums.end(), 0);
-        if (sum % k != 0) return false;
-        avg = sum / k;
-        sort(nums.begin(), nums.end(), greater<int>());
-        vector<bool> visited(n, false);
-        return dfs(0, 0, 0, visited, nums);
-    &#125;
-&#125;;
-</bool></int></int></int></bool></code></pre></details>
+/*
+*  代码可以优化，用数组维护idx，减少存储和循环次数
+*/
+bool _cmp(pair<int, int>& a, pair<int, int>& b) &#123;
+    return a.first < b.first;
+&#125;
 
-<p>待补充官方题解，利用bitmap记录当前元素是否已访问，则可以用一个整数S表示当前已经加入子集的元素（当前状态），继而可以使用vis[S]标记当前状态是否已计算，避免重复计算</p>
-<details><summary>查看代码</summary><pre><code>
-class Solution &#123;
+<p>class Solution &#123;<br>public:<br>    vector<int> advantageCount(vector<int>&amp; nums1, vector<int>&amp; nums2) &#123;<br>        int len &#x3D; nums1.size();<br>        vector<int> ans(len, -1);<br>        vector&lt;pair&lt;int, int&gt;&gt; nums1Map(len);<br>        vector&lt;pair&lt;int, int&gt;&gt; nums2Map(len);<br>        for (int i &#x3D; 0; i &lt; len; i++) &#123;<br>            nums1Map[i] &#x3D; make_pair(nums1[i], -1);<br>            nums2Map[i] &#x3D; make_pair(nums2[i], i);<br>        &#125;<br>        sort(nums1Map.begin(), nums1Map.end(), _cmp);<br>        sort(nums2Map.begin(), nums2Map.end(), _cmp);</int></int></int></int></p>
+<pre><code>    int i1 = 0, i2 = 0;
+    while (i1 &lt; len &amp;&amp; i2 &lt; len) &#123;
+        if (nums1Map[i1].first &gt; nums2Map[i2].first) &#123;
+            nums1Map[i1].second = nums2Map[i2].second;
+            i1++;
+            i2++;
+        &#125;
+        else i1++;
+    &#125;
+    for (int i = 0; i &lt; len; i++) &#123;
+        if (nums1Map[i].second != -1) &#123;
+            ans[nums1Map[i].second] = nums1Map[i].first;
+        &#125;
+    &#125;
 
-<p>  int gk;</p>
-<p>  int avg;</p>
-<p>  int n;</p>
-<p>  bool dfs(int s, int cur, vector<bool> &amp;visited, const vector<int>&amp; nums) &#123;</int></bool></p>
-<p>​    if (cur &#x3D;&#x3D; avg) cur &#x3D; 0;</p>
-<p>​    if (s &#x3D;&#x3D; 0) return true;</p>
-<p>​    if (!visited[s]) return false;</p>
-<p>​    </p>
-<p>​    visited[s] &#x3D; false;</p>
-<p>​    for (int i &#x3D; 0; i &lt; n; i++) &#123;</p>
-<p>​      if (cur + nums[i] &gt; avg) break;</p>
-<p>​      if (s &gt;&gt; i&amp; 1)</p>
-<p>​        if (dfs(s ^ (1 &lt;&lt; i), cur + nums[i], visited, nums)) return true;</p>
-<p>​    &#125;</p>
-<p>​    return false;</p>
-<p>  &#125;</p>
-<p>public:</p>
-<p>  bool canPartitionKSubsets(vector<int>&amp; nums, int k) &#123;</int></p>
-<p>​    n &#x3D; nums.size();</p>
-<p>​    gk &#x3D; k;</p>
-<p>​    int sum &#x3D; accumulate(nums.begin(), nums.end(), 0);</p>
-<p>​    if (sum % k !&#x3D; 0) return false;</p>
-<p>​    avg &#x3D; sum &#x2F; k;</p>
-<p>​    sort(nums.begin(), nums.end());</p>
-<p>​    vector<bool> visited(1 &lt;&lt; n, true);</bool></p>
-<p>​    return dfs((1 &lt;&lt; n) - 1, 0, visited, nums);</p>
-<p>  &#125;</p>
-<p>&#125;;<br></p></code></pre></details><p></p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/">698. 划分为k个相等的子集 - 力扣（LeetCode）</a></p>
+    i1 = 0;
+    for (int i = 0; i &lt; len; i++) &#123;
+        if (ans[i] != -1) &#123;
+            continue;
+        &#125;
+        while (nums1Map[i1].second != -1) &#123;
+            i1++;
+        &#125;
+        ans[i] = nums1Map[i1++].first;
+    &#125;
+    
+    return ans;
+&#125;
+</code></pre>
+<p>};<br></p></int,></int,></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/advantage-shuffle">https://leetcode.cn/problems/advantage-shuffle</a></p>
 
         </div>
 
@@ -333,7 +301,7 @@ class Solution &#123;
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/20/698/">https://wlf621.github.io/2022/09/20/698/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/08/870/">https://wlf621.github.io/2022/10/08/870/</a></span>
                     </p>
                 
                 
@@ -357,11 +325,7 @@ class Solution &#123;
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%8E%92%E5%BA%8F/"># 排序</a>
-                    
-                        <a href="/tags/DFS/"># DFS</a>
-                    
-                        <a href="/tags/BITMAP/"># BITMAP</a>
+                        <a href="/tags/%E8%B4%AA%E5%BF%83/"># 贪心</a>
                     
                         
                 </span>
@@ -374,10 +338,8 @@ class Solution &#123;
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/20/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"></a>
             
-            
-            <a class="next" rel="next" href="/2022/09/19/1636/">1636</a>
+            <a class="next" rel="next" href="/2022/09/29/01.09/">01.09</a>
             
         </section>
 
