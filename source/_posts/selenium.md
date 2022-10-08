@@ -23,3 +23,7 @@ p:nth-child(1)             # 选择第一个p标签，还可写为 p:first-child
 p:nth-last-child(1)             # 选择倒数第一个p标签（要保证最后一个标签是p） 
 
 p:only-child        #唯一的p标签
+
+
+
+- [ ]  [处理点选验证码 手把手教你用selenium模拟登录B站 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1770228)
