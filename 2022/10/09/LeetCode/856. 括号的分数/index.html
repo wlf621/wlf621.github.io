@@ -12,7 +12,7 @@
 
 
 
-<title>1.两数之和 | WLF</title>
+<title>856. 括号的分数 | WLF</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">1.两数之和</h1>
+            <h1 class="post-title">856. 括号的分数</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">十月 8, 2022&nbsp;&nbsp;22:18:07</a>
+                        Date: <a href="#">十月 9, 2022&nbsp;&nbsp;23:30:22</a>
                         </span>
                     
                     
@@ -242,80 +242,40 @@
         </header>
 
         <div class="post-content">
-            <p>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
-<p>你可以按任意顺序返回答案。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [2,7,11,15], target = 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [3,2,4], target = 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [3,3], target = 6</span><br><span class="line">输出：[0,1]</span><br></pre></td></tr></table></figure>
+            <p>给定一个平衡括号字符串 S，按下述规则计算该字符串的分数：</p>
+<p>() 得 1 分。<br>AB 得 A + B 分，其中 A 和 B 是平衡括号字符串。<br>(A) 得 2 * A 分，其中 A 是平衡括号字符串。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： &quot;()&quot;</span><br><span class="line">输出： 1</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： &quot;(())&quot;</span><br><span class="line">输出： 2</span><br></pre></td></tr></table></figure>
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： &quot;()()&quot;</span><br><span class="line">输出： 2</span><br></pre></td></tr></table></figure>
+<h3 id="示例-4："><a href="#示例-4：" class="headerlink" title="示例 4："></a>示例 4：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： &quot;(()(()))&quot;</span><br><span class="line">输出： 6</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>提示：</p>
-<ul>
-<li><p>2 &lt;&#x3D; nums.length &lt;&#x3D; 10^4</p>
-</li>
-<li><p>-10^9 &lt;&#x3D; nums[i] &lt;&#x3D; 10^9</p>
-</li>
-<li><p>-10^9 &lt;&#x3D; target &lt;&#x3D; 10^9</p>
-</li>
-<li><p>只会存在一个有效答案</p>
-</li>
-</ul>
-<p>进阶：你可以想出一个时间复杂度小于 O(n2) 的算法吗？</p>
+<p>提示：<br>S 是平衡括号字符串，且只含有 ( 和 ) 。<br>2 &lt;&#x3D; S.length &lt;&#x3D; 50</p>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
-// 简单模拟, 时间复杂度O(n^2)
 class Solution &#123;
 public:
-    vector<int> twoSum(vector<int>& nums, int target) &#123;
-        int l;
-        for (int i = 0; i < nums.size(); i++) &#123;
-            l = i;
-            for (int j = 0; j < nums.size(); j++) &#123;
-                if (j == i) continue;
-                if (nums[j] + nums[i] == target) return &#123; l, j &#125;;
+    int scoreOfParentheses(string s) &#123;
+        stack<int> strStack;
+        strStack.push(0); // 添加哨兵，虚拟最外层括号
+        for (int i = 0; i < s.size(); i++) &#123;
+            if (s[i] == '(') &#123;
+                strStack.push(0); // 初始分数为0
+            &#125;
+            else &#123;
+                int cur = strStack.top(); // 当前括号当前分数
+                strStack.pop();
+                int lcur = strStack.top(); // 外层括号当前分数
+                strStack.pop();
+                strStack.push(lcur + max(cur * 2, 1)); // 将当前括号分数累加至外层括号
             &#125;
         &#125;
-        return &#123;&#125;;
+        return strStack.top();
     &#125;
 &#125;;
-// 排序，双指针，时间复杂度O(n*logn)
-class Solution &#123;
-public:
-    vector<int> twoSum(vector<int>& nums, int target) &#123;
-        int l = 0, r = nums.size() - 1;
-        vector<int> idx(nums.size());
-        for (int i = 0; i < nums.size(); i++) &#123;
-            idx[i] = i;
-        &#125;
-        sort(idx.begin(), idx.end(), [&](int a, int b) &#123;return nums[a] < nums[b]; &#125;);
-        while (l < r) &#123;
-            if (nums[idx[l]] + nums[idx[r]] == target) return &#123; idx[l], idx[r] &#125;;
-            if (nums[idx[l]] + nums[idx[r]] > target) r--;
-            else l++;
-        &#125;
-        return &#123;&#125;;
-    &#125;
-&#125;;
-// 哈希表， 时间复杂度O(n)
-class Solution &#123;
-public:
-    vector<int> twoSum(vector<int>& nums, int target) &#123;
-        int l = 0, r = nums.size() - 1;
-        unordered_map<int, int> numsMap(nums.size());
-        for (int i = 0; i < nums.size(); i++) &#123;
-            numsMap[nums[i]] = i;
-        &#125;
+</int></code></pre></details>
 
-<pre><code>    for (int i = 0; i &lt; nums.size(); i++) &#123;
-        if (numsMap.count(target - nums[i]) != 0 &amp;&amp; numsMap[target - nums[i]] != i) return &#123;i, numsMap[target - nums[i]] &#125;;
-        numsMap[nums[i]] = i;
-    &#125;
-    return &#123;&#125;;
-&#125;
-</code></pre>
-<p>};<br></p></int,></int></int></int></int></int></int></int></code></pre></details><p></p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum">https://leetcode.cn/problems/two-sum</a></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/score-of-parentheses">https://leetcode.cn/problems/score-of-parentheses</a></p>
 
         </div>
 
@@ -330,7 +290,7 @@ public:
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/10/08/LeetCode/1.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">https://wlf621.github.io/2022/10/08/LeetCode/1.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/09/LeetCode/856.%20%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/">https://wlf621.github.io/2022/10/09/LeetCode/856.%20%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/</a></span>
                     </p>
                 
                 
@@ -354,13 +314,7 @@ public:
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%8E%92%E5%BA%8F/"># 排序</a>
-                    
-                        <a href="/tags/%E5%93%88%E5%B8%8C/"># 哈希</a>
-                    
-                        <a href="/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
-                    
-                        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"># 双指针</a>
+                        <a href="/tags/%E6%A0%88/"># 栈</a>
                     
                         
                 </span>
@@ -373,10 +327,8 @@ public:
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/10/09/LeetCode/856.%20%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/">856. 括号的分数</a>
             
-            
-            <a class="next" rel="next" href="/2022/10/08/LeetCode/2.%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/">2.两数相加</a>
+            <a class="next" rel="next" href="/2022/10/08/LeetCode/1.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">1.两数之和</a>
             
         </section>
 
