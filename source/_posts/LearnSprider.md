@@ -38,18 +38,18 @@ peace.
 - [x] [python爬虫系列教程07 | 有了 BeautifulSoup ，妈妈再也不用担心我的正则表达式了](https://vip.fxxkpython.com/?p=1891)
 - [x] [python爬虫系列教程08 | 你的第二个爬虫，要过年了，爬取豆瓣最受欢迎的250部电影慢慢看](https://vip.fxxkpython.com/?p=1871)
 - [x] [python爬虫系列教程09 | 上来，自己动 ！这就是 selenium 的牛逼之处](https://vip.fxxkpython.com/?p=1854)
-- [ ] [python爬虫系列教程10 | 这次，将带你使用 selenium+ phantomJS 爬取b站上的NBA形象大使蔡徐坤和他的球友们](https://vip.fxxkpython.com/?p=4699)
-- [ ] [python爬虫系列教程11 | python爬虫的时候对Json数据的解析](https://vip.fxxkpython.com/?p=4723)
-- [ ] [python爬虫系列教程12 | 秒爬，python爬虫中的多线程，多进程，协程](https://vip.fxxkpython.com/?p=4736)
-- [ ] [python爬虫系列教程13 | 就这么说吧，如果你不懂python多线程和线程池，那就去河边摸鱼！](https://vip.fxxkpython.com/?p=4756)
-- [ ] [python爬虫系列教程14 | 害羞，用多线程秒爬那些万恶的妹纸们，纸巾呢？](https://vip.fxxkpython.com/?p=5293)
-- [ ] [python爬虫系列教程15 | 你，快去试试用多进程的方式重新去爬取豆瓣上的电影](https://vip.fxxkpython.com/?p=4793)
-- [ ] [python爬虫系列教程16 | 听说你又被封 ip 了，你要学会伪装好自己，这次说说伪装你的头部](https://vip.fxxkpython.com/?p=4803)
-- [ ] [python爬虫系列教程17 | 就算你被封了也能继续爬，使用IP代理池伪装你的IP地址，让IP飘一会](https://vip.fxxkpython.com/?p=4818)
-- [ ] [python爬虫系列教程18 | 遇到需要的登录的网站怎么办？用这3招轻松搞定！](https://vip.fxxkpython.com/?p=4833)
-- [ ] [python爬虫系列教程19 | 小帅b教你如何识别图片验证码](https://vip.fxxkpython.com/?p=4848)
-- [ ] [python爬虫系列教程20 | 对于b站这样的滑动验证码，不好意思，照样自动识别](https://vip.fxxkpython.com/?p=4878)
-- [ ] [python爬虫系列教程21 | 以后我再讲「模拟登录」我就是狗](https://vip.fxxkpython.com/?p=4919)
+- [x] [python爬虫系列教程10 | 这次，将带你使用 selenium+ phantomJS 爬取b站上的NBA形象大使蔡徐坤和他的球友们](https://vip.fxxkpython.com/?p=4699)
+- [x] [python爬虫系列教程11 | python爬虫的时候对Json数据的解析](https://vip.fxxkpython.com/?p=4723)
+- [x] [python爬虫系列教程12 | 秒爬，python爬虫中的多线程，多进程，协程](https://vip.fxxkpython.com/?p=4736)
+- [x] [python爬虫系列教程13 | 就这么说吧，如果你不懂python多线程和线程池，那就去河边摸鱼！](https://vip.fxxkpython.com/?p=4756)
+- [x] [python爬虫系列教程14 | 害羞，用多线程秒爬那些万恶的妹纸们，纸巾呢？](https://vip.fxxkpython.com/?p=5293)
+- [x] [python爬虫系列教程15 | 你，快去试试用多进程的方式重新去爬取豆瓣上的电影](https://vip.fxxkpython.com/?p=4793)
+- [x] [python爬虫系列教程16 | 听说你又被封 ip 了，你要学会伪装好自己，这次说说伪装你的头部](https://vip.fxxkpython.com/?p=4803)
+- [x] [python爬虫系列教程17 | 就算你被封了也能继续爬，使用IP代理池伪装你的IP地址，让IP飘一会](https://vip.fxxkpython.com/?p=4818)
+- [x] [python爬虫系列教程18 | 遇到需要的登录的网站怎么办？用这3招轻松搞定！](https://vip.fxxkpython.com/?p=4833)
+- [x] [python爬虫系列教程19 | 小帅b教你如何识别图片验证码](https://vip.fxxkpython.com/?p=4848)
+- [x] [python爬虫系列教程20 | 对于b站这样的滑动验证码，不好意思，照样自动识别](https://vip.fxxkpython.com/?p=4878)
+- [x] [python爬虫系列教程21 | 以后我再讲「模拟登录」我就是狗](https://vip.fxxkpython.com/?p=4919)
 - [ ] [python爬虫系列教程22 | 手机，这次要让你上来自己动了。这就是 Appium+Python 的牛x之处](https://vip.fxxkpython.com/?p=4929)
 - [ ] [python爬虫系列教程23 | 搞事情了，用 Appium 爬取你的微信朋友圈。](https://vip.fxxkpython.com/?p=4950)
 - [ ] [python爬虫系列教程24 |爬取下来的数据怎么保存？ CSV 了解一下](https://vip.fxxkpython.com/?p=4975)
@@ -133,7 +133,6 @@ peace.
 
 ## Python 视频号
 
-
 <a href="https://fxxkpython.com"><img src="https://user-images.githubusercontent.com/11805948/148672594-3beb1694-e4d8-4d50-bc30-db0495379ea3.JPG" align="left" height="250" width="250"></a>
 
 ## 通往Python高手之路
@@ -142,3 +141,7 @@ peace.
 
 
 转载自https://github.com:wistbean/learn_python3_spider
+
+
+
+- Tesseract识别验证码
