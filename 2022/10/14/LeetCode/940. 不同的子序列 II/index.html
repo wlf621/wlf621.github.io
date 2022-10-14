@@ -12,7 +12,7 @@
 
 
 
-<title>Linux 常用操作 | WLF</title>
+<title>940. 不同的子序列 II | WLF</title>
 
 
 
@@ -39,6 +39,45 @@
 
     
     
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
         
     
 
@@ -182,7 +221,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Linux 常用操作</h1>
+            <h1 class="post-title">940. 不同的子序列 II</h1>
             
                 <div class="post-meta">
                     
@@ -191,85 +230,68 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;21:31:39</a>
+                        Date: <a href="#">十月 14, 2022&nbsp;&nbsp;22:18:07</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
-<p>Linux uname（英文全拼：unix name）命令用于显示系统信息。</p>
+            <p>给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。</p>
+<p>字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。</p>
+<ul>
+<li>例如，”ace” 是 “abcde” 的一个子序列，但 “aec” 不是。</li>
+</ul>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abc&quot;</span><br><span class="line">输出：7</span><br><span class="line">解释：7 个不同的子序列分别是 &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;ab&quot;, &quot;ac&quot;, &quot;bc&quot;, 以及 &quot;abc&quot;。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aba&quot;</span><br><span class="line">输出：6</span><br><span class="line">解释：6 个不同的子序列分别是 &quot;a&quot;, &quot;b&quot;, &quot;ab&quot;, &quot;ba&quot;, &quot;aa&quot; 以及 &quot;aba&quot;。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aaa&quot;</span><br><span class="line">输出：3</span><br><span class="line">解释：3 个不同的子序列分别是 &quot;a&quot;, &quot;aa&quot; 以及 &quot;aaa&quot;。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提示：</p>
+<ul>
+<li>1 &lt;&#x3D; s.length &lt;&#x3D; 2000</li>
+<li>s 仅由小写英文字母组成</li>
+</ul>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
+<details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+public:
+    int distinctSubseqII(string s) &#123;
+        int m = (int)1e9 + 7, ans = 0;
+        vector<vector<int>> dp(s.size() + 1, vector<int>(26, 0));
+        for (int i = 0; i < s.size(); i++) &#123;
+            int c = s[i] - 'a';
+            for (int j = 0; j < 26; j++) &#123;
+                if (c == j) &#123;
+                    int cur = 1;
+                    for (int k = 0; k < 26; k++) &#123;
+                        cur = (cur + dp[i][k]) % m;
+                    &#125;
+                    dp[i + 1][j] = cur;
+                &#125;
+                else &#123;
+                    dp[i + 1][j] = dp[i][j];
+                &#125;
+            &#125;
+        &#125;
+        for (int k = 0; k < 26; k++) &#123;
+            ans = (ans + dp[s.size()][k]) % m;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+</int></vector<int></code></pre></details>
 
-<p><strong>参数说明</strong>：</p>
-<ul>
-<li>-a或–all 　显示全部的信息。</li>
-<li>-m或–machine 　显示电脑类型。</li>
-<li>-n或–nodename 　显示在网络上的主机名称。</li>
-<li>-r或–release 　显示操作系统的发行编号。</li>
-<li>-s或–sysname 　显示操作系统名称。</li>
-<li>-v 　显示操作系统的版本。</li>
-<li>–help 　显示帮助。</li>
-<li>–version 　显示版本信息。</li>
-</ul>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><blockquote>
-<p>管理服务(unit)<br>systemctl 提供了一组子命令来管理单个的 unit</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl [command] [unit]</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>查看版本号<br>systemctl –-version</li>
-<li>command 主要有：<ul>
-<li>start：立刻启动后面接的 unit。</li>
-<li>stop：立刻关闭后面接的 unit。</li>
-<li>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</li>
-<li>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</li>
-<li>enable：设置下次开机时，后面接的 unit 会被启动。</li>
-<li>disable：设置下次开机时，后面接的 unit 不会被启动。</li>
-<li>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</li>
-<li>is-active：目前有没有正在运行中。</li>
-<li>is-enabled：开机时有没有默认要启用这个 unit。</li>
-<li>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</li>
-<li>show：列出 unit 的配置。</li>
-<li>mask：注销 unit，注销后你就无法启动这个 unit 了。</li>
-<li>unmask：取消对 unit 的注销。</li>
-</ul>
-</li>
-</ul>
-<h3 id="netstate"><a href="#netstate" class="headerlink" title="netstate"></a>netstate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][--ip]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>-a或–all 显示所有连线中的Socket。</li>
-<li>-A&lt;网络类型&gt;或–&lt;网络类型&gt; 列出该网络类型连线中的相关地址。</li>
-<li>-c或–continuous 持续列出网络状态。</li>
-<li>-C或–cache 显示路由器配置的快取信息。</li>
-<li>-e或–extend 显示网络其他相关信息。</li>
-<li>-F或–fib 显示路由缓存。</li>
-<li>-g或–groups 显示多重广播功能群组组员名单。</li>
-<li>-h或–help 在线帮助。</li>
-<li>-i或–interfaces 显示网络界面信息表单。</li>
-<li>-l或–listening 显示监控中的服务器的Socket。</li>
-<li>-M或–masquerade 显示伪装的网络连线。</li>
-<li>-n或–numeric 直接使用IP地址，而不通过域名服务器。</li>
-<li>-N或–netlink或–symbolic 显示网络硬件外围设备的符号连接名称。</li>
-<li>-o或–timers 显示计时器。</li>
-<li>-p或–programs 显示正在使用Socket的程序识别码和程序名称。</li>
-<li>-r或–route 显示Routing Table。</li>
-<li>-s或–statistics 显示网络工作信息统计表。</li>
-<li>-t或–tcp 显示TCP传输协议的连线状况。</li>
-<li>-u或–udp 显示UDP传输协议的连线状况。</li>
-<li>-v或–verbose 显示指令执行过程。</li>
-<li>-V或–version 显示版本信息。</li>
-<li>-w或–raw 显示RAW传输协议的连线状况。</li>
-<li>-x或–unix 此参数的效果和指定”-A unix”参数相同。</li>
-<li>–ip或–inet 此参数的效果和指定”-A inet”参数相同。</li>
-</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/distinct-subsequences-ii">https://leetcode.cn/problems/distinct-subsequences-ii</a></p>
 
         </div>
 
@@ -284,7 +306,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/14/LeetCode/940.%20%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97%20II/">https://wlf621.github.io/2022/10/14/LeetCode/940.%20%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97%20II/</a></span>
                     </p>
                 
                 
@@ -308,7 +330,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Linux/"># Linux</a>
+                        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"># 动态规划</a>
                     
                         
                 </span>
@@ -321,10 +343,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/26/LeetCode/17.09/">17.19</a>
             
-            
-            <a class="next" rel="next" href="/2022/09/25/LeetCode/788/">788</a>
+            <a class="next" rel="next" href="/2022/10/13/LeetCode/769.%20%E6%9C%80%E5%A4%9A%E8%83%BD%E5%AE%8C%E6%88%90%E6%8E%92%E5%BA%8F%E7%9A%84%E5%9D%97/">769. 最多能完成排序的块</a>
             
         </section>
 

@@ -12,7 +12,7 @@
 
 
 
-<title>Linux 常用操作 | WLF</title>
+<title>769. 最多能完成排序的块 | WLF</title>
 
 
 
@@ -39,6 +39,45 @@
 
     
     
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
         
     
 
@@ -182,7 +221,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Linux 常用操作</h1>
+            <h1 class="post-title">769. 最多能完成排序的块</h1>
             
                 <div class="post-meta">
                     
@@ -191,85 +230,78 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;21:31:39</a>
+                        Date: <a href="#">十月 13, 2022&nbsp;&nbsp;22:18:07</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
-<p>Linux uname（英文全拼：unix name）命令用于显示系统信息。</p>
+            <p>给定一个长度为 n 的整数数组 arr ，它表示在 [0, n - 1] 范围内的整数的排列。</p>
+<p>我们将 arr 分割成若干 块 (即分区)，并对每个块单独排序。将它们连接起来后，使得连接的结果和按升序排序后的原数组相同。</p>
+<p>返回数组能分成的最多块数量。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: arr = [4,3,2,1,0]</span><br><span class="line">输出: 1</span><br><span class="line">解释:</span><br><span class="line">将数组分成2块或者更多块，都无法得到所需的结果。</span><br><span class="line">例如，分成 [4, 3], [2, 1, 0] 的结果是 [3, 4, 0, 1, 2]，这不是有序的数组。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: arr = [1,0,2,3,4]</span><br><span class="line">输出: 4</span><br><span class="line">解释:</span><br><span class="line">我们可以把它分成两块，例如 [1, 0], [2, 3, 4]。</span><br><span class="line">然而，分成 [1, 0], [2], [3], [4] 可以得到最多的块数。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提示:</p>
+<ul>
+<li>n &#x3D;&#x3D; arr.length</li>
+</ul>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
-
-<p><strong>参数说明</strong>：</p>
 <ul>
-<li>-a或–all 　显示全部的信息。</li>
-<li>-m或–machine 　显示电脑类型。</li>
-<li>-n或–nodename 　显示在网络上的主机名称。</li>
-<li>-r或–release 　显示操作系统的发行编号。</li>
-<li>-s或–sysname 　显示操作系统名称。</li>
-<li>-v 　显示操作系统的版本。</li>
-<li>–help 　显示帮助。</li>
-<li>–version 　显示版本信息。</li>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 10</li>
+<li>0 &lt;&#x3D; arr[i] &lt; n</li>
+<li>arr 中每个元素都 不同</li>
 </ul>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><blockquote>
-<p>管理服务(unit)<br>systemctl 提供了一组子命令来管理单个的 unit</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl [command] [unit]</span><br></pre></td></tr></table></figure>
+<details><summary>Python</summary><pre><code>
+class Solution(object):
+    def maxChunksToSorted(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: int
+        """
+        ans = 0
+        flag = False
+        for i in range(len(arr)):
+            if flag and i <= 1 r: r="max(r," arr[i]) continue if arr[i] <="i:" ans="ans" +> i:
+                ans = ans + 1
+                r = arr[i]
+                flag = True
 
+<pre><code>    return ans
+</code></pre>
+<p></p></=></code></pre></details><p></p>
+<details><summary>C++</summary><pre><code>
+class Solution &#123;
+public:
+    int maxChunksToSorted(vector<int>& arr) &#123;
+        int ans = 0;
+        bool flag = false;
+        int r = 0;
+        for (int i = 0; i < arr.size(); i++) &#123;
+            if (flag && i <= r) &#123; r="max(r," arr[i]); continue; &#125; if (arr[i] <="i)" ans++;> i) &#123;
+                flag = true;
+                ans++;
+                r = arr[i];
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+</=></int></code></pre></details>
 
-
-<ul>
-<li>查看版本号<br>systemctl –-version</li>
-<li>command 主要有：<ul>
-<li>start：立刻启动后面接的 unit。</li>
-<li>stop：立刻关闭后面接的 unit。</li>
-<li>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</li>
-<li>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</li>
-<li>enable：设置下次开机时，后面接的 unit 会被启动。</li>
-<li>disable：设置下次开机时，后面接的 unit 不会被启动。</li>
-<li>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</li>
-<li>is-active：目前有没有正在运行中。</li>
-<li>is-enabled：开机时有没有默认要启用这个 unit。</li>
-<li>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</li>
-<li>show：列出 unit 的配置。</li>
-<li>mask：注销 unit，注销后你就无法启动这个 unit 了。</li>
-<li>unmask：取消对 unit 的注销。</li>
-</ul>
-</li>
-</ul>
-<h3 id="netstate"><a href="#netstate" class="headerlink" title="netstate"></a>netstate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][--ip]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>-a或–all 显示所有连线中的Socket。</li>
-<li>-A&lt;网络类型&gt;或–&lt;网络类型&gt; 列出该网络类型连线中的相关地址。</li>
-<li>-c或–continuous 持续列出网络状态。</li>
-<li>-C或–cache 显示路由器配置的快取信息。</li>
-<li>-e或–extend 显示网络其他相关信息。</li>
-<li>-F或–fib 显示路由缓存。</li>
-<li>-g或–groups 显示多重广播功能群组组员名单。</li>
-<li>-h或–help 在线帮助。</li>
-<li>-i或–interfaces 显示网络界面信息表单。</li>
-<li>-l或–listening 显示监控中的服务器的Socket。</li>
-<li>-M或–masquerade 显示伪装的网络连线。</li>
-<li>-n或–numeric 直接使用IP地址，而不通过域名服务器。</li>
-<li>-N或–netlink或–symbolic 显示网络硬件外围设备的符号连接名称。</li>
-<li>-o或–timers 显示计时器。</li>
-<li>-p或–programs 显示正在使用Socket的程序识别码和程序名称。</li>
-<li>-r或–route 显示Routing Table。</li>
-<li>-s或–statistics 显示网络工作信息统计表。</li>
-<li>-t或–tcp 显示TCP传输协议的连线状况。</li>
-<li>-u或–udp 显示UDP传输协议的连线状况。</li>
-<li>-v或–verbose 显示指令执行过程。</li>
-<li>-V或–version 显示版本信息。</li>
-<li>-w或–raw 显示RAW传输协议的连线状况。</li>
-<li>-x或–unix 此参数的效果和指定”-A unix”参数相同。</li>
-<li>–ip或–inet 此参数的效果和指定”-A inet”参数相同。</li>
-</ul>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-chunks-to-make-sorted">https://leetcode.cn/problems/max-chunks-to-make-sorted</a></p>
 
         </div>
 
@@ -284,7 +316,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/13/LeetCode/769.%20%E6%9C%80%E5%A4%9A%E8%83%BD%E5%AE%8C%E6%88%90%E6%8E%92%E5%BA%8F%E7%9A%84%E5%9D%97/">https://wlf621.github.io/2022/10/13/LeetCode/769.%20%E6%9C%80%E5%A4%9A%E8%83%BD%E5%AE%8C%E6%88%90%E6%8E%92%E5%BA%8F%E7%9A%84%E5%9D%97/</a></span>
                     </p>
                 
                 
@@ -308,7 +340,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Linux/"># Linux</a>
+                        <a href="/tags/%E8%B4%AA%E5%BF%83/"># 贪心</a>
                     
                         
                 </span>
@@ -321,10 +353,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/09/26/LeetCode/17.09/">17.19</a>
+                <a class="prev" rel="prev" href="/2022/10/14/LeetCode/940.%20%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97%20II/">940. 不同的子序列 II</a>
             
             
-            <a class="next" rel="next" href="/2022/09/25/LeetCode/788/">788</a>
+            <a class="next" rel="next" href="/2022/10/12/LeetCode/817.%E9%93%BE%E8%A1%A8%E7%BB%84%E4%BB%B6/">817.链表组件</a>
             
         </section>
 
