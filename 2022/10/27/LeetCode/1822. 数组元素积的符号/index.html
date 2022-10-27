@@ -12,7 +12,7 @@
 
 
 
-<title>862. 和至少为 K 的最短子数组 | WLF</title>
+<title>1822. 数组元素积的符号 | WLF</title>
 
 
 
@@ -221,7 +221,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">862. 和至少为 K 的最短子数组</h1>
+            <h1 class="post-title">1822. 数组元素积的符号</h1>
             
                 <div class="post-meta">
                     
@@ -230,7 +230,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">十月 26, 2022&nbsp;&nbsp;22:18:07</a>
+                        Date: <a href="#">十月 27, 2022&nbsp;&nbsp;22:18:07</a>
                         </span>
                     
                     
@@ -246,26 +246,36 @@
         </header>
 
         <div class="post-content">
-            <p>给你一个整数数组 nums 和一个整数 k ，找出 nums 中和至少为 k 的 最短非空子数组 ，并返回该子数组的长度。如果不存在这样的 子数组 ，返回 -1 。</p>
-<p>子数组 是数组中 连续 的一部分。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1], k = 1</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,2], k = 4</span><br><span class="line">输出：-1</span><br></pre></td></tr></table></figure>
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [2,-1,2], k = 3</span><br><span class="line">输出：3</span><br></pre></td></tr></table></figure>
-
-
+            <p>已知函数 signFunc(x) 将会根据 x 的正负返回特定值：</p>
+<p>如果 x 是正数，返回 1 。<br>如果 x 是负数，返回 -1 。<br>如果 x 是等于 0 ，返回 0 。<br>给你一个整数数组 nums 。令 product 为数组 nums 中所有元素值的乘积。</p>
+<p>返回 signFunc(product) 。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [-1,-2,-3,-4,3,2,1]</span><br><span class="line">输出：1</span><br><span class="line">解释：数组中所有值的乘积是 144 ，且 signFunc(144) = 1</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,5,0,2,-3]</span><br><span class="line">输出：0</span><br><span class="line">解释：数组中所有值的乘积是 0 ，且 signFunc(0) = 0</span><br></pre></td></tr></table></figure>
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [-1,1,-1,1,-1]</span><br><span class="line">输出：-1</span><br><span class="line">解释：数组中所有值的乘积是 -1 ，且 signFunc(-1) = -1</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>提示：</p>
 <ul>
-<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 10^5</li>
-<li>-10^5 &lt;&#x3D; nums[i] &lt;&#x3D; 10^5</li>
-<li>1 &lt;&#x3D; k &lt;&#x3D; 10^9</li>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 1000</li>
+<li>-100 &lt;&#x3D; nums[i] &lt;&#x3D; 100</li>
 </ul>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+public:
+    int arraySign(vector<int>& nums) &#123;
+        int flag = 1;
+        for (auto v : nums) &#123;
+            if (v < 0) flag *= -1;
+            if (v == 0) return 0;
+        &#125;
 
-<p></p></code></pre></details><p></p>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-subarray-with-sum-at-least-k">https://leetcode.cn/problems/shortest-subarray-with-sum-at-least-k</a></p>
+<pre><code>    return flag;
+&#125;
+</code></pre>
+<p>};<br></p></int></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sign-of-the-product-of-an-array">https://leetcode.cn/problems/sign-of-the-product-of-an-array</a></p>
 
         </div>
 
@@ -280,7 +290,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/10/26/LeetCode/862.%20%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA%20K%20%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/">https://wlf621.github.io/2022/10/26/LeetCode/862.%20%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA%20K%20%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/">https://wlf621.github.io/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/</a></span>
                     </p>
                 
                 
@@ -304,9 +314,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"># 前缀和</a>
-                    
-                        <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/"># 双端队列</a>
+                        <a href="/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
                     
                         
                 </span>
@@ -319,10 +327,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/">1822. 数组元素积的符号</a>
             
-            
-            <a class="next" rel="next" href="/2022/10/25/LeetCode/934.%20%E6%9C%80%E7%9F%AD%E7%9A%84%E6%A1%A5/">934. 最短的桥</a>
+            <a class="next" rel="next" href="/2022/10/26/LeetCode/862.%20%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA%20K%20%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/">862. 和至少为 K 的最短子数组</a>
             
         </section>
 
