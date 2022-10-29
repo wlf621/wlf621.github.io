@@ -200,7 +200,19 @@
         </header>
 
         <div class="post-content">
-            <h3 id="Git创建远程分支"><a href="#Git创建远程分支" class="headerlink" title="Git创建远程分支"></a>Git创建远程分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b my-test  <span class="comment"># 在当前分支下创建my-test的本地分支分支</span></span><br><span class="line">git push origin my-test  <span class="comment"># 将my-test分支推送到远程</span></span><br><span class="line">git branch --set-upstream-to=origin/my-test <span class="comment"># 将本地分支my-test关联到远程分支my-test上   </span></span><br><span class="line">git branch -a <span class="comment"># 查看远程分支</span></span><br></pre></td></tr></table></figure>
+            <h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;cxwanglunfei@163.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Git创建远程分支"><a href="#Git创建远程分支" class="headerlink" title="Git创建远程分支"></a>Git创建远程分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b my-test  <span class="comment"># 在当前分支下创建my-test的本地分支分支</span></span><br><span class="line">git push origin my-test  <span class="comment"># 将my-test分支推送到远程</span></span><br><span class="line">git branch --set-upstream-to=origin/my-test <span class="comment"># 将本地分支my-test关联到远程分支my-test上   </span></span><br><span class="line">git branch -a <span class="comment"># 查看远程分支</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="built_in">local</span> user.name=wlf</span><br><span class="line">git config --<span class="built_in">local</span> user.email=cxwanglunfei@163.com</span><br></pre></td></tr></table></figure>
+
+
+
+
         </div>
 
         
