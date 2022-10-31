@@ -12,7 +12,7 @@
 
 
 
-<title>1822. 数组元素积的符号 | WLF</title>
+<title>481. 神奇字符串 | WLF</title>
 
 
 
@@ -221,7 +221,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">1822. 数组元素积的符号</h1>
+            <h1 class="post-title">481. 神奇字符串</h1>
             
                 <div class="post-meta">
                     
@@ -246,36 +246,60 @@
         </header>
 
         <div class="post-content">
-            <p>已知函数 signFunc(x) 将会根据 x 的正负返回特定值：</p>
-<p>如果 x 是正数，返回 1 。<br>如果 x 是负数，返回 -1 。<br>如果 x 是等于 0 ，返回 0 。<br>给你一个整数数组 nums 。令 product 为数组 nums 中所有元素值的乘积。</p>
-<p>返回 signFunc(product) 。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [-1,-2,-3,-4,3,2,1]</span><br><span class="line">输出：1</span><br><span class="line">解释：数组中所有值的乘积是 144 ，且 signFunc(144) = 1</span><br></pre></td></tr></table></figure>
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,5,0,2,-3]</span><br><span class="line">输出：0</span><br><span class="line">解释：数组中所有值的乘积是 0 ，且 signFunc(0) = 0</span><br></pre></td></tr></table></figure>
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [-1,1,-1,1,-1]</span><br><span class="line">输出：-1</span><br><span class="line">解释：数组中所有值的乘积是 -1 ，且 signFunc(-1) = -1</span><br></pre></td></tr></table></figure>
+            <p>神奇字符串 s 仅由 ‘1’ 和 ‘2’ 组成，并需要遵守下面的规则：</p>
+<ul>
+<li>神奇字符串 s 的神奇之处在于，串联字符串中 <code>&#39;1&#39;</code> 和 <code>&#39;2&#39;</code> 的连续出现次数可以生成该字符串。</li>
+</ul>
+<p><code>s</code> 的前几个元素是 <code>s = &quot;1221121221221121122……&quot;</code> 。如果将 <code>s</code> 中连续的若干 <code>1</code> 和 <code>2</code> 进行分组，可以得到 <code>&quot;1 22 11 2 1 22 1 22 11 2 11 22 ......&quot;</code> 。每组中 <code>1</code> 或者 <code>2</code> 的出现次数分别是 <code>&quot;1 2 2 1 1 2 1 2 2 1 2 2 ......&quot;</code> 。上面的出现次数正是 <code>s</code> 自身。</p>
+<p>给你一个整数 <code>n</code> ，返回在神奇字符串 <code>s</code> 的前 <code>n</code> 个数字中 <code>1</code> 的数目。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：n = 6</span><br><span class="line">输出：3</span><br><span class="line">解释：神奇字符串 s 的前 6 个元素是 “122112”，它包含三个 1，因此返回 3 。 </span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：n = 1</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+
+
 
 <blockquote>
 <p>提示：</p>
 <ul>
-<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 1000</li>
-<li>-100 &lt;&#x3D; nums[i] &lt;&#x3D; 100</li>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 10^5</li>
 </ul>
 </blockquote>
 <details><summary>查看代码</summary><pre><code>
 class Solution &#123;
 public:
-    int arraySign(vector<int>& nums) &#123;
-        int flag = 1;
-        for (auto v : nums) &#123;
-            if (v < 0) flag *= -1;
-            if (v == 0) return 0;
+    int magicalString(int n) &#123;
+        string s = "122";
+        int l = 2, r = 3;
+        int cnt = 0, ans = 0;
+        while (r < n) &#123;
+            if (s[l] - '0' == cnt) &#123;
+                l++;
+                cnt = 0;
+            &#125;
+            else &#123;
+                if (cnt == 0) &#123;
+                    s.push_back('3' - s[r - 1] + '0');
+                    cnt++;
+                    r++;
+                &#125;
+                else &#123;
+                    s.push_back(s[r - 1]);
+                    cnt++;
+                    r++;
+                &#125;
+            &#125;
         &#125;
+        for (int i = 0; i < n; i++) &#123;
+            if (s[i] == '1') &#123;
+                ans++;
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
 
-<pre><code>    return flag;
-&#125;
-</code></pre>
-<p>};<br></p></int></code></pre></details><p></p>
+<p></p></code></pre></details><p></p>
 <p>来源：力扣（LeetCode）</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sign-of-the-product-of-an-array">https://leetcode.cn/problems/sign-of-the-product-of-an-array</a></p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/magical-string">https://leetcode.cn/problems/magical-string</a></p>
 
         </div>
 
@@ -290,7 +314,7 @@ public:
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/">https://wlf621.github.io/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/</a></span>
+                        <span><a href="https://wlf621.github.io/2022/10/27/LeetCode/481.%20%E7%A5%9E%E5%A5%87%E5%AD%97%E7%AC%A6%E4%B8%B2/">https://wlf621.github.io/2022/10/27/LeetCode/481.%20%E7%A5%9E%E5%A5%87%E5%AD%97%E7%AC%A6%E4%B8%B2/</a></span>
                     </p>
                 
                 
@@ -314,7 +338,7 @@ public:
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
+                        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"># 双指针</a>
                     
                         
                 </span>
@@ -327,10 +351,10 @@ public:
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/10/28/nginx-php%E9%85%8D%E7%BD%AE/">nginx + php 配置</a>
+                <a class="prev" rel="prev" href="/2022/10/27/LeetCode/1822.%20%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%A7%AF%E7%9A%84%E7%AC%A6%E5%8F%B7/">1822. 数组元素积的符号</a>
             
             
-            <a class="next" rel="next" href="/2022/10/27/LeetCode/481.%20%E7%A5%9E%E5%A5%87%E5%AD%97%E7%AC%A6%E4%B8%B2/">481. 神奇字符串</a>
+            <a class="next" rel="next" href="/2022/10/26/LeetCode/862.%20%E5%92%8C%E8%87%B3%E5%B0%91%E4%B8%BA%20K%20%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84/">862. 和至少为 K 的最短子数组</a>
             
         </section>
 
