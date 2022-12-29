@@ -5,6 +5,16 @@ tags:
 - Linux
 ---
 
+[toc]
+
+## 常用操作
+
+**设置服务开机启动**
+
+- systemctl enable [servicename]@[username]
+
+## 命令
+
 ### uname
 
 > Linux uname（英文全拼：unix name）命令用于显示系统信息。
@@ -54,7 +64,7 @@ systemctl [command] [unit]
   - mask：注销 unit，注销后你就无法启动这个 unit 了。
   - unmask：取消对 unit 的注销。
 
-### netstate
+### netstat
 
 ```shell
 netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
@@ -84,3 +94,38 @@ netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
 - -w或--raw 显示RAW传输协议的连线状况。
 - -x或--unix 此参数的效果和指定"-A unix"参数相同。
 - --ip或--inet 此参数的效果和指定"-A inet"参数相同。
+
+### yum
+
+- 列出已安装的软件清单: **yum -qa**
+- 列出所有可更新的软件清单命令：**yum check-update**
+- 更新所有软件命令：**yum update**
+- 仅安装指定的软件命令：**yum install <package_name>**
+- 仅更新指定的软件命令：**yum update <package_name>**
+- 列出所有可安裝的软件清单命令：**yum list**
+- 删除软件包命令：**yum remove <package_name>**
+- 查找软件包命令：**yum search <keyword>**
+- 清除缓存命令:
+  - **yum clean packages**: 清除缓存目录下的软件包
+  - **yum clean headers**: 清除缓存目录下的 headers
+  - **yum clean oldheaders**: 清除缓存目录下旧的 headers
+  - **yum clean, yum clean all (= yum clean packages; yum clean oldheaders)** :清除缓存目录下的软件包及旧的 header
+
+### df
+
+- **df -hl**：查看磁盘剩余空间
+
+- **df -h**：查看每个根路径的分区大小
+
+  
+
+### du
+
+- **-s**：对每个Names参数只给出占用的数据块总数。
+- **-a**：递归地显示指定目录中各文件及子目录中各文件占用的数据块数。若既不指定-s，也不指定-a，则只显示Names中的每一个目录及其中的各子目录所占的磁盘块数。
+- **-b**：以字节为单位列出磁盘空间使用情况（系统默认以k字节为单位）。
+- **-k**：以1024字节为单位列出磁盘空间使用情况。
+- **-c**：最后再加上一个总计（系统默认设置）。
+- **-l**：计算所有的文件大小，对硬链接文件，则计算多次。
+- **-x**：跳过在不同文件系统上的目录不予统计。
+- **-h**：以K，M，G为单位，提高信息的可读性。
