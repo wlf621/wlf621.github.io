@@ -288,6 +288,55 @@ Options:
 
 
 
+## 分层镜像
+
+​	所有的 Docker 镜像都起始于一个基础镜像层，当进行修改或增加新的内容时，就会在当前镜像层之
+上，创建新的镜像层。
+
+![镜像分层](image-layers.png)
+
+> Docker镜像都是只读的，当容器启动时，一个新的可写层被加载到镜像的顶部！
+> 这一层就是我们通常说的容器层，容器之下的都叫镜像层！  
+
+
+
+## commit镜像
+
+```bash
+[root@VM-8-3-centos ~]# docker commit --help
+Usage:  docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+Create a new image from a container's changes
+
+Options:
+  -a, --author string    Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+  -c, --change list      Apply Dockerfile instruction to the created image
+  -m, --message string   Commit message
+  -p, --pause            Pause container during commit (default true)
+
+```
+
+
+
+# 容器数据卷
+
+## 什么是容器数据卷？
+
+​	容器挂载主机数据卷，实现数据共享
+
+
+
+## 使用数据卷
+
+> 方式一：使用docker run -v命令
+
+```bash
+docker run -it --name python:3.8 -p 80:5000 -v /usr/share/github_codes/timeManager:/opt/timeManager python:3.8 bash
+```
+
+主机目录/usr/share/github_codes/timeManager挂载到/opt/timeManager，类似软链接，把/opt/timeManager链接到/usr/share/github_codes/timeManager
+
+
+
 # 可视化
 
 **portainer**
@@ -300,6 +349,22 @@ docker run -d -p 80:9000 \
 
 
 # 实践操作
+
+## Mysql
+
+```bash
+[root@VM-8-3-centos ~]# docker pull mysql:5.7
+[root@VM-8-3-centos home]# docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=QAZWSX@1234 --name mysql-timemanager mysql:5.7
+
+-v	容器内路径:权限(ro/rw)			 # 匿名挂载
+-v	卷名:容器内路径:权限(ro/rw)		# 具名挂载
+-v	宿主路径:容器内路径:权限(ro/rw)	   # 指定目录挂载
+# 路径为绝对路径
+# ro  read only
+# rw  readwrite
+```
+
+
 
 ## 运行python3项目
 
