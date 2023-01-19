@@ -387,3 +387,24 @@ docker commit -a "wlf" -m "time manager" 74d22634c17f  time_manager:1.0.0
 
 
 
+## DockerFile
+
+```shell
+# dockerfile 文件示例
+FROM centos
+MAINTAINER wlf<cxwanglunfei@163.com>
+ENV MYPATH /usr/share/docker_learning
+WORKDIR $MYPATH
+# RUN yum -y install vim   # centos不再提供服务，原始镜像源会下载失败
+# RUN yum -y install net-tools
+VOLUME ["volume_test"]
+EXPOSE 80
+CMD echo $MYPATH
+CMD echo "----------end--------"
+CMD /bin/bash
+```
+
+```bash
+docker build -f DockerFile -t wlf/centos:1.0.0 
+```
+
