@@ -392,6 +392,10 @@
 
 
 
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dockerfile 文件示例</span></span><br><span class="line">FROM centos</span><br><span class="line">MAINTAINER wlf&lt;cxwanglunfei@163.com&gt;</span><br><span class="line">ENV MYPATH /usr/share/docker_learning</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install vim   <span class="comment"># centos不再提供服务，原始镜像源会下载失败</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install net-tools</span></span><br><span class="line">VOLUME [&quot;volume_test&quot;]</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;----------end--------&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -f DockerFile -t wlf/centos:1.0.0 </span><br></pre></td></tr></table></figure>
+
 
         </div>
 
