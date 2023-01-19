@@ -12,7 +12,7 @@
 
 
 
-<title>WLF</title>
+<title>学习体系 | WLF</title>
 
 
 
@@ -39,6 +39,45 @@
 
     
     
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
         
     
 
@@ -182,7 +221,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">学习体系</h1>
             
                 <div class="post-meta">
                     
@@ -191,17 +230,30 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">十一月 19, 2022&nbsp;&nbsp;16:36:48</a>
+                        Date: <a href="#">一月 17, 2023&nbsp;&nbsp;16:18:02</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/">学习体系</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;wanwan621x&#x27;;</span><br></pre></td></tr></table></figure>
-
+            <h1 id="需要持续学习"><a href="#需要持续学习" class="headerlink" title="需要持续学习"></a>需要持续学习</h1><ol>
+<li><strong>网络(数通，核心网，网络基础)</strong></li>
+<li><strong>数据库</strong></li>
+<li><strong>容器等云化技术</strong></li>
+<li><strong>算法编程能力</strong></li>
+<li><strong>操作系统</strong></li>
+<li><strong>编程语言(C&#x2F;C++ python Go)</strong></li>
+</ol>
 
         </div>
 
@@ -216,7 +268,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://wlf621.github.io/2022/11/19/Mysql%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/11/19/Mysql%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</a></span>
+                        <span><a href="https://wlf621.github.io/2023/01/17/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/">https://wlf621.github.io/2023/01/17/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/</a></span>
                     </p>
                 
                 
@@ -239,6 +291,10 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/"># 学习体系</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -249,10 +305,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/01/17/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/">学习体系</a>
             
-            
-            <a class="next" rel="next" href="/2022/11/07/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">Git基础操作</a>
+            <a class="next" rel="next" href="/2022/11/19/Mysql%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"></a>
             
         </section>
 
