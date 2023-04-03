@@ -379,6 +379,28 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name python:3.8 -p 80:5000 -v /usr/share/github_codes/timeManager:/opt/timeManager python:3.8 bash</span><br></pre></td></tr></table></figure>
 
 <p>主机目录&#x2F;usr&#x2F;share&#x2F;github_codes&#x2F;timeManager挂载到&#x2F;opt&#x2F;timeManager，类似软链接，把&#x2F;opt&#x2F;timeManager链接到&#x2F;usr&#x2F;share&#x2F;github_codes&#x2F;timeManager</p>
+<h2 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p><img src="/2022/11/07/Docker/volumes-from.png" alt="镜像分层"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -it --name centos01 wlf/centos:1.0.1</span><br><span class="line">docker run -d -it --name centos02 --volumes-from centos01 wlf/centos:1.0.1</span><br></pre></td></tr></table></figure>
+
+<h1 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h1><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a><strong>介绍</strong></h3><p>dockerfile是用来构建docker镜像的命令参数脚本文件</p>
+<p><strong>步骤</strong></p>
+<ol>
+<li>编写一个dockerfile文件</li>
+<li>docker build 构建一个镜像</li>
+<li>docker run 运行镜像</li>
+<li>docker push 发布镜像（Docker Hub、阿里云镜像仓库等）</li>
+</ol>
+<h3 id="构建过程"><a href="#构建过程" class="headerlink" title="构建过程"></a>构建过程</h3><ol>
+<li><p>每个保留关键字必须是大写字母</p>
+</li>
+<li><p>从上到下执行</p>
+</li>
+<li><p>‘#‘ 注释</p>
+</li>
+<li><p>每一个指令都会创建提交一个新的镜像层</p>
+<p><img src="/2022/11/07/Docker/dockerfile1.png" alt="镜像分层"></p>
+</li>
+</ol>
 <h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><p><strong>portainer</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:9000 \</span><br><span class="line">--restart=always -v /var/run/docker.sock:/var/run/docker.sock --privileged=<span class="literal">true</span> portainer/portainer</span><br></pre></td></tr></table></figure>
 
@@ -392,9 +414,9 @@
 
 
 
-<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dockerfile 文件示例</span></span><br><span class="line">FROM centos</span><br><span class="line">MAINTAINER wlf&lt;cxwanglunfei@163.com&gt;</span><br><span class="line">ENV MYPATH /usr/share/docker_learning</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install vim   <span class="comment"># centos不再提供服务，原始镜像源会下载失败</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install net-tools</span></span><br><span class="line">VOLUME [&quot;volume_test&quot;]</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;----------end--------&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="DockerFile-1"><a href="#DockerFile-1" class="headerlink" title="DockerFile"></a>DockerFile</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dockerfile 文件示例</span></span><br><span class="line">FROM centos</span><br><span class="line">MAINTAINER wlf&lt;cxwanglunfei@163.com&gt;</span><br><span class="line">ENV MYPATH /usr/share/docker_learning</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install vim   <span class="comment"># centos不再提供服务，原始镜像源会下载失败</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install net-tools</span></span><br><span class="line">VOLUME [&quot;volume_test&quot;]</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;----------end--------&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -f DockerFile -t wlf/centos:1.0.0 </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -f DockerFile -t wlf/centos:1.0.0 </span><br><span class="line">docker run -d -it wlf/centos:1.0.0		<span class="comment">#启动容器</span></span><br></pre></td></tr></table></figure>
 
 
         </div>
