@@ -335,7 +335,39 @@ docker run -it --name python:3.8 -p 80:5000 -v /usr/share/github_codes/timeManag
 
 主机目录/usr/share/github_codes/timeManager挂载到/opt/timeManager，类似软链接，把/opt/timeManager链接到/usr/share/github_codes/timeManager
 
+## 数据卷容器
 
+![镜像分层](volumes-from.png)
+
+```bash
+docker run -d -it --name centos01 wlf/centos:1.0.1
+docker run -d -it --name centos02 --volumes-from centos01 wlf/centos:1.0.1
+```
+
+# DockerFile
+
+### **介绍**
+
+dockerfile是用来构建docker镜像的命令参数脚本文件
+
+**步骤**
+
+1. 编写一个dockerfile文件
+2. docker build 构建一个镜像
+3. docker run 运行镜像
+4. docker push 发布镜像（Docker Hub、阿里云镜像仓库等）
+
+### 构建过程
+
+1. 每个保留关键字必须是大写字母
+
+2. 从上到下执行
+
+3. ‘#‘ 注释
+
+4. 每一个指令都会创建提交一个新的镜像层
+
+   ![镜像分层](dockerfile1.png)
 
 # 可视化
 
@@ -406,5 +438,6 @@ CMD /bin/bash
 
 ```bash
 docker build -f DockerFile -t wlf/centos:1.0.0 
+docker run -d -it wlf/centos:1.0.0		#启动容器
 ```
 
