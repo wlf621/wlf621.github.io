@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>784. 字母大小写全排列 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">784. 字母大小写全排列</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 30, 2022&nbsp;&nbsp;9:18:07</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。</p>
+<p>返回 所有可能得到的字符串集合 。以 任意顺序 返回输出。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;a1b2&quot;</span><br><span class="line">输出：[&quot;a1b2&quot;, &quot;a1B2&quot;, &quot;A1b2&quot;, &quot;A1B2&quot;]</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;3z4&quot;</span><br><span class="line">输出: [&quot;3z4&quot;,&quot;3Z4&quot;]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提示:</p>
+<ul>
+<li>1 &lt;&#x3D; s.length &lt;&#x3D; 12</li>
+<li>s 由小写英文字母、大写英文字母和数字组成</li>
+</ul>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+    int len;
+    vector<string> ans;
+    void help(string &s, int index) &#123;
+        if (index == len) &#123;
+            ans.push_back(s);
+            return;
+        &#125;
+        if (s[index] >= '0' && s[index] <= '9') &#123; help(s, index + 1); return; &#125; s[index]="tolower(s[index]);" public: vector<string> letterCasePermutation(string s) &#123;
+        len = s.size();
+        help(s, 0);
+        return ans;
+    &#125;
+&#125;;
+</=></string></code></pre></details>
+
+
+
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/letter-case-permutation">https://leetcode.cn/problems/letter-case-permutation</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/10/30/LeetCode/784.%20%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E5%85%A8%E6%8E%92%E5%88%97/">https://wlf621.github.io/2022/10/30/LeetCode/784.%20%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E5%85%A8%E6%8E%92%E5%88%97/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%80%92%E5%BD%92/"># 递归</a>
+                    
+                        <a href="/tags/BFS/"># BFS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/11/07/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">Git基础操作</a>
+            
+            
+            <a class="next" rel="next" href="/2022/10/29/LeetCode/1773.%20%E7%BB%9F%E8%AE%A1%E5%8C%B9%E9%85%8D%E6%A3%80%E7%B4%A2%E8%A7%84%E5%88%99%E7%9A%84%E7%89%A9%E5%93%81%E6%95%B0%E9%87%8F/">1773. 统计匹配检索规则的物品数量</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

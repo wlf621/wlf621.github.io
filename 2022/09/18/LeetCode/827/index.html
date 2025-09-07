@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>827 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">827</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 18, 2022&nbsp;&nbsp;23:30:22</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>给你一个大小为 n x n 二进制矩阵 grid 。最多 只能将一格 0 变成 1 。</p>
+<p>返回执行此操作后，grid 中最大的岛屿面积是多少？</p>
+<p>岛屿 由一组上、下、左、右四个方向相连的 1 形成。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><p>输入: grid &#x3D; [[1, 0], [0, 1]]<br>输出: 3<br>解释: 将一格0变成1，最终连通两个小岛得到面积为 3 的岛屿。<br>示例 2:</p>
+<p>输入: grid &#x3D; [[1, 1], [1, 0]]<br>输出: 4<br>解释: 将一格0变成1，岛屿的面积扩大为 4。<br>示例 3:</p>
+<p>输入: grid &#x3D; [[1, 1], [1, 1]]<br>输出: 4<br>解释: 没有0可以让我们变成1，面积依然为 4。</p>
+<details><summary>查看代码</summary><pre><code>
+// dfs
+class Solution &#123;
+    static int dir[][2];
+    bool invaild(int n, int x, int y) &#123;
+        return x < 0 || x >= n || y < 0 || y >= n;
+    &#125;
+    int dfs(vector<vector<int>>& grid, int x, int y, vector<vector<int>>& tag, int t) &#123;
+        int area = 1;
+        tag[x][y] = t;
+        for (int i = 0; i < 4; i++) &#123;
+            int next_x = x + dir[i][0];
+            int next_y = y + dir[i][1];
+            if (invaild(grid.size(), next_x, next_y) || grid[next_x][next_y] == 0 ||
+                tag[next_x][next_y] != 0) &#123;
+                continue;
+            &#125;
+            area += dfs(grid, next_x, next_y, tag, t);
+        &#125;
+        return area;
+    &#125;
+public:
+    int largestIsland(vector<vector<int>>& grid) &#123;
+        int ans = 0;
+        int n = grid.size();
+        vector<vector<int>> tag(n, vector<int>(n, 0));
+        vector<int> area(n * n + 1, 0);
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                if (grid[i][j] == 1 && tag[i][j] == 0) &#123;
+                    int t = i * n + j + 1;
+                    area[t] = dfs(grid, i, j, tag, t);
+                    ans = max(ans, area[t]);
+                &#125;
+            &#125;
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                unordered_set<int> hashSet;
+                if (grid[i][j] == 1) continue;
+                int sum = 1;
+                for (int k = 0; k < 4; k++) &#123;
+                    int next_x = i + dir[k][0];
+                    int next_y = j + dir[k][1];
+                    if (!invaild(grid.size(), next_x, next_y) && tag[next_x][next_y] != 0 && hashSet.count(tag[next_x][next_y]) == 0) &#123;
+                        sum += area[tag[next_x][next_y]];
+                        hashSet.insert(tag[next_x][next_y]);
+                    &#125;
+                &#125;
+                ans = max(ans, sum);
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+int Solution::dir[][2] = &#123; &#123;1, 0&#125;, &#123;0, 1&#125;, &#123;-1, 0&#125;, &#123;0, -1&#125; &#125;;
+// 并查集解法
+class Solution &#123;
+    static int dir[][2];
+    vector<int> area;
+    vector<int> parents;
+    bool invaild(int n, int x, int y) &#123;
+        return x < 0 || x >= n || y < 0 || y >= n;
+    &#125;
+    int find(int x) &#123;
+        if (parents[x] != x) parents[x] = find(parents[x]);
+        return parents[x];
+    &#125;
+    void unionSet(int x, int y) &#123;
+        int px = find(x), py = find(y);
+        if (px == py) &#123;
+            return;
+        &#125;
+        if (area[px] < area[py]) &#123;
+            unionSet(y, x);
+        &#125;
+        else &#123;
+            parents[px] = parents[py];
+            area[py] += area[px];
+        &#125;
+    &#125;
+public:
+    int largestIsland(vector<vector<int>>& grid) &#123;
+        int ans = 0;
+        int n = grid.size();
+        area.resize(n * n + 1);
+        parents.resize(n * n + 1);
+        for (int i = 0; i < n * n + 1; i++) &#123;
+            parents[i] = i;
+            area[i] = 1;
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                if (grid[i][j] == 0) continue;
+                for (int k = 0; k < 4; k++) &#123;
+                    int next_x = i + dir[k][0], next_y = j + dir[k][1];
+                    if (!invaild(grid.size(), next_x, next_y) && grid[next_x][next_y] == 1) &#123;
+                        unionSet(i * n + j + 1, next_x * n + next_y + 1);
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        for (int i = 0; i < n; i++) &#123;
+            for (int j = 0; j < n; j++) &#123;
+                if (grid[i][j] == 1) &#123;
+                    ans = max(ans, area[find(i * n + j + 1)]);
+                    continue;
+                &#125;
+                int sum = 1;
+                unordered_set<int> hashSet;
+                for (int k = 0; k < 4; k++) &#123;
+                    int next_x = i + dir[k][0];
+                    int next_y = j + dir[k][1];
+                    int t = next_x * n + next_y + 1;
+                    if (!invaild(grid.size(), next_x, next_y) && hashSet.count(find(t)) == 0 && grid[next_x][next_y] != 0) &#123;
+                        sum += area[find(t)];
+                        hashSet.insert(find(t));
+                    &#125;
+                &#125;
+                ans = max(ans, sum);
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+int Solution::dir[][2] = &#123; &#123;1, 0&#125;, &#123;0, 1&#125;, &#123;-1, 0&#125;, &#123;0, -1&#125; &#125;;
+</int></vector<int></int></int></int></int></int></vector<int></vector<int></vector<int></vector<int></code></pre></details>
+
+<p>REF:<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/making-a-large-island">力扣（LeetCode）</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/09/18/LeetCode/827/">https://wlf621.github.io/2022/09/18/LeetCode/827/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/DFS/"># DFS</a>
+                    
+                        <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/"># 并查集</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/19/LeetCode/1636/">1636</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/17/C++%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">C++知识总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

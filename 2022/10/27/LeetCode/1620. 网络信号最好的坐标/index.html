@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>1620. 网络信号最好的坐标 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">1620. 网络信号最好的坐标</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 27, 2022&nbsp;&nbsp;22:18:07</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>数组  towers  中包含一些网络信号塔，其中 towers[i] &#x3D; [xi, yi, qi] 表示第 i 个网络信号塔的坐标是 (xi, yi) 且信号强度参数为 qi 。所有坐标都是在  X-Y 坐标系内的 整数 坐标。两个坐标之间的距离用 欧几里得距离 计算。</p>
+<p>整数 radius 表示一个塔 能到达 的 最远距离 。如果一个坐标跟塔的距离在 radius 以内，那么该塔的信号可以到达该坐标。在这个范围以外信号会很微弱，所以 radius 以外的距离该塔是 不能到达的 。</p>
+<p>如果第 i 个塔能到达 (x, y) ，那么该塔在此处的信号为 ⌊qi &#x2F; (1 + d)⌋ ，其中 d 是塔跟此坐标的距离。一个坐标的 信号强度 是所有 能到达 该坐标的塔的信号强度之和。</p>
+<p>请你返回数组 [cx, cy] ，表示 信号强度 最大的 整数 坐标点 (cx, cy) 。如果有多个坐标网络信号一样大，请你返回字典序最小的 非负 坐标。</p>
+<blockquote>
+<p>注意：</p>
+<p>坐标 (x1, y1) 字典序比另一个坐标 (x2, y2) 小，需满足以下条件之一：<br>要么 x1 &lt; x2 ，<br>要么 x1 &#x3D;&#x3D; x2 且 y1 &lt; y2 。<br>⌊val⌋ 表示小于等于 val 的最大整数（向下取整函数）。</p>
+</blockquote>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/10/17/untitled-diagram.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：towers = [[1,2,5],[2,1,7],[3,1,9]], radius = 2</span><br><span class="line">输出：[2,1]</span><br><span class="line">解释：</span><br><span class="line">坐标 (2, 1) 信号强度之和为 13</span><br><span class="line">- 塔 (2, 1) 强度参数为 7 ，在该点强度为 ⌊7 / (1 + sqrt(0)⌋ = ⌊7⌋ = 7</span><br><span class="line">- 塔 (1, 2) 强度参数为 5 ，在该点强度为 ⌊5 / (1 + sqrt(2)⌋ = ⌊2.07⌋ = 2</span><br><span class="line">- 塔 (3, 1) 强度参数为 9 ，在该点强度为 ⌊9 / (1 + sqrt(1)⌋ = ⌊4.5⌋ = 4</span><br><span class="line">没有别的坐标有更大的信号强度。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：towers = [[23,11,21]], radius = 9</span><br><span class="line">输出：[23,11]</span><br><span class="line">解释：由于仅存在一座信号塔，所以塔的位置信号强度最大。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：towers = [[1,2,13],[2,1,7],[0,1,9]], radius = 2</span><br><span class="line">输出：[1,2]</span><br><span class="line">解释：坐标 (1, 2) 的信号强度最大。</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>提示：</p>
+<ul>
+<li>1 &lt;&#x3D; towers.length &lt;&#x3D; 50</li>
+<li>towers[i].length &#x3D;&#x3D; 3</li>
+<li>0 &lt;&#x3D; xi, yi, qi &lt;&#x3D; 50</li>
+<li>1 &lt;&#x3D; radius &lt;&#x3D; 50</li>
+</ul>
+</blockquote>
+<details><summary>查看代码</summary><pre><code>
+class Solution &#123;
+public:
+    vector<int> bestCoordinate(vector<vector<int>>& towers, int radius) &#123;
+        vector<vector<int>> energy(51, vector<int>(51, 0));
+        int ans = 0, ans_x = 0, ans_y = 0;
+        double dis;
+
+<pre><code>    for (int i = 0; i &lt;= 50; i++) &#123;
+        for (int j = 0; j &lt;= 50;j++) &#123;
+            for (auto tower : towers) &#123;
+                dis = sqrt((i - tower[0])*(i - tower[0]) + (j - tower[1])*(j - tower[1]));
+                if (dis &lt;= radius) &#123;
+                    energy[i][j] += floor(tower[2] / (1 + dis));
+                &#125;
+                if (energy[i][j] &gt; ans) &#123;
+                    ans = energy[i][j];
+                    ans_x = i;
+                    ans_y = j;
+                &#125;
+                else if (energy[i][j] == ans) &#123;
+                    if (ans_x &gt; i) &#123;
+                        ans_x = i;
+                        ans_y = j;
+                    &#125;
+                    else if (ans_x == i &amp;&amp; ans_y &gt; j) &#123;
+                        ans_x = i;
+                        ans_y = j;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    return &#123; ans_x, ans_y &#125;;
+&#125;
+</code></pre>
+<p>};<br></p></int></vector<int></vector<int></int></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coordinate-with-maximum-network-quality">https://leetcode.cn/problems/coordinate-with-maximum-network-quality</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/10/27/LeetCode/1620.%20%E7%BD%91%E7%BB%9C%E4%BF%A1%E5%8F%B7%E6%9C%80%E5%A5%BD%E7%9A%84%E5%9D%90%E6%A0%87/">https://wlf621.github.io/2022/10/27/LeetCode/1620.%20%E7%BD%91%E7%BB%9C%E4%BF%A1%E5%8F%B7%E6%9C%80%E5%A5%BD%E7%9A%84%E5%9D%90%E6%A0%87/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/10/27/LeetCode/1106.%20%E8%A7%A3%E6%9E%90%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F/">1106. 解析布尔表达式</a>
+            
+            
+            <a class="next" rel="next" href="/2022/10/27/LeetCode/1678.%20%E8%AE%BE%E8%AE%A1%20Goal%20%E8%A7%A3%E6%9E%90%E5%99%A8/">1678. 设计 Goal 解析器</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

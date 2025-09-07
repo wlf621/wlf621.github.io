@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>C++ | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C++</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">七月 27, 2020&nbsp;&nbsp;9:54:49</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C/">C++</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="📝c"><a href="#📝c" class="headerlink" title="📝c++"></a>📝c++</h2><h3 id="字节算法总结"><a href="#字节算法总结" class="headerlink" title="字节算法总结"></a><a target="_blank" rel="noopener" href="https://github.com/lewiscrow/WorkHardAndFindJob/blob/master/%E5%A4%8D%E4%B9%A0/%E9%9D%A2%E8%AF%95/%E6%89%8B%E6%92%95%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E9%9D%A2%E8%AF%95%E6%97%B6%E5%87%BA%E7%8E%B0%E8%BF%87%E7%9A%84%E7%AE%97%E6%B3%95%E9%A2%98.md#7%E6%89%BE%E5%87%BA%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84%E5%85%83%E7%B4%A0%E4%B8%AA%E6%95%B0">字节算法总结</a></h3><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><h4 id="extern-c"><a href="#extern-c" class="headerlink" title="extern c"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lichkingct/archive/2009/07/21/1527893.html">extern c</a></h4><p>如果C++调用一个C语言编写的.DLL时，当包括.DLL的头文件或声明接口函数时，应加extern “C”；<br>678extern “C” static void f(); &#x2F;&#x2F; error<br>因为extern “C”表明它是外部连接的，与static矛盾（多存储类型声明错误）。</p>
+<h4 id="线程joinable-detach"><a href="#线程joinable-detach" class="headerlink" title="线程joinable detach"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41543888/article/details/90316223">线程joinable detach</a></h4><h4 id="try…catch的应用场景"><a href="#try…catch的应用场景" class="headerlink" title="try…catch的应用场景"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tianzhiliang/archive/2010/10/09/1846676.html">try…catch的应用场景</a></h4><h4 id="STL迭代器失效问题"><a href="#STL迭代器失效问题" class="headerlink" title="STL迭代器失效问题"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangshihui512/article/details/9791517">STL迭代器失效问题</a></h4><h4 id="explicit-和-implicit-关键字"><a href="#explicit-和-implicit-关键字" class="headerlink" title="explicit 和 implicit 关键字"></a><a href>explicit 和 implicit 关键字</a></h4><h4 id="使用lambda表达式需要注意什么"><a href="#使用lambda表达式需要注意什么" class="headerlink" title="使用lambda表达式需要注意什么"></a><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903879818084359">使用lambda表达式需要注意什么</a></h4><h4 id="模板优缺点"><a href="#模板优缺点" class="headerlink" title="模板优缺点"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39381028/article/details/100514855">模板优缺点</a></h4><h4 id="std-move"><a href="#std-move" class="headerlink" title="std::move"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/daaikuaichuan/article/details/88371948">std::move</a></h4><h4 id="重复delete出错原因"><a href="#重复delete出错原因" class="headerlink" title="[重复delete出错原因]"></a>[重复delete出错原因]</h4><p>描述符</p>
+<h4 id="为什么说复杂的长的函数不能内联"><a href="#为什么说复杂的长的函数不能内联" class="headerlink" title="为什么说复杂的长的函数不能内联"></a>为什么说复杂的长的函数不能内联</h4><p>函数运行时间远高于调用时间，内联提升不大而且要消耗大量内存。</p>
+<h4 id="说一下指针和引用，那函数传参数的时候用哪个比较好？为什么不能用另一个"><a href="#说一下指针和引用，那函数传参数的时候用哪个比较好？为什么不能用另一个" class="headerlink" title="[说一下指针和引用，那函数传参数的时候用哪个比较好？为什么不能用另一个]"></a>[说一下指针和引用，那函数传参数的时候用哪个比较好？为什么不能用另一个]</h4><p>传指针又用了一个变量，变量内是对象的地址（本质还是传值），引用直接传递对象本身。</p>
+<h4 id="new-operator-和-operator-new-和-placement-new-分别表示什么意思？区别？"><a href="#new-operator-和-operator-new-和-placement-new-分别表示什么意思？区别？" class="headerlink" title="new operator 和 operator new 和 placement new 分别表示什么意思？区别？"></a><a href>new operator 和 operator new 和 placement new 分别表示什么意思？区别？</a></h4><h4 id="那为什么还用定义这个static-cast"><a href="#那为什么还用定义这个static-cast" class="headerlink" title="那为什么还用定义这个static_cast"></a><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/31192">那为什么还用定义这个static_cast</a></h4><h4 id="const-和-volatile-分别介绍一下，可以一起使用吗"><a href="#const-和-volatile-分别介绍一下，可以一起使用吗" class="headerlink" title="const 和 volatile  分别介绍一下，可以一起使用吗"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012523688/article/details/22792995">const 和 volatile  分别介绍一下，可以一起使用吗</a></h4><h4 id="为什么引入右值引用"><a href="#为什么引入右值引用" class="headerlink" title="为什么引入右值引用"></a>为什么引入右值引用</h4><h4 id="你说到虚指针，虚表，他们是什么时候初始化的？"><a href="#你说到虚指针，虚表，他们是什么时候初始化的？" class="headerlink" title="你说到虚指针，虚表，他们是什么时候初始化的？"></a>你说到虚指针，虚表，他们是什么时候初始化的？</h4><p>在构造函数中进行虚表的创建和虚表指针的初始化。</p>
+<h4 id="malloc实现原理，申请的内存连续吗"><a href="#malloc实现原理，申请的内存连续吗" class="headerlink" title="malloc实现原理，申请的内存连续吗"></a>malloc实现原理，申请的内存连续吗</h4><h4 id="C-的三大特性"><a href="#C-的三大特性" class="headerlink" title="C++的三大特性"></a>C++的三大特性</h4><h4 id="具体说下private，protected，public"><a href="#具体说下private，protected，public" class="headerlink" title="具体说下private，protected，public"></a>具体说下private，protected，public</h4><h4 id="lambda表达式和函数指针"><a href="#lambda表达式和函数指针" class="headerlink" title="lambda表达式和函数指针"></a>lambda表达式和函数指针</h4><h4 id="私有继承"><a href="#私有继承" class="headerlink" title="私有继承"></a>私有继承</h4><h4 id="C-内存布局"><a href="#C-内存布局" class="headerlink" title="C++内存布局"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Code_beeps/article/details/89608929">C++内存布局</a></h4><h4 id="C-内存堆栈的区别"><a href="#C-内存堆栈的区别" class="headerlink" title="C++ 内存堆栈的区别"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/cv_yuippe/article/details/9926839">C++ 内存堆栈的区别</a></h4><h4 id="static关键字，static成员变量会不会占有类的空间"><a href="#static关键字，static成员变量会不会占有类的空间" class="headerlink" title="static关键字，static成员变量会不会占有类的空间"></a>static关键字，static成员变量会不会占有类的空间</h4><h4 id="类所占空间的各种情况"><a href="#类所占空间的各种情况" class="headerlink" title="类所占空间的各种情况"></a>类所占空间的各种情况</h4><h4 id="空类大小为什么是1？"><a href="#空类大小为什么是1？" class="headerlink" title="空类大小为什么是1？"></a>空类大小为什么是1？</h4><h4 id="虚函数实现，虚函数表的存储位置"><a href="#虚函数实现，虚函数表的存储位置" class="headerlink" title="虚函数实现，虚函数表的存储位置"></a>虚函数实现，虚函数表的存储位置</h4><p>这是类结构体实例化的原因，空的类或结构体同样可以被实例化，如果定义对空的类或者结构体取sizeof()的值为0，那么该空的类或结构体实例化出很多实例时，在内存地址上就不能区分该类实例化出的实例，所以，为了实现每个实例在内存中都有一个独一无二的地址，编译器往往会给一个空类隐含的加一个字节，这样空类在实例化后在内存得到了独一无二的地址，所以空类所占的内存大小是1个字节。</p>
+<h4 id="常用stl容器"><a href="#常用stl容器" class="headerlink" title="常用stl容器"></a>常用stl容器</h4><h4 id="Map底层结构，unordered-map底层结构"><a href="#Map底层结构，unordered-map底层结构" class="headerlink" title="Map底层结构，unordered_map底层结构"></a>Map底层结构，unordered_map底层结构</h4><h4 id="unordered-map-和-map-的区别"><a href="#unordered-map-和-map-的区别" class="headerlink" title="unordered_map 和 map 的区别"></a><a target="_blank" rel="noopener" href="http://wlf621.gitee.io/blog/2020/07/27/Interview/#%F0%9F%93%A6-STL">unordered_map 和 map 的区别</a></h4><h4 id="Vector-clear和resize方法会不会释放内存"><a href="#Vector-clear和resize方法会不会释放内存" class="headerlink" title="Vector clear和resize方法会不会释放内存"></a>Vector clear和resize方法会不会释放内存</h4><h4 id="C-11-特性"><a href="#C-11-特性" class="headerlink" title="C++11 特性"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/aixintianshideshouhu/article/details/94548940">C++11 特性</a></h4><p>1.列表初始化；2.变量类型推导；3.基于范围的for循环；4.右值引用；5.线程库；6.lambda表达式等。</p>
+<h4 id="map，vector是不是线程安全"><a href="#map，vector是不是线程安全" class="headerlink" title="map，vector是不是线程安全"></a><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29987589">map，vector是不是线程安全</a></h4><p>STL 语义上不提供任何强度的线程安全保证。</p>
+<h4 id="list跟数组的区别"><a href="#list跟数组的区别" class="headerlink" title="list跟数组的区别"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42056625/article/details/88962614">list跟数组的区别</a></h4><h4 id="vector底层"><a href="#vector底层" class="headerlink" title="vector底层"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/-citywall123/p/12846941.html">vector底层</a></h4><h4 id="Set-x2F-map为什么要用红黑树"><a href="#Set-x2F-map为什么要用红黑树" class="headerlink" title="Set&#x2F;map为什么要用红黑树"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfri/p/12565031.html">Set&#x2F;map为什么要用红黑树</a></h4><h4 id="deque的底层实现"><a href="#deque的底层实现" class="headerlink" title="deque的底层实现"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012940886/article/details/80529721">deque的底层实现</a></h4><h4 id="生成可执行文件的步骤"><a href="#生成可执行文件的步骤" class="headerlink" title="生成可执行文件的步骤"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/choudan8888/article/details/88578434">生成可执行文件的步骤</a></h4><h4 id="new-malloc-new-出的内容可以调用free释放吗？"><a href="#new-malloc-new-出的内容可以调用free释放吗？" class="headerlink" title="new malloc  new 出的内容可以调用free释放吗？"></a><a target="_blank" rel="noopener" href="https://www.nowcoder.com/discuss/458550">new malloc  new 出的内容可以调用free释放吗？</a></h4><h4 id="malloc最大分配多少内存"><a href="#malloc最大分配多少内存" class="headerlink" title="malloc最大分配多少内存"></a><a target="_blank" rel="noopener" href="http://fallincode.com/blog/2020/01/malloc%E6%9C%80%E5%A4%9A%E8%83%BD%E5%88%86%E9%85%8D%E5%A4%9A%E5%B0%91%E5%86%85%E5%AD%98/">malloc最大分配多少内存</a></h4><p>小于128K用brk在堆区，大于128K用mmap在内存映射区</p>
+<h4 id="在多线程模式下shared-ptr会出现什么问题"><a href="#在多线程模式下shared-ptr会出现什么问题" class="headerlink" title="在多线程模式下shared_ptr会出现什么问题"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Leo_wl/archive/2013/01/28/2879948.html">在多线程模式下shared_ptr会出现什么问题</a></h4><h4 id="为什么C-有函数重载，C语言不能实现重载"><a href="#为什么C-有函数重载，C语言不能实现重载" class="headerlink" title="为什么C++有函数重载，C语言不能实现重载"></a>为什么C++有函数重载，C语言不能实现重载</h4><p>在c语言的编译器下，编译器将函数名编译为”_函数名”，重载之后，编译器将所有重载的函数编译为“_函数名”形式，而在c++编译器下，将函数名编译为“？@函数名@@yahhh@Z”的形式-&gt;函数名+参数类型+类型信息，所以不会形成相同名字的函数，因此c语言中没有函数重载。</p>
+<h4 id="右值引用和std-move"><a href="#右值引用和std-move" class="headerlink" title="右值引用和std::move"></a>右值引用和std::move</h4><p>右值不是左值，右值引用和左值引用都是引用，都是一个变量（即都是一个左值），std::move并不产生新的对象，不会调用构造函数，只是做了一个类型转换，这样做的目的主要是为了支持移动构造和移动赋值，因为移动构造和移动赋值的参数类型为右值引用。（拷贝构造需要对成员变量进行深拷贝，移动构造不需要，很明显，移动构造效率高。）</p>
+<h4 id="auto关键字"><a href="#auto关键字" class="headerlink" title="auto关键字"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/QG-whz/p/4951177.html">auto关键字</a></h4><p>在定义模板函数时，用于声明依赖模板参数的变量类型;<br>模板函数依赖于模板参数的返回值;<br>** auto 变量必须在定义时初始化;<br>如果初始化表达式是引用，则去除引用语义;<br>如果初始化表达式为const或volatile（或者两者兼有），则除去const&#x2F;volatile语义;<br>如果auto关键字带上&amp;号，则不去除const语意;</p>
+<h4 id="make-shared-make-unique"><a href="#make-shared-make-unique" class="headerlink" title="make_shared,make_unique"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011475134/article/details/76714243">make_shared,make_unique</a></h4><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="两个栈实现队列"><a href="#两个栈实现队列" class="headerlink" title="两个栈实现队列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/">两个栈实现队列</a></h4><h4 id="完全二叉树的判定"><a href="#完全二叉树的判定" class="headerlink" title="完全二叉树的判定"></a>完全二叉树的判定</h4><p>利用层次遍历，遇到第一个nullptr即为结尾，若后续仍有节点则不是完全二叉树</p>
+<h4 id="将所有负数移到左边，所有正数移到右边，并保持相对位置不变"><a href="#将所有负数移到左边，所有正数移到右边，并保持相对位置不变" class="headerlink" title="[将所有负数移到左边，所有正数移到右边，并保持相对位置不变]"></a>[将所有负数移到左边，所有正数移到右边，并保持相对位置不变]</h4><p>辅助数组或者一直交换(前一个正值和负值交换)</p>
+<h4 id="无序数组中找出和为0的三元组"><a href="#无序数组中找出和为0的三元组" class="headerlink" title="无序数组中找出和为0的三元组"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/3sum/">无序数组中找出和为0的三元组</a></h4><p>三数和问题，常见</p>
+<h4 id="求出数组右边小于当前元素的个数"><a href="#求出数组右边小于当前元素的个数" class="headerlink" title="求出数组右边小于当前元素的个数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/count-of-smaller-numbers-after-self/">求出数组右边小于当前元素的个数</a></h4><h4 id="大数乘法"><a href="#大数乘法" class="headerlink" title="大数乘法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43442778/article/details/89682822">大数乘法</a></h4><h4 id="如何实现LRU，保证查找和插入的时间复杂度都是O-1"><a href="#如何实现LRU，保证查找和插入的时间复杂度都是O-1" class="headerlink" title="如何实现LRU，保证查找和插入的时间复杂度都是O(1)"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43275277/article/details/107740004">如何实现LRU，保证查找和插入的时间复杂度都是O(1)</a></h4><h4 id="如何查找两个有序数组的中位数"><a href="#如何查找两个有序数组的中位数" class="headerlink" title="如何查找两个有序数组的中位数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/">如何查找两个有序数组的中位数</a></h4><h4 id="两个单链表相交求交点"><a href="#两个单链表相交求交点" class="headerlink" title="两个单链表相交求交点"></a>两个单链表相交求交点</h4><h4 id="单链表有环求环入口（双指针）"><a href="#单链表有环求环入口（双指针）" class="headerlink" title="单链表有环求环入口（双指针）"></a>单链表有环求环入口（双指针）</h4><h4 id="找出在数组A但不在数组B的元素"><a href="#找出在数组A但不在数组B的元素" class="headerlink" title="找出在数组A但不在数组B的元素"></a>找出在数组A但不在数组B的元素</h4><h4 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/unique-paths/">不同路径</a></h4><h4 id="计算数组小和"><a href="#计算数组小和" class="headerlink" title="计算数组小和"></a>计算数组小和</h4><p>例如，数组s &#x3D; [1, 3, 5, 2, 4, 6]，在s[0]的左边小于或等于s[0]的数的和为0；在s[1]的左边小于或等于s[1]的数的和为1；在s[2]的左边小于或等于s[2]的数的和为1+3&#x3D;4；在s[3]的左边小于或等于s[3]的数的和为1；在s[4]的左边小于或等于s[4]的数的和为1+3+2&#x3D;6；在s[5]的左边小于或等于s[5]的数的和为1+3+5+2+4&#x3D;15。所以s的小和为0+1+4+1+6+15&#x3D;27<br>给定一个数组s，实现函数返回s的小和，要求时间复杂度为O(nlogn)，空间复杂度为O(n)</p>
+<h4 id="第k大的数"><a href="#第k大的数" class="headerlink" title="第k大的数"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/orangefly0214/article/details/86527462">第k大的数</a></h4><p>类快排期望时间复杂度为O(N)</p>
+<h4 id="求两小时内最大金额"><a href="#求两小时内最大金额" class="headerlink" title="求两小时内最大金额"></a>求两小时内最大金额</h4><p>假设你是个咖啡店老板，你有一个一天的流水单，流水单每行是交易发生的时间及其金额，求两小时内最大金额发生在哪个时间段，输出起始时间即可<br>滑动窗口</p>
+<h4 id="有正有负的数组，求最大连续子数组的和"><a href="#有正有负的数组，求最大连续子数组的和" class="headerlink" title="有正有负的数组，求最大连续子数组的和"></a><a href>有正有负的数组，求最大连续子数组的和</a></h4><p>动态规划</p>
+<h4 id="第n个丑数"><a href="#第n个丑数" class="headerlink" title="第n个丑数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/chou-shu-lcof/">第n个丑数</a></h4><h4 id="鹰蛋问题"><a href="#鹰蛋问题" class="headerlink" title="鹰蛋问题"></a>鹰蛋问题</h4><h3 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h3><h4 id="http为什么是无状态的"><a href="#http为什么是无状态的" class="headerlink" title="http为什么是无状态的"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ymkfnuiwgij/p/6978526.html">http为什么是无状态的</a></h4><h4 id="TCP连接和释放连接的所有过程"><a href="#TCP连接和释放连接的所有过程" class="headerlink" title="TCP连接和释放连接的所有过程"></a><a target="_blank" rel="noopener" href="http://wlf621.gitee.io/blog/2020/07/27/Interview/#TCP-%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA">TCP连接和释放连接的所有过程</a></h4><h4 id="DNS域名污染"><a href="#DNS域名污染" class="headerlink" title="[DNS域名污染]"></a>[DNS域名污染]</h4><h4 id="跟踪会话的cookie、session"><a href="#跟踪会话的cookie、session" class="headerlink" title="跟踪会话的cookie、session"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuyuewei/p/6018374.html">跟踪会话的cookie、session</a></h4><h4 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ltl1532/p/5781874.html">断点续传</a></h4><h4 id="http了解吗？http的发送请求的报文都含有什么说一下"><a href="#http了解吗？http的发送请求的报文都含有什么说一下" class="headerlink" title="http了解吗？http的发送请求的报文都含有什么说一下"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/duhuo/p/4778097.html">http了解吗？http的发送请求的报文都含有什么说一下</a></h4><h4 id="Socket-write和read函数"><a href="#Socket-write和read函数" class="headerlink" title="Socket write和read函数"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuchanming/p/3783650.html">Socket write和read函数</a></h4><h4 id="Socket的分类"><a href="#Socket的分类" class="headerlink" title="Socket的分类"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/wuwei178/article/details/81224084">Socket的分类</a></h4><p>流式套接字，数据报式套接字，原始套接字</p>
+<h4 id="怎么理解tcp一种流式协议"><a href="#怎么理解tcp一种流式协议" class="headerlink" title="怎么理解tcp一种流式协议"></a><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/397653509">怎么理解tcp一种流式协议</a></h4><h4 id="TCP-为什么会抖动？"><a href="#TCP-为什么会抖动？" class="headerlink" title="TCP 为什么会抖动？"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33893473/article/details/91927093?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-1-91927093.nonecase">TCP 为什么会抖动？</a></h4><p>在网络上连续传输的数据包即便使用相同的路径，也会有不同的延时。这是由于分组交换网络固有的两个关键原因造成的。第一，数据包被单独路由。第二，网络设备接收队列中的数据包，因此无法保证延时调度不变。每个数据包之间的这种延时不一致称为抖动。对于实时通信而言，这可能是一个相当大的问题，包括IP电话，视频会议和虚拟桌面基础架构。抖动可能由网络上的许多因素引起，并且每个网络都有延时时间变化。</p>
+<h4 id="https的请求过程"><a href="#https的请求过程" class="headerlink" title="https的请求过程"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/seujava_er/article/details/90018326">https的请求过程</a></h4><h4 id="ssl-为什么要用几个随机数加密后作为对话密钥"><a href="#ssl-为什么要用几个随机数加密后作为对话密钥" class="headerlink" title="ssl 为什么要用几个随机数加密后作为对话密钥"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/doraeimo/article/details/18995781">ssl 为什么要用几个随机数加密后作为对话密钥</a></h4><h4 id="海量ip中找出现次数最多的topk"><a href="#海量ip中找出现次数最多的topk" class="headerlink" title="海量ip中找出现次数最多的topk"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/sty945/article/details/81838721">海量ip中找出现次数最多的topk</a></h4><h4 id="url输入到显示的过程"><a href="#url输入到显示的过程" class="headerlink" title="url输入到显示的过程"></a><a target="_blank" rel="noopener" href="https://www.nowcoder.com/questionTerminal/5141f06ae6e044e9bdaf07ce1047b550?orderByHotValue=1&mutiTagIds=628&page=2&onlyReference=false">url输入到显示的过程</a></h4><h4 id="ping的原理"><a href="#ping的原理" class="headerlink" title="ping的原理"></a><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e1795962ad76">ping的原理</a></h4><h4 id="http-post，get区别"><a href="#http-post，get区别" class="headerlink" title="http post，get区别"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/logsharing/p/8448446.html">http post，get区别</a></h4><p>get 参数在url里明文可见，post参数在request body内相对较安全<br>GET产生一个TCP数据包；POST产生两个TCP数据包。对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。</p>
+<h4 id="常见标识码"><a href="#常见标识码" class="headerlink" title="常见标识码"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhurong/p/10107917.html">常见标识码</a></h4><h4 id="TCP和UDP区别常用场景"><a href="#TCP和UDP区别常用场景" class="headerlink" title="TCP和UDP区别常用场景"></a>TCP和UDP区别常用场景</h4><h4 id="TCP三次握手，为什么三次握手四次挥手"><a href="#TCP三次握手，为什么三次握手四次挥手" class="headerlink" title="TCP三次握手，为什么三次握手四次挥手"></a>TCP三次握手，为什么三次握手四次挥手</h4><h4 id="TCP三次握手的本质"><a href="#TCP三次握手的本质" class="headerlink" title="TCP三次握手的本质"></a>TCP三次握手的本质</h4><h4 id="DNS原理"><a href="#DNS原理" class="headerlink" title="DNS原理"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79350395">DNS原理</a></h4><h4 id="一千万个域名，怎么知道一个域名在不在里面"><a href="#一千万个域名，怎么知道一个域名在不在里面" class="headerlink" title="一千万个域名，怎么知道一个域名在不在里面"></a>一千万个域名，怎么知道一个域名在不在里面</h4><p>布隆过滤器</p>
+<h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3><h4 id="C-实现守护线程"><a href="#C-实现守护线程" class="headerlink" title="C++ 实现守护线程"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34216036/article/details/92412054">C++ 实现守护线程</a></h4><h4 id="动态链接和静态链接"><a href="#动态链接和静态链接" class="headerlink" title="动态链接和静态链接"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/kang___xi/article/details/80210717">动态链接和静态链接</a></h4><h4 id="虚拟内存机制"><a href="#虚拟内存机制" class="headerlink" title="虚拟内存机制"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/freeelinux/article/details/53783039">虚拟内存机制</a></h4><h4 id="进程通信：管道"><a href="#进程通信：管道" class="headerlink" title="进程通信：管道"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38410730/article/details/81569852">进程通信：管道</a></h4><h4 id="静态库和动态库"><a href="#静态库和动态库" class="headerlink" title="静态库和动态库"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/codingmengmeng/p/6046481.html">静态库和动态库</a></h4><h4 id="DMA原理"><a href="#DMA原理" class="headerlink" title="DMA原理"></a>DMA原理</h4><h4 id="线程切换过程"><a href="#线程切换过程" class="headerlink" title="线程切换过程"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kkshaq/p/4547725.html">线程切换过程</a></h4><h4 id="切换上下文，需要保留的东西"><a href="#切换上下文，需要保留的东西" class="headerlink" title="切换上下文，需要保留的东西"></a>切换上下文，需要保留的东西</h4><p>进程上下文实际上是进程执行活动全过程的静态描述。我们把已执行过的进程指令和数据在相关寄存器与堆栈中的内容称为上文，把正在执行的指令和数据在寄存器和堆栈中的内容称为正文，把待执行的指令和数据在寄存器与堆栈中的内容称为下文。具体的说，进程上下文包括计算机系统中与执行该进程有关的各种寄存器（例如通用寄存器，程序计数器PC，程序状态字寄存器PS等）的值，程序段在经过编译过后形成的机器指令代码集，数据集及各种堆栈值PCB结构。这里，有关寄存器和栈区的内容是重要的，例如没有程序计数器PC和程序状态寄存器PS，CPU将无法知道下一条待执行指令的地址和控制有关操作。</p>
+<h4 id="通用寄存器，程序计数器PC，程序状态字寄存器PS"><a href="#通用寄存器，程序计数器PC，程序状态字寄存器PS" class="headerlink" title="通用寄存器，程序计数器PC，程序状态字寄存器PS"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34801169/article/details/102782643">通用寄存器，程序计数器PC，程序状态字寄存器PS</a></h4><h4 id="内存泄漏，如何避免内存泄漏"><a href="#内存泄漏，如何避免内存泄漏" class="headerlink" title="内存泄漏，如何避免内存泄漏"></a>内存泄漏，如何避免内存泄漏</h4><h4 id="进程通信，共享内存API及参数"><a href="#进程通信，共享内存API及参数" class="headerlink" title="进程通信，共享内存API及参数"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/zc20141220/article/details/79140904">进程通信，共享内存API及参数</a></h4><h4 id="消息队列API"><a href="#消息队列API" class="headerlink" title="消息队列API"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lidabo/p/4330498.html">消息队列API</a></h4><h4 id="信号如何使用"><a href="#信号如何使用" class="headerlink" title="信号如何使用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Zoran-/p/5819260.html">信号如何使用</a></h4><h4 id="多线程使用互斥锁如何避免发生死锁"><a href="#多线程使用互斥锁如何避免发生死锁" class="headerlink" title="多线程使用互斥锁如何避免发生死锁"></a>多线程使用互斥锁如何避免发生死锁</h4><h4 id="高速缓存读取一次大约多少秒"><a href="#高速缓存读取一次大约多少秒" class="headerlink" title="高速缓存读取一次大约多少秒"></a>高速缓存读取一次大约多少秒</h4><h4 id="如何保证高速缓存和内存一致"><a href="#如何保证高速缓存和内存一致" class="headerlink" title="如何保证高速缓存和内存一致"></a>如何保证高速缓存和内存一致</h4><p>写直达</p>
+<h4 id="软连接，硬链接"><a href="#软连接，硬链接" class="headerlink" title="软连接，硬链接"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/stupid56862/article/details/90785420">软连接，硬链接</a></h4><h4 id="rw-r–r–-各位含义"><a href="#rw-r–r–-各位含义" class="headerlink" title="-rw-r–r– 各位含义"></a>-rw-r–r– 各位含义</h4><p>第一个-表示文件类型：-普通文件，d文件夹，l链接文件，p管理文件，b块设备文件，c字符设备文件，s套接字文件</p>
+<h4 id="xargs-grep-命令"><a href="#xargs-grep-命令" class="headerlink" title="xargs grep 命令"></a>xargs grep 命令</h4><h4 id="如果线上某台虚拟机CPU-Load过高，该如何快速排查原因？只介绍思路和涉及的Linux命令即可"><a href="#如果线上某台虚拟机CPU-Load过高，该如何快速排查原因？只介绍思路和涉及的Linux命令即可" class="headerlink" title="如果线上某台虚拟机CPU Load过高，该如何快速排查原因？只介绍思路和涉及的Linux命令即可"></a><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6d573e42310a">如果线上某台虚拟机CPU Load过高，该如何快速排查原因？只介绍思路和涉及的Linux命令即可</a></h4><h4 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-awk.html">AWK</a></h4><h4 id="为什么内存对齐？"><a href="#为什么内存对齐？" class="headerlink" title="为什么内存对齐？"></a>为什么内存对齐？</h4><p>1、平台原因(移植原因)<br>    A   不是所有的硬件平台都能访问任意地址上的任意数据的；<br>    B   某些硬件平台只能在某些地址处取某些特定类型的数据，否则抛出硬件异常。<br>2、性能原因：<br>    A   数据结构(尤其是栈)应该尽可能地在自然边界上对齐。<br>    B   原因在于，为了访问未对齐的内存，处理器需要作两次内存访问；而对齐的内存访问仅需要一次访问。</p>
+<h4 id="IO设计中Reactor-和-Proactor-区别"><a href="#IO设计中Reactor-和-Proactor-区别" class="headerlink" title="IO设计中Reactor 和 Proactor 区别"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/me115/p/4452801.html">IO设计中Reactor 和 Proactor 区别</a></h4><h4 id="进程同步方式-（1）-（2）"><a href="#进程同步方式-（1）-（2）" class="headerlink" title="进程同步方式 （1） （2）"></a>进程同步方式 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Allen-rg/p/7172958.html">（1）</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/zxx901221/article/details/83006453">（2）</a></h4><h4 id="线程数目与内核的关系"><a href="#线程数目与内核的关系" class="headerlink" title="线程数目与内核的关系"></a>线程数目与内核的关系</h4><p>一般情况下它们是1:1对应关系,也就是说四核CPU一般拥有四个线程。但Intel引入超线程技术后,使核心数与线程数形成1:2的关系;跟调度有关（时间片轮转）。</p>
+<h4 id="进程、线程、协程和管程的区别"><a href="#进程、线程、协程和管程的区别" class="headerlink" title="进程、线程、协程和管程的区别"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/love10_1314/article/details/97282627">进程、线程、协程和管程的区别</a></h4><h4 id="多线程和线程池"><a href="#多线程和线程池" class="headerlink" title="多线程和线程池"></a><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b8197dd2934c">多线程和线程池</a></h4><h4 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_24181587/article/details/85140830">进程同步</a></h4><p>临界区、锁机制、信号量、管程。</p>
+<h4 id="内存碎片怎么解决"><a href="#内存碎片怎么解决" class="headerlink" title="内存碎片怎么解决"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013009575/article/details/17751147">内存碎片怎么解决</a></h4><p>伙伴算法和slab算法</p>
+<h4 id="负载均衡怎么实现"><a href="#负载均衡怎么实现" class="headerlink" title="负载均衡怎么实现"></a>负载均衡怎么实现</h4><p>1.轮询（默认）<br>请求依次轮流往每个应用服务器上进行分配，分配策略比较简单。<br>缺点：不均匀，可能会出现，某些服务器接受的请求较重，负载压力重，有些负荷小，不可控。另外服务器之间需要进行session同步。</p>
+<p>2.权重轮询（权重越高，进入的几率越大）<br>优点：可以根据情况进行调整。可控，仍然需要进行session同步。</p>
+<h4 id="Reactor模式"><a href="#Reactor模式" class="headerlink" title="Reactor模式"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/winner-0715/p/8733787.html">Reactor模式</a></h4><h4 id="redis"><a href="#redis" class="headerlink" title="redis"></a><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fJ41127bM?from=search&seid=7445510862027952920">redis</a></h4><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><h4 id="SQL回滚怎么实现"><a href="#SQL回滚怎么实现" class="headerlink" title="[SQL回滚怎么实现]"></a>[SQL回滚怎么实现]</h4><h4 id="数据库-acid，具体说下ACID"><a href="#数据库-acid，具体说下ACID" class="headerlink" title="数据库 acid，具体说下ACID"></a>数据库 acid，具体说下ACID</h4><h4 id="脏读，不可重复读，幻读"><a href="#脏读，不可重复读，幻读" class="headerlink" title="脏读，不可重复读，幻读"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35206244/article/details/82493215">脏读，不可重复读，幻读</a></h4><h4 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h4><p>读未提交<br>读已提交<br>可重复读<br>串行化</p>
+<h4 id="大事务"><a href="#大事务" class="headerlink" title="大事务"></a>大事务</h4><h4 id="索引的结构"><a href="#索引的结构" class="headerlink" title="索引的结构"></a>索引的结构</h4><p>排好序的数据结构 </p>
+<h4 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h4><p>全值匹配我最爱，最左前缀要遵守；<br>带头大哥不能死，中间兄弟不能断；<br>索引列上少计算，范围之后全失效；<br>Like百分写最右，覆盖索引不写星；<br>不等非空还有or，索引失效要少用；<br>VAR引号不可丢， SQL高级也不难！</p>
+<h4 id="为什么用B-树"><a href="#为什么用B-树" class="headerlink" title="为什么用B+树"></a>为什么用B+树</h4><p>1.B+树深度小（非叶节点仅存储索引）<br>2.叶子节点用指针相连（双指针），有利于范围查找和局部性原理（hash索引不利于范围查找，适用于等值查找）</p>
+<h4 id="索引推荐使用整型自增主键"><a href="#索引推荐使用整型自增主键" class="headerlink" title="索引推荐使用整型自增主键"></a>索引推荐使用整型自增主键</h4><p>整型占有空间少，自增会降低B+树分裂的几率</p>
+<h4 id="聚合索引和非聚合索引"><a href="#聚合索引和非聚合索引" class="headerlink" title="聚合索引和非聚合索引"></a>聚合索引和非聚合索引</h4><p>聚合索引数据存储在B+树叶子节点（Innodb），非聚合索引分开存储（Myisam）</p>
+<h4 id="描述MySQL数据库联合索引的命中规则，可举例说明。"><a href="#描述MySQL数据库联合索引的命中规则，可举例说明。" class="headerlink" title="描述MySQL数据库联合索引的命中规则，可举例说明。"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nickup/p/9825091.html">描述MySQL数据库联合索引的命中规则，可举例说明。</a></h4><h4 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h4><h4 id="S锁，X锁，表锁"><a href="#S锁，X锁，表锁" class="headerlink" title="S锁，X锁，表锁"></a>S锁，X锁，表锁</h4><h4 id="什么是分布式事务，分布式事务产生的原因是什么？分布式事务的解决方案有哪些？分别有哪些优缺点？"><a href="#什么是分布式事务，分布式事务产生的原因是什么？分布式事务的解决方案有哪些？分别有哪些优缺点？" class="headerlink" title="什么是分布式事务，分布式事务产生的原因是什么？分布式事务的解决方案有哪些？分别有哪些优缺点？"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_17555933/article/details/100603947">什么是分布式事务，分布式事务产生的原因是什么？分布式事务的解决方案有哪些？分别有哪些优缺点？</a></h4><h4 id="myisam和innodb的区别"><a href="#myisam和innodb的区别" class="headerlink" title="myisam和innodb的区别"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35642036/article/details/82820178">myisam和innodb的区别</a></h4>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/07/27/%E9%9D%A2%E7%BB%8F/">https://wlf621.github.io/2020/07/27/%E9%9D%A2%E7%BB%8F/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C/"># C++</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/01/%E7%BB%8F%E5%85%B8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">经典动态规划</a>
+            
+            
+            <a class="next" rel="next" href="/2020/07/27/Interview/">Interview</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>Linux 常用操作 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Linux 常用操作</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 25, 2022&nbsp;&nbsp;21:31:39</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>[toc]</p>
+<h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><p><strong>设置服务开机启动</strong></p>
+<ul>
+<li>systemctl enable [servicename]@[username]</li>
+</ul>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
+<p>Linux uname（英文全拼：unix name）命令用于显示系统信息。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li>-a或–all 　显示全部的信息。</li>
+<li>-m或–machine 　显示电脑类型。</li>
+<li>-n或–nodename 　显示在网络上的主机名称。</li>
+<li>-r或–release 　显示操作系统的发行编号。</li>
+<li>-s或–sysname 　显示操作系统名称。</li>
+<li>-v 　显示操作系统的版本。</li>
+<li>–help 　显示帮助。</li>
+<li>–version 　显示版本信息。</li>
+</ul>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><blockquote>
+<p>管理服务(unit)<br>systemctl 提供了一组子命令来管理单个的 unit</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl [command] [unit]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>查看版本号<br>systemctl –-version</li>
+<li>command 主要有：<ul>
+<li>start：立刻启动后面接的 unit。</li>
+<li>stop：立刻关闭后面接的 unit。</li>
+<li>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</li>
+<li>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</li>
+<li>enable：设置下次开机时，后面接的 unit 会被启动。</li>
+<li>disable：设置下次开机时，后面接的 unit 不会被启动。</li>
+<li>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</li>
+<li>is-active：目前有没有正在运行中。</li>
+<li>is-enabled：开机时有没有默认要启用这个 unit。</li>
+<li>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</li>
+<li>show：列出 unit 的配置。</li>
+<li>mask：注销 unit，注销后你就无法启动这个 unit 了。</li>
+<li>unmask：取消对 unit 的注销。</li>
+</ul>
+</li>
+</ul>
+<h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][--ip]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-a或–all 显示所有连线中的Socket。</li>
+<li>-A&lt;网络类型&gt;或–&lt;网络类型&gt; 列出该网络类型连线中的相关地址。</li>
+<li>-c或–continuous 持续列出网络状态。</li>
+<li>-C或–cache 显示路由器配置的快取信息。</li>
+<li>-e或–extend 显示网络其他相关信息。</li>
+<li>-F或–fib 显示路由缓存。</li>
+<li>-g或–groups 显示多重广播功能群组组员名单。</li>
+<li>-h或–help 在线帮助。</li>
+<li>-i或–interfaces 显示网络界面信息表单。</li>
+<li>-l或–listening 显示监控中的服务器的Socket。</li>
+<li>-M或–masquerade 显示伪装的网络连线。</li>
+<li>-n或–numeric 直接使用IP地址，而不通过域名服务器。</li>
+<li>-N或–netlink或–symbolic 显示网络硬件外围设备的符号连接名称。</li>
+<li>-o或–timers 显示计时器。</li>
+<li>-p或–programs 显示正在使用Socket的程序识别码和程序名称。</li>
+<li>-r或–route 显示Routing Table。</li>
+<li>-s或–statistics 显示网络工作信息统计表。</li>
+<li>-t或–tcp 显示TCP传输协议的连线状况。</li>
+<li>-u或–udp 显示UDP传输协议的连线状况。</li>
+<li>-v或–verbose 显示指令执行过程。</li>
+<li>-V或–version 显示版本信息。</li>
+<li>-w或–raw 显示RAW传输协议的连线状况。</li>
+<li>-x或–unix 此参数的效果和指定”-A unix”参数相同。</li>
+<li>–ip或–inet 此参数的效果和指定”-A inet”参数相同。</li>
+</ul>
+<h3 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h3><ul>
+<li>列出已安装的软件清单: <strong>yum -qa</strong></li>
+<li>列出所有可更新的软件清单命令：<strong>yum check-update</strong></li>
+<li>更新所有软件命令：<strong>yum update</strong></li>
+<li>仅安装指定的软件命令：<strong>yum install <package_name></package_name></strong></li>
+<li>仅更新指定的软件命令：<strong>yum update <package_name></package_name></strong></li>
+<li>列出所有可安裝的软件清单命令：<strong>yum list</strong></li>
+<li>删除软件包命令：<strong>yum remove <package_name></package_name></strong></li>
+<li>查找软件包命令：<strong>yum search <keyword></keyword></strong></li>
+<li>清除缓存命令:<ul>
+<li><strong>yum clean packages</strong>: 清除缓存目录下的软件包</li>
+<li><strong>yum clean headers</strong>: 清除缓存目录下的 headers</li>
+<li><strong>yum clean oldheaders</strong>: 清除缓存目录下旧的 headers</li>
+<li><strong>yum clean, yum clean all (&#x3D; yum clean packages; yum clean oldheaders)</strong> :清除缓存目录下的软件包及旧的 header</li>
+</ul>
+</li>
+</ul>
+<h3 id="df"><a href="#df" class="headerlink" title="df"></a>df</h3><ul>
+<li><p><strong>df -hl</strong>：查看磁盘剩余空间</p>
+</li>
+<li><p><strong>df -h</strong>：查看每个根路径的分区大小</p>
+</li>
+</ul>
+<h3 id="du"><a href="#du" class="headerlink" title="du"></a>du</h3><ul>
+<li><strong>-s</strong>：对每个Names参数只给出占用的数据块总数。</li>
+<li><strong>-a</strong>：递归地显示指定目录中各文件及子目录中各文件占用的数据块数。若既不指定-s，也不指定-a，则只显示Names中的每一个目录及其中的各子目录所占的磁盘块数。</li>
+<li><strong>-b</strong>：以字节为单位列出磁盘空间使用情况（系统默认以k字节为单位）。</li>
+<li><strong>-k</strong>：以1024字节为单位列出磁盘空间使用情况。</li>
+<li><strong>-c</strong>：最后再加上一个总计（系统默认设置）。</li>
+<li><strong>-l</strong>：计算所有的文件大小，对硬链接文件，则计算多次。</li>
+<li><strong>-x</strong>：跳过在不同文件系统上的目录不予统计。</li>
+<li><strong>-h</strong>：以K，M，G为单位，提高信息的可读性。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">https://wlf621.github.io/2022/09/25/Linux-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Linux/"># Linux</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/26/LeetCode/17.09/">17.19</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/25/LeetCode/788/">788</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

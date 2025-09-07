@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>Docker 实践 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Docker 实践</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十一月 7, 2022&nbsp;&nbsp;20:26:02</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Docker/">Docker</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>[toc]</p>
+<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><h2 id="常用命令图示"><a href="#常用命令图示" class="headerlink" title="常用命令图示"></a>常用命令图示</h2><p><img src="/2022/11/07/Docker/image-20221225215844006.png" alt="image-20221225215844006"></p>
+<h2 id="启动Docker"><a href="#启动Docker" class="headerlink" title="启动Docker"></a>启动Docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker	<span class="comment">#启动docker</span></span><br><span class="line">systemctl status docker	<span class="comment">#查看状态</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker	<span class="comment">#开机自启动docker</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker version		<span class="comment">#版本信息</span></span><br><span class="line">docker info			<span class="comment">#docker系统信息</span></span><br><span class="line">docker [cmd] --<span class="built_in">help</span> <span class="comment">#帮助信息</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h2><h3 id="docker-images"><a href="#docker-images" class="headerlink" title="docker images"></a>docker images</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker images --help</span></span><br><span class="line">Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]</span><br><span class="line">List images</span><br><span class="line">Options:</span><br><span class="line">  -a, --all             Show all images (default hides intermediate images)</span><br><span class="line">      --digests         Show digests</span><br><span class="line">  -f, --filter filter   Filter output based on conditions provided</span><br><span class="line">      --format string   Pretty-<span class="built_in">print</span> images using a Go template</span><br><span class="line">      --no-trunc        Don<span class="string">&#x27;t truncate output</span></span><br><span class="line"><span class="string">  -q, --quiet           Only show image IDs</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>filter</strong><br>过滤标志（-f或–filter）格式为<code>“key=value”</code>。如果有多个过滤器，则传递多个标志（例如，<code>–filter “foo=bar” --filter “bif=baz”</code>）</p>
+<p><strong>目前支持的过滤器有：</strong></p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dangling</td>
+<td>显示标记为空的镜像，true和false</td>
+</tr>
+<tr>
+<td>label</td>
+<td>根据标签进行过滤，其中lable的值，是docker在Dockerfile中配置的</td>
+</tr>
+<tr>
+<td>before</td>
+<td>根据时间来进行过滤，表示镜像构建时间之前的镜像</td>
+</tr>
+<tr>
+<td>since</td>
+<td>根据时间来进行过滤，表示在镜像构建之后的镜像</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>正则匹配</td>
+</tr>
+</tbody></table>
+<p><strong>format</strong><br>格式化选项将使用 Go 模板漂亮地打印容器输出。要以表格格式列出可以使用table<br>下面列出了 Go 模板的有效占位符：</p>
+<table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.ID</td>
+<td>镜像id</td>
+</tr>
+<tr>
+<td>.Repository</td>
+<td>镜像名称</td>
+</tr>
+<tr>
+<td>.Tag</td>
+<td>镜像标签</td>
+</tr>
+<tr>
+<td>.Digest</td>
+<td>镜像简介</td>
+</tr>
+<tr>
+<td>.CreatedSince</td>
+<td>自创以来经过的时间</td>
+</tr>
+<tr>
+<td>.CreatedAt</td>
+<td>创建图像的时间</td>
+</tr>
+<tr>
+<td>.Size</td>
+<td>镜像大小</td>
+</tr>
+</tbody></table>
+<h3 id="docker-search"><a href="#docker-search" class="headerlink" title="docker search"></a>docker search</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker search --help</span></span><br><span class="line">Usage:  docker search [OPTIONS] TERM</span><br><span class="line">Search the Docker Hub <span class="keyword">for</span> images</span><br><span class="line">Options:</span><br><span class="line">  -f, --filter filter   Filter output based on conditions provided</span><br><span class="line">      --format string   Pretty-<span class="built_in">print</span> search using a Go template</span><br><span class="line">      --<span class="built_in">limit</span> int       Max number of search results (default 25)</span><br><span class="line">      --no-trunc        Don<span class="string">&#x27;t truncate output</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Eg: docker search python -f=stars=5</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="docker-pull"><a href="#docker-pull" class="headerlink" title="docker pull"></a>docker pull</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker search --help</span></span><br><span class="line">Usage:  docker search [OPTIONS] TERM</span><br><span class="line">Search the Docker Hub <span class="keyword">for</span> images</span><br><span class="line">Options:</span><br><span class="line">  -f, --filter filter   Filter output based on conditions provided</span><br><span class="line">      --format string   Pretty-<span class="built_in">print</span> search using a Go template</span><br><span class="line">      --<span class="built_in">limit</span> int       Max number of search results (default 25)</span><br><span class="line">      --no-trunc        Don<span class="string">&#x27;t truncate output</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">eg: docker pull mysql:latest</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="docker-rmi"><a href="#docker-rmi" class="headerlink" title="docker rmi"></a>docker rmi</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker rmi --help</span></span><br><span class="line">Usage:  docker rmi [OPTIONS] IMAGE [IMAGE...]</span><br><span class="line">Remove one or more images</span><br><span class="line">Options:</span><br><span class="line">  -f, --force      Force removal of the image</span><br><span class="line">      --no-prune   Do not delete untagged parents</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><h3 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker run --help</span></span><br><span class="line">Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line">Run a <span class="built_in">command</span> <span class="keyword">in</span> a new container</span><br><span class="line"></span><br><span class="line"><span class="comment">#参数较多，列举常用选项</span></span><br><span class="line">--name=<span class="string">&quot;Name&quot;</span>		<span class="comment">#命名容器</span></span><br><span class="line">-d					<span class="comment">#后台方式运行容器</span></span><br><span class="line">-it					<span class="comment">#交互方式运行，进入容器查看内容</span></span><br><span class="line">-p					<span class="comment">#发布容器指定端口到主机端口</span></span><br><span class="line">	-p	<span class="comment">#主机端口:容器端口</span></span><br><span class="line">	-p	<span class="comment">#容器端口</span></span><br><span class="line">-P					<span class="comment">#随机指定端口映射，容器内部端口随机映射到主机的端口</span></span><br><span class="line">-e					<span class="comment">#配置环境变量</span></span><br><span class="line">-v					<span class="comment">#挂载目录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-ps"><a href="#docker-ps" class="headerlink" title="docker ps"></a>docker ps</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker ps --help</span></span><br><span class="line">Usage:  docker ps [OPTIONS]</span><br><span class="line">List containers</span><br><span class="line">Options:</span><br><span class="line">  -a, --all             Show all containers (default shows just running)</span><br><span class="line">  -f, --filter filter   Filter output based on conditions provided</span><br><span class="line">      --format string   Pretty-<span class="built_in">print</span> containers using a Go template</span><br><span class="line">  -n, --last int        Show n last created containers (includes all states) (default -1)</span><br><span class="line">  -l, --latest          Show the latest created container (includes all states)</span><br><span class="line">      --no-trunc        Don<span class="string">&#x27;t truncate output</span></span><br><span class="line"><span class="string">  -q, --quiet           Only display container IDs</span></span><br><span class="line"><span class="string">  -s, --size            Display total file sizes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Eg: docker ps -an 1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-logs"><a href="#docker-logs" class="headerlink" title="docker logs"></a>docker logs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker logs --help</span></span><br><span class="line">Usage:  docker logs [OPTIONS] CONTAINER</span><br><span class="line">Fetch the logs of a container</span><br><span class="line">Options:</span><br><span class="line">      --details        Show extra details provided to logs</span><br><span class="line">  -f, --follow         Follow <span class="built_in">log</span> output</span><br><span class="line">      --since string   Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or</span><br><span class="line">                       relative (e.g. 42m <span class="keyword">for</span> 42 minutes)</span><br><span class="line">  -n, --<span class="built_in">tail</span> string    Number of lines to show from the end of the logs (default <span class="string">&quot;all&quot;</span>)</span><br><span class="line">  -t, --timestamps     Show timestamps</span><br><span class="line">      --until string   Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or</span><br><span class="line">                       relative (e.g. 42m <span class="keyword">for</span> 42 minutes)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker inspect --help</span></span><br><span class="line">Usage:  docker inspect [OPTIONS] NAME|ID [NAME|ID...]</span><br><span class="line">Return low-level information on Docker objects</span><br><span class="line">Options:</span><br><span class="line">  -f, --format string   Format the output using the given Go template</span><br><span class="line">  -s, --size            Display total file sizes <span class="keyword">if</span> the <span class="built_in">type</span> is container</span><br><span class="line">      --<span class="built_in">type</span> string     Return JSON <span class="keyword">for</span> specified <span class="built_in">type</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-exec"><a href="#docker-exec" class="headerlink" title="docker exec"></a>docker exec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker exec --help</span></span><br><span class="line">Usage:  docker <span class="built_in">exec</span> [OPTIONS] CONTAINER COMMAND [ARG...]</span><br><span class="line">Run a <span class="built_in">command</span> <span class="keyword">in</span> a running container</span><br><span class="line">Options:</span><br><span class="line">  -d, --detach               Detached mode: run <span class="built_in">command</span> <span class="keyword">in</span> the background</span><br><span class="line">      --detach-keys string   Override the key sequence <span class="keyword">for</span> detaching a container</span><br><span class="line">  -e, --<span class="built_in">env</span> list             Set environment variables</span><br><span class="line">      --env-file list        Read <span class="keyword">in</span> a file of environment variables</span><br><span class="line">  -i, --interactive          Keep STDIN open even <span class="keyword">if</span> not attached</span><br><span class="line">      --privileged           Give extended privileges to the <span class="built_in">command</span></span><br><span class="line">  -t, --<span class="built_in">tty</span>                  Allocate a pseudo-TTY</span><br><span class="line">  -u, --user string          Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;])</span><br><span class="line">  -w, --workdir string       Working directory inside the container</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-attach"><a href="#docker-attach" class="headerlink" title="docker attach"></a>docker attach</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker attach --help</span></span><br><span class="line">Usage:  docker attach [OPTIONS] CONTAINER</span><br><span class="line">Attach <span class="built_in">local</span> standard input, output, and error streams to a running container</span><br><span class="line">Options:</span><br><span class="line">      --detach-keys string   Override the key sequence <span class="keyword">for</span> detaching a container</span><br><span class="line">      --no-stdin             Do not attach STDIN</span><br><span class="line">      --sig-proxy            Proxy all received signals to the process (default <span class="literal">true</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-cp"><a href="#docker-cp" class="headerlink" title="docker cp"></a>docker cp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker cp --help</span></span><br><span class="line">Usage:  docker <span class="built_in">cp</span> [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-</span><br><span class="line">        docker <span class="built_in">cp</span> [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH</span><br><span class="line"></span><br><span class="line">Copy files/folders between a container and the <span class="built_in">local</span> filesystem</span><br><span class="line">Use <span class="string">&#x27;-&#x27;</span> as the <span class="built_in">source</span> to <span class="built_in">read</span> a tar archive from stdin</span><br><span class="line">and extract it to a directory destination <span class="keyword">in</span> a container.</span><br><span class="line">Use <span class="string">&#x27;-&#x27;</span> as the destination to stream a tar archive of a</span><br><span class="line">container <span class="built_in">source</span> to stdout.</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -a, --archive       Archive mode (copy all uid/gid information)</span><br><span class="line">  -L, --follow-link   Always follow symbol <span class="built_in">link</span> <span class="keyword">in</span> SRC_PATH</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="docker镜像"><a href="#docker镜像" class="headerlink" title="docker镜像"></a>docker镜像</h1><h2 id="UnionFS-（联合文件系统）"><a href="#UnionFS-（联合文件系统）" class="headerlink" title="UnionFS （联合文件系统）"></a>UnionFS （联合文件系统）</h2><p>​	UnionFS（联合文件系统）：Union文件系统（UnionFS）是一种分层、轻量级并且高性能的文件系统，<br>它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系<br>统下(unite several directories into a single virtual filesystem)。Union 文件系统是 Docker 镜像的基<br>础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
+<p><strong>特性：</strong>一次同时加载多个文件系统，但从外面看起来，只能看到一个文件系统，联合加载会把各层文件<br>系统叠加起来，这样最终的文件系统会包含所有底层的文件和目录  </p>
+<p><strong><code>overlay2</code>是目前Docker 官方推荐的文件系统，也是目前安装 Docker 时默认的文件系统。</strong></p>
+<p>联合文件系统（overlay）基本原理图示：</p>
+<p><img src="/2022/11/07/Docker/overlay2.png" alt="overlay2"></p>
+<p>​	如上图所示，OverlayFS将单个Linux主机上的两个目录合并成一个目录，这些目录被称为层，统一过程被称为联合挂载。OverlayFS关联的底层目录称为lowerdir，lowerdir是只读的镜像层(image layer)，其中就包含bootfs&#x2F;rootfs层，bootfs(boot file system)主要包含bootloader和kernel，bootloader主要是引导加载kernel，当boot成功 kernel 被加载到内存中，bootfs就被umount了，rootfs(root file system)包含的就是典型Linux系统中的&#x2F;dev、&#x2F;proc、&#x2F;bin、&#x2F;etc等标准目录。lowerdir是可以分很多层的，除了bootfs&#x2F;rootfs层以外，还可以通过Dockerfile建立很多image层。</p>
+<p>​	对应的高层目录upperdir层是lowerdir的上一层，只有这一层可读可写的，其实就是Container层，在启动一个容器的时候会在最后的image层的上一层自动创建，所有对容器数据的更改都会发生在这一层。</p>
+<p>​	联合挂载后merged层就是联合挂载层，也就是给用户暴露的统一视觉，将image层和container层结合，就如最上边的图中描述一致，同一文件，在此层会展示离它最近的层级里的文件内容，或者可以理解为，只要container层中有此文件，便展示container层中的文件内容，若container层中没有，则展示image层中的。</p>
+<p>加载过程图示：</p>
+<p><img src="/2022/11/07/Docker/lianhejiazai.png" alt="加载过程"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/rendongxingzhe/article/details/126864482">docker的联合文件系统（UnionFS）_忍冬行者的博客-CSDN博客_docker unionfs</a></p>
+<h2 id="分层镜像"><a href="#分层镜像" class="headerlink" title="分层镜像"></a>分层镜像</h2><p>​	所有的 Docker 镜像都起始于一个基础镜像层，当进行修改或增加新的内容时，就会在当前镜像层之<br>上，创建新的镜像层。</p>
+<p><img src="/2022/11/07/Docker/image-layers.png" alt="镜像分层"></p>
+<blockquote>
+<p>Docker镜像都是只读的，当容器启动时，一个新的可写层被加载到镜像的顶部！<br>这一层就是我们通常说的容器层，容器之下的都叫镜像层！  </p>
+</blockquote>
+<h2 id="commit镜像"><a href="#commit镜像" class="headerlink" title="commit镜像"></a>commit镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker commit --help</span></span><br><span class="line">Usage:  docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]</span><br><span class="line">Create a new image from a container<span class="string">&#x27;s changes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Options:</span></span><br><span class="line"><span class="string">  -a, --author string    Author (e.g., &quot;John Hannibal Smith &lt;hannibal@a-team.com&gt;&quot;)</span></span><br><span class="line"><span class="string">  -c, --change list      Apply Dockerfile instruction to the created image</span></span><br><span class="line"><span class="string">  -m, --message string   Commit message</span></span><br><span class="line"><span class="string">  -p, --pause            Pause container during commit (default true)</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h1><h2 id="什么是容器数据卷？"><a href="#什么是容器数据卷？" class="headerlink" title="什么是容器数据卷？"></a>什么是容器数据卷？</h2><p>​	容器挂载主机数据卷，实现数据共享</p>
+<h2 id="使用数据卷"><a href="#使用数据卷" class="headerlink" title="使用数据卷"></a>使用数据卷</h2><blockquote>
+<p>方式一：使用docker run -v命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name python:3.8 -p 80:5000 -v /usr/share/github_codes/timeManager:/opt/timeManager python:3.8 bash</span><br></pre></td></tr></table></figure>
+
+<p>主机目录&#x2F;usr&#x2F;share&#x2F;github_codes&#x2F;timeManager挂载到&#x2F;opt&#x2F;timeManager，类似软链接，把&#x2F;opt&#x2F;timeManager链接到&#x2F;usr&#x2F;share&#x2F;github_codes&#x2F;timeManager</p>
+<h2 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p><img src="/2022/11/07/Docker/volumes-from.png" alt="镜像分层"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -it --name centos01 wlf/centos:1.0.1</span><br><span class="line">docker run -d -it --name centos02 --volumes-from centos01 wlf/centos:1.0.1</span><br></pre></td></tr></table></figure>
+
+<h1 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h1><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a><strong>介绍</strong></h3><p>dockerfile是用来构建docker镜像的命令参数脚本文件</p>
+<p><strong>步骤</strong></p>
+<ol>
+<li>编写一个dockerfile文件</li>
+<li>docker build 构建一个镜像</li>
+<li>docker run 运行镜像</li>
+<li>docker push 发布镜像（Docker Hub、阿里云镜像仓库等）</li>
+</ol>
+<h3 id="构建过程"><a href="#构建过程" class="headerlink" title="构建过程"></a>构建过程</h3><ol>
+<li><p>每个保留关键字必须是大写字母</p>
+</li>
+<li><p>从上到下执行</p>
+</li>
+<li><p>‘#‘ 注释</p>
+</li>
+<li><p>每一个指令都会创建提交一个新的镜像层</p>
+<p><img src="/2022/11/07/Docker/dockerfile1.png" alt="镜像分层"></p>
+</li>
+</ol>
+<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><p><strong>portainer</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:9000 \</span><br><span class="line">--restart=always -v /var/run/docker.sock:/var/run/docker.sock --privileged=<span class="literal">true</span> portainer/portainer</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="实践操作"><a href="#实践操作" class="headerlink" title="实践操作"></a>实践操作</h1><h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-3-centos ~]<span class="comment"># docker pull mysql:5.7</span></span><br><span class="line">[root@VM-8-3-centos home]<span class="comment"># docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=QAZWSX@1234 --name mysql-timemanager mysql:5.7</span></span><br><span class="line"></span><br><span class="line">-v	容器内路径:权限(ro/rw)			 <span class="comment"># 匿名挂载</span></span><br><span class="line">-v	卷名:容器内路径:权限(ro/rw)		<span class="comment"># 具名挂载</span></span><br><span class="line">-v	宿主路径:容器内路径:权限(ro/rw)	   <span class="comment"># 指定目录挂载</span></span><br><span class="line"><span class="comment"># 路径为绝对路径</span></span><br><span class="line"><span class="comment"># ro  read only</span></span><br><span class="line"><span class="comment"># rw  readwrite</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="运行python3项目"><a href="#运行python3项目" class="headerlink" title="运行python3项目"></a>运行python3项目</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker pull python:3.8</span><br><span class="line">   </span><br><span class="line"><span class="comment"># 启动docker</span></span><br><span class="line">docker run -it --name python:3.8 -p 80:5000 -v /usr/share/github_codes/timeManager:/opt/timeManager python:3.8 bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包镜像</span></span><br><span class="line">docker commit -a <span class="string">&quot;wlf&quot;</span> -m <span class="string">&quot;time manager&quot;</span> 74d22634c17f  time_manager:1.0.0</span><br><span class="line">-a :提交的镜像作者；</span><br><span class="line">-c :使用Dockerfile指令来创建镜像；</span><br><span class="line">-m :提交时的说明文字；</span><br><span class="line">-p :在commit时，将容器暂停。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DockerFile-1"><a href="#DockerFile-1" class="headerlink" title="DockerFile"></a>DockerFile</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dockerfile 文件示例</span></span><br><span class="line">FROM centos</span><br><span class="line">MAINTAINER wlf&lt;cxwanglunfei@163.com&gt;</span><br><span class="line">ENV MYPATH /usr/share/docker_learning</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install vim   <span class="comment"># centos不再提供服务，原始镜像源会下载失败</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">RUN yum -y install net-tools</span></span><br><span class="line">VOLUME [&quot;volume_test&quot;]</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;----------end--------&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -f DockerFile -t wlf/centos:1.0.0 </span><br><span class="line">docker run -d -it wlf/centos:1.0.0		<span class="comment">#启动容器</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/11/07/Docker/">https://wlf621.github.io/2022/11/07/Docker/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Docker/"># Docker</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/01/17/%E5%AD%A6%E4%B9%A0%E4%BD%93%E7%B3%BB/">学习体系</a>
+            
+            
+            <a class="next" rel="next" href="/2022/11/07/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">Git基础操作</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

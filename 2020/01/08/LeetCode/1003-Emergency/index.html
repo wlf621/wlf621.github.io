@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>1003 Emergency | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">1003 Emergency</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 8, 2020&nbsp;&nbsp;19:18:23</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/PAT/">PAT</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams in each city and the length of each road between any pair of cities are marked on the map. When there is an emergency call to you from some other city, your job is to lead your men to the place as quickly as possible, and at the mean time, call up as many hands on the way as possible.</p>
+<blockquote>
+<p>Input Specification:<br>Each input file contains one test case. For each test case, the first line contains 4 positive integers: $N (\le 500)$ - the number of cities (and the cities are numbered from 0 to <em>N−1</em>), <em>M</em> - the number of roads, $C_{1}​$​​ and $C_{2}$​​​ - the cities that you are currently in and that you must save, respectively. The next line contains <em>N</em> integers, where the <em>i</em>-th integer is the number of rescue teams in the <em>i</em>-th city. Then <em>M</em> lines follow, each describes a road with three integers $c_{1}, c_{2}$ and <em>L</em>, which are the pair of cities connected by a road and the length of that road, respectively. It is guaranteed that there exists at least one path from $C_{2}$ to $C_{2}$​.<br>Output Specification:<br>For each test case, print in one line two numbers: the number of different shortest paths between $C_{1}, C_{2}$, and the maximum amount of rescue teams you can possibly gather. All the numbers in a line must be separated by exactly one space, and there is no extra space allowed at the end of a line.</p>
+</blockquote>
+<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">5 6 0 2</span><br><span class="line">1 2 1 5 3</span><br><span class="line">0 1 1</span><br><span class="line">0 2 2</span><br><span class="line">0 3 1</span><br><span class="line">1 2 1</span><br><span class="line">2 4 1</span><br><span class="line">3 4 1</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="AC-Code"><a href="#AC-Code" class="headerlink" title="AC Code"></a>AC Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dij</span><span class="params">(<span class="type">int</span> **matrix,<span class="type">int</span> *dis,<span class="type">int</span> *cnt,<span class="type">int</span> *num, <span class="type">int</span> *cap, <span class="type">int</span> s, <span class="type">int</span> N)</span> </span>&#123;<span class="comment">//N:节点数，s:起点,cnt：记录路径数；</span></span><br><span class="line">	<span class="type">int</span> **e,*m, min, u;</span><br><span class="line">	e = <span class="keyword">new</span> <span class="type">int</span>*[N];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++)e[i] = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">	m = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; N; k++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> l = <span class="number">0</span>; l &lt; N; l++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (matrix[k][l] == <span class="number">-1</span>)e[k][l] = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">			<span class="keyword">else</span> e[k][l] = matrix[k][l];</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; N; k++) &#123;</span><br><span class="line">		dis[k] = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">		m[k] = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	cnt[s] = <span class="number">1</span>; dis[s] = <span class="number">0</span>; num[s] = cap[s];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; N; i++) &#123;</span><br><span class="line">		min = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">		u = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> s = <span class="number">0</span>; s &lt; N; s++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (m[s] == <span class="number">0</span> &amp;&amp; dis[s] &lt; min) &#123;</span><br><span class="line">				min = dis[s];</span><br><span class="line">				u = s;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (u == <span class="number">-1</span>) &#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			m[u] = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; N; k++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (e[u][k] &lt; <span class="number">0x3f3f3f3f</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (u == k)<span class="keyword">continue</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (dis[k] &gt; (dis[u] + e[u][k])) &#123;</span><br><span class="line">					dis[k] = dis[u] + e[u][k];</span><br><span class="line">					num[k] = num[u] + cap[k];</span><br><span class="line">					cnt[k] = cnt[u];</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (dis[k] == (dis[u] + e[u][k])) &#123;</span><br><span class="line">					cnt[k] += cnt[u];</span><br><span class="line">					num[k] = <span class="built_in">max</span>(num[k],num[u]+ cap[k]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span>  s, t, *cnt,N,M,*num,*cap, **matrix,*dis;</span><br><span class="line">	<span class="keyword">while</span> (cin &gt;&gt; N &gt;&gt; M &gt;&gt; s &gt;&gt; t) &#123;</span><br><span class="line">		cap = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">		cnt = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">		num = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">		dis = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">		matrix = <span class="keyword">new</span> <span class="type">int</span>*[N];</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">			cin &gt;&gt; cap[i];</span><br><span class="line">			matrix[i] = <span class="keyword">new</span> <span class="type">int</span>[N];</span><br><span class="line">			cnt[i] = <span class="number">0</span>;</span><br><span class="line">			num[i] = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt; N; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (i == j)matrix[i][j] = matrix[j][i] = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">else</span> matrix[i][j] = matrix[j][i] = <span class="number">-1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; M; i++) &#123;</span><br><span class="line">			<span class="type">int</span> t1, t2,t3;</span><br><span class="line">			cin &gt;&gt; t1 &gt;&gt; t2 &gt;&gt; t3;</span><br><span class="line">			matrix[t1][t2] = matrix[t2][t1] = t3;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">dij</span>(matrix, dis, cnt, num, cap, s, N);</span><br><span class="line">		cout &lt;&lt; cnt[t] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; num[t] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/01/08/LeetCode/1003-Emergency/">https://wlf621.github.io/2020/01/08/LeetCode/1003-Emergency/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"># 最短路径</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/01/09/LeetCode/1017-Queueing-at-Bank/">1017 Queueing at Bank</a>
+            
+            
+            <a class="next" rel="next" href="/2020/01/08/LeetCode/1002-A-B-for-Polynomials/">1002 A+B for Polynomials</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>1017 Queueing at Bank | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">1017 Queueing at Bank</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 9, 2020&nbsp;&nbsp;19:12:44</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/PAT/">PAT</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>Suppose a bank has K windows open for service. There is a yellow line in front of the windows which devides the waiting area into two parts. All the customers have to wait in line behind the yellow line, until it is his&#x2F;her turn to be served and there is a window available. It is assumed that no window can be occupied by a single customer for more than 1 hour.</p>
+<p>Now given the arriving time T and the processing time P of each customer, you are supposed to tell the average waiting time of all the customers.</p>
+<blockquote>
+<p>Input Specification:<br>Each input file contains one test case. For each case, the first line contains 2 numbers: $N \ (\le 10^4​​ )$ - the total number of customers, and $K \ (\le 100)$ - the number of windows. Then N lines follow, each contains 2 times: HH:MM:SS - the arriving time, and P - the processing time in minutes of a customer. Here HH is in the range [00, 23], MM and SS are both in [00, 59]. It is assumed that no two customers arrives at the same time. Notice that the bank opens from 08:00 to 17:00. Anyone arrives early will have to wait in line till 08:00, and anyone comes too late (at or after 17:00:01) will not be served nor counted into the average.</p>
+</blockquote>
+<blockquote>
+<p>Output Specification:<br>For each test case, print in one line the average waiting time of all the customers, in minutes and accurate up to 1 decimal place.</p>
+</blockquote>
+<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input:"></a>Sample Input:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">7 3</span><br><span class="line">07:55:00 16</span><br><span class="line">17:00:01 2</span><br><span class="line">07:59:59 15</span><br><span class="line">08:01:00 60</span><br><span class="line">08:00:00 30</span><br><span class="line">08:00:02 2</span><br><span class="line">08:03:00 10</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output:"></a>Sample Output:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="AC-Code"><a href="#AC-Code" class="headerlink" title="AC Code"></a>AC Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">	<span class="type">int</span> arrive[<span class="number">3</span>], process = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">comp</span><span class="params">(Node a, Node b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (a.arrive[<span class="number">0</span>] &lt; b.arrive[<span class="number">0</span>])<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (a.arrive[<span class="number">0</span>] == b.arrive[<span class="number">0</span>]) &#123;</span><br><span class="line">		<span class="keyword">if</span> (a.arrive[<span class="number">1</span>] &lt; b.arrive[<span class="number">1</span>])<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a.arrive[<span class="number">1</span>] == b.arrive[<span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="keyword">if</span> (a.arrive[<span class="number">2</span>] &lt;= b.arrive[<span class="number">2</span>])<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N, K; <span class="type">double</span> avg_wait = <span class="number">0</span>, cnt = <span class="number">0</span>;</span><br><span class="line">	Node *user,early,last,*W;</span><br><span class="line">	early.arrive[<span class="number">0</span>] = <span class="number">8</span>;</span><br><span class="line">	early.arrive[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	early.arrive[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">	last.arrive[<span class="number">0</span>] = <span class="number">17</span>;</span><br><span class="line">	early.arrive[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	early.arrive[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">	cin &gt;&gt; N &gt;&gt; K;</span><br><span class="line">	user = <span class="keyword">new</span> Node[N];</span><br><span class="line">	W = <span class="keyword">new</span> Node[K];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; K; i++) &#123;</span><br><span class="line">		W[i].arrive[<span class="number">0</span>] = <span class="number">8</span>;</span><br><span class="line">		W[i].arrive[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">		W[i].arrive[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">		string arr;</span><br><span class="line">		<span class="type">int</span> tmp = <span class="number">0</span>;</span><br><span class="line">		cin &gt;&gt; arr;</span><br><span class="line">		cin &gt;&gt; user[i].process;</span><br><span class="line">		<span class="keyword">if</span> (user[i].process&gt;<span class="number">60</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			user[i].process = <span class="number">60</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function">stringstream <span class="title">ss</span><span class="params">(arr)</span></span>;</span><br><span class="line">		<span class="keyword">while</span> (<span class="built_in">getline</span>(ss, arr, <span class="string">&#x27;:&#x27;</span>)) &#123;</span><br><span class="line">			user[i].arrive[tmp] = <span class="built_in">atoi</span>(arr.<span class="built_in">c_str</span>());</span><br><span class="line">			tmp++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(user, user + N, comp);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">comp</span>(user[i], early)) &#123;</span><br><span class="line">			avg_wait += -((user[i].arrive[<span class="number">0</span>] - <span class="number">8</span>) * <span class="number">60</span> * <span class="number">60</span> + (user[i].arrive[<span class="number">1</span>] - <span class="number">0</span>) * <span class="number">60</span> + user[i].arrive[<span class="number">2</span>] - <span class="number">0</span>);</span><br><span class="line">			user[i].arrive[<span class="number">0</span>] = <span class="number">8</span>;</span><br><span class="line">			user[i].arrive[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">			user[i].arrive[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">comp</span>(user[i],last)) &#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			<span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; K; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">comp</span>(W[j], user[i])) &#123;</span><br><span class="line">					W[j].arrive[<span class="number">0</span>] = user[i].arrive[<span class="number">0</span>]+ (user[i].arrive[<span class="number">1</span>] + user[i].process) /<span class="number">60</span>;</span><br><span class="line">					W[j].arrive[<span class="number">1</span>] = (user[i].arrive[<span class="number">1</span>]+user[i].process)%<span class="number">60</span>;</span><br><span class="line">					W[j].arrive[<span class="number">2</span>] = user[i].arrive[<span class="number">2</span>];</span><br><span class="line">					flag = <span class="literal">true</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">				<span class="type">double</span> min,tmp;</span><br><span class="line">				<span class="type">int</span> index;</span><br><span class="line">				min = (W[<span class="number">0</span>].arrive[<span class="number">0</span>] - user[i].arrive[<span class="number">0</span>]) * <span class="number">60</span> * <span class="number">60</span> + (W[<span class="number">0</span>].arrive[<span class="number">1</span>] - user[i].arrive[<span class="number">1</span>]) * <span class="number">60</span> + (W[<span class="number">0</span>].arrive[<span class="number">2</span>] - user[i].arrive[<span class="number">2</span>]);</span><br><span class="line">				index = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; K; j++) &#123;</span><br><span class="line">					tmp = (W[j].arrive[<span class="number">0</span>] - user[i].arrive[<span class="number">0</span>]) * <span class="number">60</span> * <span class="number">60</span> + (W[j].arrive[<span class="number">1</span>] - user[i].arrive[<span class="number">1</span>]) * <span class="number">60</span> + (W[j].arrive[<span class="number">2</span>] - user[i].arrive[<span class="number">2</span>]);</span><br><span class="line">					<span class="keyword">if</span> (tmp &lt; min) &#123;</span><br><span class="line">						min = tmp;</span><br><span class="line">						index = j;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				W[index].arrive[<span class="number">0</span>] = W[index].arrive[<span class="number">0</span>]+ (W[index].arrive[<span class="number">1</span>] + user[i].process)/<span class="number">60</span>;</span><br><span class="line">				W[index].arrive[<span class="number">1</span>] =  (W[index].arrive[<span class="number">1</span>] + user[i].process) % <span class="number">60</span>;</span><br><span class="line">				avg_wait += min;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">1</span>) &lt;&lt; avg_wait/(<span class="number">60</span>*cnt) &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2020/01/09/LeetCode/1017-Queueing-at-Bank/">https://wlf621.github.io/2020/01/09/LeetCode/1017-Queueing-at-Bank/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%A8%A1%E6%8B%9F/"># 模拟</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/08/LeetCode/1018-Public-Bike-Management/">1018 Public Bike Management</a>
+            
+            
+            <a class="next" rel="next" href="/2020/01/08/LeetCode/1003-Emergency/">1003 Emergency</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

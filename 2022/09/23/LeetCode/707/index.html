@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Wlf">
+
+
+
+
+
+<title>707 | WLF</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wlf&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wlf&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" target="_blank" rel="noopener" href="https://github.com/SharingSource/LogicStack-LeetCode/wiki">宫水三叶的刷题笔记（引）</a>
+                
+                    <a class="menu-item" href="/html">文档</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">707</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Wlf</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 23, 2022&nbsp;&nbsp;22:30:22</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/leetcode/">leetcode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>设计链表的实现。您可以选择使用单链表或双链表。单链表中的节点应该具有两个属性：val 和 next。val 是当前节点的值，next 是指向下一个节点的指针&#x2F;引用。如果要使用双向链表，则还需要一个属性 prev 以指示链表中的上一个节点。假设链表中的所有节点都是 0-index 的。</p>
+<p>在链表类中实现这些功能：</p>
+<ul>
+<li>get(index)：获取链表中第 index 个节点的值。如果索引无效，则返回-1。</li>
+<li>addAtHead(val)：在链表的第一个元素之前添加一个值为 val 的节点。插入后，新节点将成为链表的第一个节点。</li>
+<li>addAtTail(val)：将值为 val 的节点追加到链表的最后一个元素。</li>
+<li>addAtIndex(index,val)：在链表中的第 index 个节点之前添加值为 val  的节点。如果 index 等于链表的长度，则该节点将附加到链表的末尾。如果 index 大于链表长度，则不会插入节点。如果index小于0，则在头部插入节点。</li>
+<li>deleteAtIndex(index)：如果索引 index 有效，则删除链表中的第 index 个节点。</li>
+</ul>
+<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyLinkedList linkedList = <span class="keyword">new</span> <span class="built_in">MyLinkedList</span>();</span><br><span class="line">linkedList.<span class="built_in">addAtHead</span>(<span class="number">1</span>);</span><br><span class="line">linkedList.<span class="built_in">addAtTail</span>(<span class="number">3</span>);</span><br><span class="line">linkedList.<span class="built_in">addAtIndex</span>(<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//链表变为1-&gt; 2-&gt; 3</span></span><br><span class="line">linkedList.<span class="built_in">get</span>(<span class="number">1</span>);            <span class="comment">//返回2</span></span><br><span class="line">linkedList.<span class="built_in">deleteAtIndex</span>(<span class="number">1</span>);  <span class="comment">//现在链表是1-&gt; 3</span></span><br><span class="line">linkedList.<span class="built_in">get</span>(<span class="number">1</span>);            <span class="comment">//返回3</span></span><br></pre></td></tr></table></figure>
+
+<details><summary>查看代码</summary><pre><code>
+// 注意边界情况，链表空等
+struct DLinkListNode &#123;
+    int val;
+    DLinkListNode* prev, * next;
+    DLinkListNode(int _val) : val(_val), prev(nullptr), next(nullptr) &#123;&#125;
+    DLinkListNode() : val(0), prev(nullptr), next(nullptr) &#123;&#125;
+&#125;;
+
+<p>class MyLinkedList &#123;<br>    DLinkListNode *head;<br>    int len &#x3D; 0;<br>public:<br>    MyLinkedList() &#123;<br>        head &#x3D; new DLinkListNode();<br>    &#125;</p>
+<pre><code>DLinkListNode* getNodeByIndex(int index) &#123;
+    int num = 0;
+    DLinkListNode* pWork = this-&gt;head-&gt;next;
+    while (pWork != nullptr) &#123;
+        if (num == index) &#123;
+            return pWork;
+        &#125;
+        num++;
+        pWork = pWork-&gt;next;
+    &#125;
+    return pWork;
+&#125;
+
+int get(int index) &#123;
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index);
+    return tmp == nullptr ? -1 : tmp-&gt;val;
+&#125;
+
+void addAtHead(int val) &#123;
+    DLinkListNode *tmp = new DLinkListNode(val);
+    tmp-&gt;next = this-&gt;head-&gt;next;
+    tmp-&gt;prev = this-&gt;head;
+    if (this-&gt;head-&gt;next != nullptr) &#123;
+        this-&gt;head-&gt;next-&gt;prev = tmp;
+    &#125;
+    this-&gt;head-&gt;next = tmp;
+    len++;
+&#125;
+
+void addAtTail(int val) &#123;
+    if (len == 0) &#123;
+        this-&gt;addAtHead(val);
+        return;
+    &#125;
+    DLinkListNode* tmp = new DLinkListNode(val);
+    DLinkListNode* tail = this-&gt;getNodeByIndex(len - 1);
+    tmp-&gt;prev = tail;
+    if (tail != nullptr)
+        tail-&gt;next = tmp;
+    tail = tmp;
+    len++;
+&#125;
+
+void addAtIndex(int index, int val) &#123;
+    if (index &gt; len) return;
+    if (index &lt;= 0) &#123;
+        this-&gt;addAtHead(val);
+        return;
+    &#125;
+    if (index == len) &#123;
+        this-&gt;addAtTail(val);
+        return;
+    &#125;
+
+    DLinkListNode* tmpNode = new DLinkListNode(val);
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index - 1);
+    tmpNode-&gt;prev = tmp;
+    tmpNode-&gt;next = tmp-&gt;next;
+    if (tmp-&gt;next != nullptr)
+        tmp-&gt;next-&gt;prev = tmpNode;
+    tmp-&gt;next = tmpNode;
+    len++;
+&#125;
+
+void deleteAtIndex(int index) &#123;
+    if (index &lt; 0 || index &gt;= len) return;
+    DLinkListNode* tmp = this-&gt;getNodeByIndex(index);
+    tmp-&gt;prev-&gt;next = tmp-&gt;next;
+    if (tmp-&gt;next != nullptr)
+        tmp-&gt;next-&gt;prev = tmp-&gt;prev;
+    delete tmp;
+    len--;
+&#125;
+</code></pre>
+<p>};<br></p></code></pre></details><p></p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-linked-list">https://leetcode.cn/problems/design-linked-list</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Wlf</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://wlf621.github.io/2022/09/23/LeetCode/707/">https://wlf621.github.io/2022/09/23/LeetCode/707/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/"># 链表</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/24/LeetCode/1652/">1652</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/22/LeetCode/1640/">1640</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Wlf | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
